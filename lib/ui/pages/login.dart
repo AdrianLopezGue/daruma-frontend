@@ -18,8 +18,7 @@ class LoginPage extends StatelessWidget {
 
           store.dispatch(result);
 
-          Future.wait([result.completer.future])
-              .then((user) => {
+          Future.wait([result.completer.future]).then((user) => {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) {
@@ -85,7 +84,7 @@ class OAuthLoginButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return OutlineButton(
       splashColor: backgroundColor,
-      onPressed: () => onPressed,
+      onPressed: onPressed,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
       highlightElevation: 0,
       borderSide: BorderSide(color: Colors.grey),

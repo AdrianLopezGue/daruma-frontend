@@ -15,7 +15,6 @@ middleware(Store<AppState> store, action, NextDispatcher next){
   if(action is LoginWithGoogleAction){
       _handleLoginWithGoogle(store, action);
 
-      action.completer.complete();
   }
   else if(action is LogoutAction){
       _handleLogoutAction(store, action);
@@ -43,6 +42,8 @@ _handleLoginWithGoogle(Store<AppState> store, LoginWithGoogleAction action) asyn
   assert(user.uid == currentUser.uid);
 
   store.dispatch(UserLoadedAction(currentUser));
+
+  action.completer.complete();
 }
 
 _handleLogoutAction(Store<AppState> store, LogoutAction action) async {
