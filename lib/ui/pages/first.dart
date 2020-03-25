@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:daruma/pages/login.dart';
+import 'package:daruma/ui/pages/login.dart';
 import 'package:daruma/services/authentication.dart';
 
 class FirstScreen extends StatelessWidget {
@@ -19,13 +19,7 @@ class FirstScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-              CircleAvatar(
-                backgroundImage: NetworkImage(
-                  imageUrl,
-                ),
-                radius: 60,
-                backgroundColor: Colors.transparent,
-              ),
+              
               SizedBox(height: 40),
               Text(
                 'NAME',
@@ -35,7 +29,7 @@ class FirstScreen extends StatelessWidget {
                     color: Colors.black54),
               ),
               Text(
-                name,
+                'NAME',
                 style: TextStyle(
                     fontSize: 25,
                     color: Colors.deepPurple,
@@ -50,7 +44,7 @@ class FirstScreen extends StatelessWidget {
                     color: Colors.black54),
               ),
               Text(
-                email,
+                'NAME',
                 style: TextStyle(
                     fontSize: 25,
                     color: Colors.deepPurple,

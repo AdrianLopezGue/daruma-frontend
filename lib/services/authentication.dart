@@ -18,12 +18,10 @@ Future<FirebaseUser> signInWithGoogle() async {
     idToken: googleSignInAuthentication.idToken,
   );
 
+  print(googleSignInAuthentication.idToken);
+
   final AuthResult authResult = await _auth.signInWithCredential(credential);
   final FirebaseUser user = authResult.user;
-
-  print(user.email);
-  print(user.displayName);
-  print(user.photoUrl);
 
   // Checking if email and name is null
   assert(user.email != null);
@@ -47,6 +45,7 @@ Future<FirebaseUser> signInWithGoogle() async {
 
   return user;
 }
+
 
 void signOutGoogle() async {
   await googleSignIn.signOut();
