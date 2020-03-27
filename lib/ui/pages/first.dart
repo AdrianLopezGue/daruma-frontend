@@ -1,10 +1,22 @@
+import 'package:daruma/redux/index.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:daruma/ui/pages/login.dart';
-import 'package:daruma/services/authentication.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 class FirstScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return new StoreConnector<AppState, _ViewModel>(converter: (store) {
+      return new _ViewModel(
+        user: store.state.firebaseState.firebaseUser,
+        logout: () => store.dispatch(LogoutAction()),
+      );
+    }, builder: (BuildContext context, _ViewModel vm) {
+      return _loginView(context, vm);
+    });
+  }
+    Widget _loginView(BuildContext context, _ViewModel vm) {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -29,7 +41,7 @@ class FirstScreen extends StatelessWidget {
                     color: Colors.black54),
               ),
               Text(
-                'NAME',
+                vm.user.displayName,
                 style: TextStyle(
                     fontSize: 25,
                     color: Colors.deepPurple,
@@ -44,7 +56,7 @@ class FirstScreen extends StatelessWidget {
                     color: Colors.black54),
               ),
               Text(
-                'NAME',
+                vm.user.email,
                 style: TextStyle(
                     fontSize: 25,
                     color: Colors.deepPurple,
@@ -53,7 +65,7 @@ class FirstScreen extends StatelessWidget {
               SizedBox(height: 40),
               RaisedButton(
                 onPressed: () {
-                  signOutGoogle();
+                  vm.logout();
                   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) {return LoginPage();}), ModalRoute.withName('/'));
                 },
                 color: Colors.deepPurple,
@@ -74,4 +86,14 @@ class FirstScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+class _ViewModel {
+  final FirebaseUser user;
+  final Function() logout;
+
+  _ViewModel({
+    @required this.user,
+    @required this.logout,
+  });
 }

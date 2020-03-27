@@ -27,8 +27,7 @@ class LoginPage extends StatelessWidget {
                       ),
                     )
                   });
-        },
-        logout: () => store.dispatch(LogoutAction()),
+        }
       );
     }, builder: (BuildContext context, _ViewModel vm) {
       return _loginView(context, vm);
@@ -63,12 +62,10 @@ class LoginPage extends StatelessWidget {
 class _ViewModel {
   final FirebaseUser user;
   final Function() login;
-  final Function() logout;
 
   _ViewModel({
     @required this.user,
     @required this.login,
-    @required this.logout,
   });
 }
 

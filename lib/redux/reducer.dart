@@ -2,9 +2,9 @@ import 'package:daruma/redux/index.dart';
 import 'package:daruma/redux/state.dart';
 
 AppState mainReducer(AppState state, dynamic action) {
-  print(action.runtimeType); 
 
   FirebaseState firebaseState = _reduceFirebaseState(state, action);
+
 
   return AppState(
     firebaseState: firebaseState

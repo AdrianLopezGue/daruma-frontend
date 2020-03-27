@@ -19,6 +19,8 @@ middleware(Store<AppState> store, action, NextDispatcher next){
   else if(action is LogoutAction){
       _handleLogoutAction(store, action);
   }
+
+  next(action);
 }
 
 _handleLoginWithGoogle(Store<AppState> store, LoginWithGoogleAction action) async{
