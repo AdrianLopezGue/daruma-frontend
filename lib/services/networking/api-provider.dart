@@ -21,21 +21,19 @@ class ApiProvider {
   }
 
   Future<dynamic> post(String url, String body) async {
-
     var responseJson;
 
     try {
       final response = await http.post(_baseUrl + url,
           headers: {HttpHeaders.contentTypeHeader: 'application/json'},
-          body: body
-      );
+          body: body);
+
       responseJson = _response(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');
     }
     return responseJson;
   }
-  
 
   dynamic _response(http.Response response) {
     switch (response.statusCode) {

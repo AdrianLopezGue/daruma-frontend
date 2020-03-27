@@ -1,4 +1,7 @@
+import 'package:daruma/model/group.dart';
 import 'package:daruma/redux/index.dart';
+import 'package:daruma/services/bloc/group-bloc.dart';
+import 'package:daruma/services/networking/index.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:daruma/ui/pages/login.dart';
@@ -10,16 +13,21 @@ class FirstScreen extends StatelessWidget {
     return new StoreConnector<AppState, _ViewModel>(converter: (store) {
       return new _ViewModel(
         user: store.state.firebaseState.firebaseUser,
+        idToken: store.state.firebaseState.idTokenUser,
         logout: () {
           store.dispatch(LogoutAction());
-          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) {return LoginPage();}), ModalRoute.withName('/'));          
-          },
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) {
+            return LoginPage();
+          }), ModalRoute.withName('/'));
+        },
       );
     }, builder: (BuildContext context, _ViewModel vm) {
       return _loginView(context, vm);
     });
   }
-    Widget _loginView(BuildContext context, _ViewModel vm) {
+
+  Widget _loginView(BuildContext context, _ViewModel vm) {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -34,7 +42,6 @@ class FirstScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-              
               SizedBox(height: 40),
               Text(
                 'NAME',
@@ -69,7 +76,6 @@ class FirstScreen extends StatelessWidget {
               RaisedButton(
                 onPressed: () {
                   vm.logout();
-                  
                 },
                 color: Colors.deepPurple,
                 child: Padding(
@@ -90,18 +96,94 @@ class FirstScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         backgroundColor: Colors.black,
-        onPressed: (){},
-        ),
+        onPressed: () {
+          showDialog(
+              context: context,
+              child: new SimpleDialog(children: <Widget>[
+                LoadingDialog(user: vm.user, idToken: vm.idToken),
+              ]));
+        },
+      ),
     );
   }
 }
 
 class _ViewModel {
   final FirebaseUser user;
+  final IdTokenResult idToken;
   final Function() logout;
 
   _ViewModel({
     @required this.user,
+    @required this.idToken,
     @required this.logout,
   });
+}
+
+class LoadingDialog extends StatelessWidget {
+  final FirebaseUser user;
+  final IdTokenResult idToken;
+
+  LoadingDialog({this.user, this.idToken});
+
+  @override
+  Widget build(BuildContext context) {
+    final GroupBloc _bloc = GroupBloc();
+
+    _bloc.postGroup(
+        Group(name: "Grupo prueba", currencyCode: "EUR", idOwner: user.uid),
+        idToken);
+
+    return StreamBuilder<Response<Group>>(
+        stream: _bloc.groupStream,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            switch (snapshot.data.status) {
+              case Status.LOADING:
+                return Center(child: CircularProgressIndicator());
+                break;
+
+              case Status.COMPLETED:
+                return Container(
+                  height: 300.0, // Change as per your requirement
+                  width: 300.0,
+                  child: Row(
+                    children: <Widget>[
+                      Text("Post completed!"),
+                      FlatButton(
+                        onPressed: () {
+                          Navigator.pop(context, true);
+                        },
+                        child: Text(
+                          "Exit",
+                        ),
+                      )
+                    ],
+                  ),
+                );
+                break;
+              case Status.ERROR:
+                return Container(
+                  height: 300.0, // Change as per your requirement
+                  width: 300.0,
+                  child: Row(
+                    children: <Widget>[
+                      Text("Post ERROR!"),
+                      FlatButton(
+                        onPressed: () {
+                          Navigator.pop(context, true);
+                        },
+                        child: Text(
+                          "Exit",
+                        ),
+                      )
+                    ],
+                  ),
+                );
+                break;
+            }
+          }
+          return Container();
+        });
+  }
 }

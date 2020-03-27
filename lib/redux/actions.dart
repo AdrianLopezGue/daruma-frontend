@@ -5,7 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 class LoginWithGoogleAction {
   final Completer completer;
 
-  LoginWithGoogleAction({Completer completer}): this.completer = completer ?? Completer();
+  LoginWithGoogleAction({Completer completer})
+      : this.completer = completer ?? Completer();
 }
 
 class LogoutAction {
@@ -14,6 +15,7 @@ class LogoutAction {
 
 class UserLoadedAction {
   final FirebaseUser firebaseUser;
+  final IdTokenResult idTokenUser;
 
-  UserLoadedAction(this.firebaseUser);
+  UserLoadedAction(this.firebaseUser, this.idTokenUser);
 }

@@ -1,4 +1,3 @@
-
 import 'package:daruma/redux/index.dart';
 import 'package:daruma/redux/state.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,31 +7,28 @@ import 'package:redux/redux.dart';
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn _googleSignIn = GoogleSignIn();
 
+middleware(Store<AppState> store, action, NextDispatcher next) {
+  print(action.runtimeType);
 
-middleware(Store<AppState> store, action, NextDispatcher next){
-  print(action.runtimeType); 
-
-  if(action is LoginWithGoogleAction){
-      _handleLoginWithGoogle(store, action);
-
-  }
-  else if(action is LogoutAction){
-      _handleLogoutAction(store, action);
+  if (action is LoginWithGoogleAction) {
+    _handleLoginWithGoogle(store, action);
+  } else if (action is LogoutAction) {
+    _handleLogoutAction(store, action);
   }
 
   next(action);
 }
 
-_handleLoginWithGoogle(Store<AppState> store, LoginWithGoogleAction action) async{
-
+_handleLoginWithGoogle(
+    Store<AppState> store, LoginWithGoogleAction action) async {
   GoogleSignInAccount googleSignInAccount = await _googleSignIn.signIn();
-  GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
+  GoogleSignInAuthentication googleSignInAuthentication =
+      await googleSignInAccount.authentication;
 
   final AuthCredential credential = GoogleAuthProvider.getCredential(
     accessToken: googleSignInAuthentication.accessToken,
     idToken: googleSignInAuthentication.idToken,
   );
-
 
   final AuthResult authResult = await _auth.signInWithCredential(credential);
   final FirebaseUser user = authResult.user;
@@ -43,7 +39,9 @@ _handleLoginWithGoogle(Store<AppState> store, LoginWithGoogleAction action) asyn
   final FirebaseUser currentUser = await _auth.currentUser();
   assert(user.uid == currentUser.uid);
 
-  store.dispatch(UserLoadedAction(currentUser));
+  final IdTokenResult token = await currentUser.getIdToken();
+
+  store.dispatch(UserLoadedAction(currentUser, token));
 
   action.completer.complete();
 }
