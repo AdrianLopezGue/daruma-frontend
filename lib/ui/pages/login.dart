@@ -12,24 +12,22 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(converter: (store) {
       return new _ViewModel(
-        user: store.state.firebaseState.firebaseUser,
-        login: () {
+          user: store.state.firebaseState.firebaseUser,
+          login: () {
+            final result = LoginWithGoogleAction();
 
-          final result = LoginWithGoogleAction();
+            store.dispatch(result);
 
-          store.dispatch(result);
-
-          Future.wait([result.completer.future]).then((user) => {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return FirstScreen();
-                        },
-                      ),
-                    )
-                  });
-        }
-      );
+            Future.wait([result.completer.future]).then((user) => {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return FirstScreen();
+                      },
+                    ),
+                  )
+                });
+          });
     }, builder: (BuildContext context, _ViewModel vm) {
       return _loginView(context, vm);
     });
