@@ -10,7 +10,10 @@ class FirstScreen extends StatelessWidget {
     return new StoreConnector<AppState, _ViewModel>(converter: (store) {
       return new _ViewModel(
         user: store.state.firebaseState.firebaseUser,
-        logout: () => store.dispatch(LogoutAction()),
+        logout: () {
+          store.dispatch(LogoutAction());
+          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) {return LoginPage();}), ModalRoute.withName('/'));          
+          },
       );
     }, builder: (BuildContext context, _ViewModel vm) {
       return _loginView(context, vm);
@@ -66,7 +69,7 @@ class FirstScreen extends StatelessWidget {
               RaisedButton(
                 onPressed: () {
                   vm.logout();
-                  Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) {return LoginPage();}), ModalRoute.withName('/'));
+                  
                 },
                 color: Colors.deepPurple,
                 child: Padding(
@@ -84,6 +87,11 @@ class FirstScreen extends StatelessWidget {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        backgroundColor: Colors.black,
+        onPressed: (){},
+        ),
     );
   }
 }
