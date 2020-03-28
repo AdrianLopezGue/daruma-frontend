@@ -18,12 +18,12 @@ class AppState {
 @immutable
 class FirebaseState {
   final FirebaseUser firebaseUser;
-  final IdTokenResult idTokenUser;
+  final String idTokenUser;
 
   const FirebaseState({this.firebaseUser, this.idTokenUser});
 
   FirebaseState copyWith(
-      {FirebaseUser firebaseUser, IdTokenResult idTokenUser}) {
+      {FirebaseUser firebaseUser, String idTokenUser}) {
     return new FirebaseState(
         firebaseUser: firebaseUser ?? this.firebaseUser,
         idTokenUser: idTokenUser ?? this.idTokenUser);

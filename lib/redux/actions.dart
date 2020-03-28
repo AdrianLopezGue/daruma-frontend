@@ -15,7 +15,7 @@ class LogoutAction {
 
 class UserLoadedAction {
   final FirebaseUser firebaseUser;
-  final IdTokenResult idTokenUser;
+  final String idTokenUser;
 
   UserLoadedAction(this.firebaseUser, this.idTokenUser);
 }

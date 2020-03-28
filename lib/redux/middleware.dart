@@ -41,7 +41,7 @@ _handleLoginWithGoogle(
 
   final IdTokenResult token = await currentUser.getIdToken();
 
-  store.dispatch(UserLoadedAction(currentUser, token));
+  store.dispatch(UserLoadedAction(currentUser, token.token));
 
   action.completer.complete();
 }

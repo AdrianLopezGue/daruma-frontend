@@ -11,6 +11,7 @@ FirebaseState _reduceFirebaseState(AppState state, dynamic action) {
   FirebaseState newState = state.firebaseState;
 
   if (action is UserLoadedAction) {
+
     newState = newState.copyWith(
         firebaseUser: action.firebaseUser, idTokenUser: action.idTokenUser);
   }

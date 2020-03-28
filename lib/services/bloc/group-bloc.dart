@@ -19,7 +19,7 @@ class GroupBloc {
     _groupRepository = GroupRepository();
   }
 
-  postGroup(Group group, IdTokenResult idToken) async {
+  postGroup(Group group, String idToken) async {
     groupSink.add(Response.loading('Post new group.'));
     try {
       Group groupResponse = await _groupRepository.createGroup(group, idToken);

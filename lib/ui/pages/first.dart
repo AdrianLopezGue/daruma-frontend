@@ -110,7 +110,7 @@ class FirstScreen extends StatelessWidget {
 
 class _ViewModel {
   final FirebaseUser user;
-  final IdTokenResult idToken;
+  final String idToken;
   final Function() logout;
 
   _ViewModel({
@@ -122,7 +122,7 @@ class _ViewModel {
 
 class LoadingDialog extends StatelessWidget {
   final FirebaseUser user;
-  final IdTokenResult idToken;
+  final String idToken;
 
   LoadingDialog({this.user, this.idToken});
 
