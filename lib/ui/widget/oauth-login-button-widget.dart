@@ -1,3 +1,4 @@
+import 'package:daruma/util/colors.dart';
 import 'package:flutter/material.dart';
 
 class OAuthLoginButton extends StatelessWidget {
@@ -15,7 +16,7 @@ class OAuthLoginButton extends StatelessWidget {
       onPressed: onPressed,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
       highlightElevation: 0,
-      borderSide: BorderSide(color: Colors.grey),
+      borderSide: BorderSide(color: white),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
         child: Row(
@@ -29,7 +30,7 @@ class OAuthLoginButton extends StatelessWidget {
                 text,
                 style: TextStyle(
                   fontSize: 20,
-                  color: Colors.grey,
+                  color: white,
                 ),
               ),
             )

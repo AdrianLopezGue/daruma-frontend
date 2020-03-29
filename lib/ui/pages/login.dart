@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:daruma/redux/index.dart';
 import 'package:daruma/ui/widget/index.dart';
+import 'package:daruma/util/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:daruma/ui/pages/first.dart';
@@ -36,19 +37,19 @@ class LoginPage extends StatelessWidget {
   Widget _loginView(BuildContext context, _ViewModel vm) {
     return Scaffold(
       body: Container(
-        color: Colors.white,
+        color: redPrimaryColor,
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              FlutterLogo(size: 150),
+              Image(image: AssetImage("assets/daruma-logo.jpg"), height: 200.0,),
               SizedBox(height: 50),
               OAuthLoginButton(
                 onPressed: vm.login,
                 text: "Inicia Sesión con Google",
                 assetName: "assets/google_logo.png",
-                backgroundColor: Colors.grey,
+                backgroundColor: white,
               ),
             ],
           ),
