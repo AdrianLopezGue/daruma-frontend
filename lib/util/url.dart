@@ -1,4 +1,4 @@
 class Url {
   static const String exchangeBaseUrl =
-      'http://localhost:5001/daruma-ad984/us-central1/api';
+      'http://10.0.2.2:3000';
 }

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:daruma/model/group.dart';
 import 'package:daruma/services/networking/index.dart';
 import 'package:daruma/services/repository/group-repository.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rxdart/rxdart.dart';
 
 class GroupBloc {

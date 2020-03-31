@@ -23,9 +23,11 @@ class ApiProvider {
   Future<dynamic> post(String url, String body, String header) async {
     var responseJson;
 
+    print(_baseUrl + url);
+
     try {
       final response = await http.post(_baseUrl + url,
-          headers: {HttpHeaders.contentTypeHeader: 'application/json', HttpHeaders.authorizationHeader: 'Bearer $header'},
+          headers: {HttpHeaders.contentTypeHeader: 'application/json', HttpHeaders.authorizationHeader: '$header'},
           body: body);
 
       responseJson = _response(response);
