@@ -72,6 +72,27 @@ class FirstScreen extends StatelessWidget {
               elevation: 5,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(40)),
+            ),
+            SizedBox(height: 40),
+            RaisedButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  child: new SimpleDialog(children: <Widget>[
+                    GroupsDialog(user: vm.user, idToken: vm.idToken),
+                  ]));
+              },
+              color: redPrimaryColor,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Show groups',
+                  style: TextStyle(fontSize: 25, color: Colors.white),
+                ),
+              ),
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(40)),
             )
           ],
         ),
@@ -117,7 +138,7 @@ class LoadingDialog extends StatelessWidget {
         Group(name: "Grupo prueba", currencyCode: "EUR", idOwner: user.uid),
         idToken);
 
-    return StreamBuilder<Response<Group>>(
+    return StreamBuilder<Response<bool>>(
         stream: _bloc.groupStream,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
@@ -152,6 +173,72 @@ class LoadingDialog extends StatelessWidget {
                   child: Row(
                     children: <Widget>[
                       Text("Post ERROR!"),
+                      FlatButton(
+                        onPressed: () {
+                          Navigator.pop(context, true);
+                        },
+                        child: Text(
+                          "Exit",
+                        ),
+                      )
+                    ],
+                  ),
+                );
+                break;
+            }
+          }
+          return Container();
+        });
+  }
+}
+
+class GroupsDialog extends StatelessWidget {
+  final FirebaseUser user;
+  final String idToken;
+
+  GroupsDialog({this.user, this.idToken});
+
+  @override
+  Widget build(BuildContext context) {
+    final GroupBloc _bloc = GroupBloc();
+
+    _bloc.getGroups(idToken);
+
+    return StreamBuilder<Response<List<Group>>>(
+        stream: _bloc.groupStreamGroups,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            switch (snapshot.data.status) {
+              case Status.LOADING:
+                return Center(child: CircularProgressIndicator());
+                break;
+
+              case Status.COMPLETED:
+                return Container(
+                  height: 300.0, // Change as per your requirement
+                  width: 300.0,
+                  child: ListView.builder(
+                      itemCount: snapshot.data.data.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: Text(
+                              snapshot.data.data[index].name),
+                          subtitle: Text(
+                              snapshot.data.data[index].currencyCode),
+                          onTap: (){
+                            Navigator.pop(context, true);
+                          } 
+                        );
+                      })
+                );
+                break;
+                case Status.ERROR:
+                return Container(
+                  height: 300.0, // Change as per your requirement
+                  width: 300.0,
+                  child: Row(
+                    children: <Widget>[
+                      Text("GET ERROR!"),
                       FlatButton(
                         onPressed: () {
                           Navigator.pop(context, true);

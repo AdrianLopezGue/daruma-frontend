@@ -5,7 +5,7 @@ import 'package:daruma/services/networking/index.dart';
 class GroupRepository {
   ApiProvider _provider = ApiProvider();
 
-  Future<Group> createGroup(Group group, String idToken) async {
+  Future<bool> createGroup(Group group, String idToken) async {
     final String parameterUrl = "/groups";
     var requestBody = 
       {
@@ -19,5 +19,14 @@ class GroupRepository {
         await _provider.post(parameterUrl, jsonEncode(requestBody), idToken);
 
     return response;
+  }
+
+  Future<List<Group>> getGroups(String idToken) async {
+    final response = await _provider.get("/groups", idToken);
+
+    var list = response as List;
+    list = response.map<Group>((json) => Group.fromJson(json)).toList();
+
+    return list;
   }
 }
