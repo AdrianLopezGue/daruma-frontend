@@ -8,11 +8,11 @@ import 'dart:async';
 class ApiProvider {
   final String _baseUrl = Url.exchangeBaseUrl;
 
-  Future<dynamic> get(String url) async {
+  Future<dynamic> get(String url, String header) async {
     var responseJson;
 
     try {
-      final response = await http.get(_baseUrl + url);
+      final response = await http.get(_baseUrl + url, headers: {HttpHeaders.authorizationHeader: '$header'});
       responseJson = _response(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');
@@ -43,6 +43,10 @@ class ApiProvider {
         var responseJson = json.decode(response.body);
 
         return responseJson;
+
+      case 204:       
+
+        return true;
       case 400:
         throw BadRequestException(response.body);
       case 401:
