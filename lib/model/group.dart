@@ -1,12 +1,14 @@
 class Group {
+  String id;
   String name;
   String currencyCode;
   String idOwner;
 
-  Group({this.name, this.currencyCode, this.idOwner});
+  Group({this.id, this.name, this.currencyCode, this.idOwner});
 
-  Group copyWith({String name, String currencyCode, String idOwner}) {
+  Group copyWith({String id, String name, String currencyCode, String idOwner}) {
     return Group(
+      id: id ?? this.id,
       name: name ?? this.name,
       currencyCode: currencyCode ?? this.currencyCode,
       idOwner: idOwner ?? this.idOwner,
@@ -19,5 +21,5 @@ class Group {
         idOwner = json['idOwner'];
 
   Map<String, dynamic> toJson() =>
-      {'name': name, 'currencyCode': currencyCode, 'idOwner': idOwner};
+      {'id': id, 'name': name, 'currencyCode': currencyCode, 'idOwner': idOwner};
 }
