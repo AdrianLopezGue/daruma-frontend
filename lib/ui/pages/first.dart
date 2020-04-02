@@ -2,11 +2,14 @@ import 'package:daruma/model/group.dart';
 import 'package:daruma/redux/index.dart';
 import 'package:daruma/services/bloc/group-bloc.dart';
 import 'package:daruma/services/networking/index.dart';
+import 'package:daruma/ui/widget/groups-list-widget.dart';
+import 'package:daruma/ui/widget/sign-out-button-widget.dart';
 import 'package:daruma/util/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:daruma/ui/pages/login.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class FirstScreen extends StatelessWidget {
   @override
@@ -40,74 +43,71 @@ class FirstScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(15.0),
                   child: Column(                                       
                     children: <Widget>[
-                      Text(
-                        'Bienvenido,',
-                        style: TextStyle(
-                            fontSize: 30,
-                            color: black),
+                      Row(
+                        children: <Widget>[
+                          Text(
+                            'Bienvenido,',
+                            style: GoogleFonts.aBeeZee(
+                                fontSize: 30,    
+                                textStyle: TextStyle(color: black)                            
+                                ),
+                          ),
+                        ],
                       ),
-                      Text(
-                        vm.user.displayName,
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: redPrimaryColor,),
+                      Row(
+                        children: <Widget>[
+                          Text(
+                            vm.user.displayName,
+                            style: GoogleFonts.aBeeZee(
+                                fontSize: 20,    
+                                textStyle: TextStyle(color: redPrimaryColor)                            
+                                ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ),
             ),
-            SizedBox(height: 40),
-            RaisedButton(
-              onPressed: () {
-                vm.logout();
-              },
-              color: redPrimaryColor,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Sign Out',
-                  style: TextStyle(fontSize: 25, color: Colors.white),
-                ),
+            SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.only(left: 15.0, top: 15.0),
+              child: Row(
+                children: <Widget>[
+                  Text(
+                    "Tus grupos",
+                    style: GoogleFonts.aBeeZee(
+                                fontSize: 25,    
+                                textStyle: TextStyle(color: black),
+                                fontWeight: FontWeight.bold                            
+                                ),
+                  ),
+                ],
               ),
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(40)),
             ),
-            SizedBox(height: 40),
-            RaisedButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  child: new SimpleDialog(children: <Widget>[
-                    GroupsDialog(user: vm.user, idToken: vm.idToken),
-                  ]));
-              },
-              color: redPrimaryColor,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Show groups',
-                  style: TextStyle(fontSize: 25, color: Colors.white),
-                ),
+            Padding(
+              padding: const EdgeInsets.only(left: 15.0),
+              child: Row(
+                children: <Widget>[
+                  GroupsList(user: vm.user, idToken: vm.idToken),
+                ],
               ),
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(40)),
-            )
+            ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        backgroundColor: redPrimaryColor,
-        onPressed: () {
-          showDialog(
-              context: context,
-              child: new SimpleDialog(children: <Widget>[
-                LoadingDialog(user: vm.user, idToken: vm.idToken),
-              ]));
-        },
-      ),
+              child: Icon(Icons.add),
+              backgroundColor: redPrimaryColor,
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    child: new SimpleDialog(children: <Widget>[
+                      LoadingDialog(user: vm.user, idToken: vm.idToken),
+                    ]));
+              },
+            ),  
+      
     );
   }
 }
