@@ -28,6 +28,7 @@ dependencies:
   redux: ^4.0.0
   flutter_redux: ^0.6.0
   redux_thunk: ^0.3.0
+  google_fonts: ^0.1.0
 
 dev_dependencies:
   flutter_test:
