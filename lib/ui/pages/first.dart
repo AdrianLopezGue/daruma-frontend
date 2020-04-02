@@ -1,9 +1,6 @@
-import 'package:daruma/model/group.dart';
 import 'package:daruma/redux/index.dart';
-import 'package:daruma/services/bloc/group-bloc.dart';
-import 'package:daruma/services/networking/index.dart';
+import 'package:daruma/ui/pages/create-group.dart';
 import 'package:daruma/ui/widget/groups-list-widget.dart';
-import 'package:daruma/ui/widget/sign-out-button-widget.dart';
 import 'package:daruma/util/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -100,18 +97,19 @@ class FirstScreen extends StatelessWidget {
               child: Icon(Icons.add),
               backgroundColor: redPrimaryColor,
               onPressed: () {
-                showDialog(
-                    context: context,
-                    child: new SimpleDialog(children: <Widget>[
-                      LoadingDialog(user: vm.user, idToken: vm.idToken),
-                    ]));
+                Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return CreateGroupPage();
+                      },
+                    ),
+                  );
               },
             ),  
       
     );
   }
 }
-
 class _ViewModel {
   final FirebaseUser user;
   final String idToken;
@@ -124,136 +122,3 @@ class _ViewModel {
   });
 }
 
-class LoadingDialog extends StatelessWidget {
-  final FirebaseUser user;
-  final String idToken;
-
-  LoadingDialog({this.user, this.idToken});
-
-  @override
-  Widget build(BuildContext context) {
-    final GroupBloc _bloc = GroupBloc();
-
-    _bloc.postGroup(
-        Group(name: "Grupo prueba", currencyCode: "EUR", idOwner: user.uid),
-        idToken);
-
-    return StreamBuilder<Response<bool>>(
-        stream: _bloc.groupStream,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            switch (snapshot.data.status) {
-              case Status.LOADING:
-                return Center(child: CircularProgressIndicator());
-                break;
-
-              case Status.COMPLETED:
-                return Container(
-                  height: 300.0, // Change as per your requirement
-                  width: 300.0,
-                  child: Row(
-                    children: <Widget>[
-                      Text("Post completed!"),
-                      FlatButton(
-                        onPressed: () {
-                          Navigator.pop(context, true);
-                        },
-                        child: Text(
-                          "Exit",
-                        ),
-                      )
-                    ],
-                  ),
-                );
-                break;
-              case Status.ERROR:
-                return Container(
-                  height: 300.0, // Change as per your requirement
-                  width: 300.0,
-                  child: Row(
-                    children: <Widget>[
-                      Text("Post ERROR!"),
-                      FlatButton(
-                        onPressed: () {
-                          Navigator.pop(context, true);
-                        },
-                        child: Text(
-                          "Exit",
-                        ),
-                      )
-                    ],
-                  ),
-                );
-                break;
-            }
-          }
-          return Container();
-        });
-  }
-}
-
-class GroupsDialog extends StatelessWidget {
-  final FirebaseUser user;
-  final String idToken;
-
-  GroupsDialog({this.user, this.idToken});
-
-  @override
-  Widget build(BuildContext context) {
-    final GroupBloc _bloc = GroupBloc();
-
-    _bloc.getGroups(idToken);
-
-    return StreamBuilder<Response<List<Group>>>(
-        stream: _bloc.groupStreamGroups,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            switch (snapshot.data.status) {
-              case Status.LOADING:
-                return Center(child: CircularProgressIndicator());
-                break;
-
-              case Status.COMPLETED:
-                return Container(
-                  height: 300.0, // Change as per your requirement
-                  width: 300.0,
-                  child: ListView.builder(
-                      itemCount: snapshot.data.data.length,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          title: Text(
-                              snapshot.data.data[index].name),
-                          subtitle: Text(
-                              snapshot.data.data[index].currencyCode),
-                          onTap: (){
-                            Navigator.pop(context, true);
-                          } 
-                        );
-                      })
-                );
-                break;
-                case Status.ERROR:
-                return Container(
-                  height: 300.0, // Change as per your requirement
-                  width: 300.0,
-                  child: Row(
-                    children: <Widget>[
-                      Text("GET ERROR!"),
-                      FlatButton(
-                        onPressed: () {
-                          Navigator.pop(context, true);
-                        },
-                        child: Text(
-                          "Exit",
-                        ),
-                      )
-                    ],
-                  ),
-                );
-                break;
-            }
-          }
-          return Container();
-        });
-  }
-}
