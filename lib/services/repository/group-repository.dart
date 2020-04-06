@@ -13,9 +13,9 @@ class GroupRepository {
         'groupId': group.idGroup,
         'name': group.name,
         'currencyCode': group.currencyCode,
-        'idOwner': group.idOwner
-      }
-    ;
+        'idOwner': group.idOwner,
+        'members': group.members.toString()
+      };
 
     final response =
         await _provider.post(url, jsonEncode(requestBody), idToken);
