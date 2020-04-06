@@ -5,7 +5,7 @@ import 'package:daruma/ui/widget/index.dart';
 import 'package:daruma/util/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:daruma/ui/pages/first.dart';
+import 'package:daruma/ui/pages/welcome.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 class LoginPage extends StatelessWidget {
@@ -23,7 +23,7 @@ class LoginPage extends StatelessWidget {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) {
-                        return FirstScreen();
+                        return WelcomeScreen();
                       },
                     ),
                   )

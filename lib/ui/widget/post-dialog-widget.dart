@@ -2,7 +2,7 @@ import 'package:daruma/model/group.dart';
 import 'package:daruma/redux/state.dart';
 import 'package:daruma/services/bloc/group-bloc.dart';
 import 'package:daruma/services/networking/index.dart';
-import 'package:daruma/ui/pages/first.dart';
+import 'package:daruma/ui/pages/welcome.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -32,7 +32,9 @@ class PostDialog extends StatelessWidget {
             idGroup: group.idGroup,
             name: group.name,
             currencyCode: group.currencyCode,
-            idOwner: vm.user.uid),
+            idOwner: vm.user.uid,
+            members: group.members,
+            ),
         vm.idToken);
 
     return StreamBuilder<Response<bool>>(
@@ -56,7 +58,7 @@ class PostDialog extends StatelessWidget {
                         Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) {
-                                return FirstScreen();
+                                return WelcomeScreen();
                               },
                             ),
                           );

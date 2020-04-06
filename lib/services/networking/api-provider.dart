@@ -1,5 +1,4 @@
 import 'package:daruma/services/networking/custom-exception.dart';
-import 'package:daruma/util/url.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'dart:convert';

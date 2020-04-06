@@ -8,7 +8,7 @@ import 'package:daruma/ui/pages/login.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class FirstScreen extends StatelessWidget {
+class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(converter: (store) {
@@ -30,8 +30,7 @@ class FirstScreen extends StatelessWidget {
 
   Widget _loginView(BuildContext context, _ViewModel vm) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(color: white),
+      body: SingleChildScrollView(
         child: Column(          
           children: <Widget>[
             SizedBox(height: 40),
