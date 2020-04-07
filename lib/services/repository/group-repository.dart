@@ -8,17 +8,12 @@ class GroupRepository {
 
   Future<bool> createGroup(Group group, String idToken) async {
     final String url = Url.apiBaseUrl + "/groups";
-    var requestBody = 
-      {
-        'groupId': group.idGroup,
-        'name': group.name,
-        'currencyCode': group.currencyCode,
-        'idOwner': group.idOwner,
-        'members': group.members.toString()
-      };
 
+    var requestBody = jsonEncode(group);
+
+    print(requestBody);
     final response =
-        await _provider.post(url, jsonEncode(requestBody), idToken);
+        await _provider.post(url, requestBody, idToken);
 
     return response;
   }

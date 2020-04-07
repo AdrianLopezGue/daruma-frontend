@@ -7,7 +7,7 @@ class Group {
   String idOwner;
   List<Member> members;
 
-  Group({this.idGroup, this.name, this.currencyCode, this.idOwner, List<Member> members});
+  Group({this.idGroup, this.name, this.currencyCode, this.idOwner, this.members});
 
   Group copyWith({String id, String name, String currencyCode, String idOwner, List<Member> members}) {
     return Group(
@@ -19,11 +19,22 @@ class Group {
     );
   }
 
-  Group.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
-        currencyCode = json['currencyCode'],
-        idOwner = json['idOwner'];
+  Map toJson(){
+    List<Map> members =
+        this.members != null ? this.members.map((member) => member.toJson()).toList() : null;
 
-  Map<String, dynamic> toJson() =>
-      {'id': idGroup, 'name': name, 'currencyCode': currencyCode, 'idOwner': idOwner};
+    return {
+    'groupId': this.idGroup,
+    'name': this.name,
+    'currencyCode': this.currencyCode,
+    'idOwner': this.idOwner,
+    'members': members
+    };
+  }
+
+  Group.fromJson(Map<String, dynamic> json){
+    this.name = json['name'];
+    this.currencyCode = json['currencyCode'];
+    this.idOwner = json['idOwner'];
+  }
 }

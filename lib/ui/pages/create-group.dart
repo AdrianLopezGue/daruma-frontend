@@ -180,7 +180,6 @@ class _NewGroupFormState extends State<NewGroupForm> {
                           member.idMember = uuid.v4();
                           member.name = result[i].displayName;
                           group.members.add(member);
-                          print(group.members);
                         });
 
                       }

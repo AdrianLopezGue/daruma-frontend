@@ -26,7 +26,6 @@ class GroupBloc {
     groupSink.add(Response.loading('Post new group.'));
     try {
       bool groupResponse = await _groupRepository.createGroup(group, idToken);
-
       groupSink.add(Response.completed(groupResponse));
     } catch (e) {
       groupSink.add(Response.error(e.toString()));
