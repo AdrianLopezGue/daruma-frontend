@@ -36,5 +36,6 @@ class Group {
     this.name = json['name'];
     this.currencyCode = json['currencyCode'];
     this.idOwner = json['idOwner'];
+    //this.members = json['members'].map((member) => Member(idMember: member.id, name: member.name)).toList();
   }
 }

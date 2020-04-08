@@ -10,8 +10,6 @@ class GroupRepository {
     final String url = Url.apiBaseUrl + "/groups";
 
     var requestBody = jsonEncode(group);
-
-    print(requestBody);
     final response =
         await _provider.post(url, requestBody, idToken);
 
