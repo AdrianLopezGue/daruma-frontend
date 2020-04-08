@@ -19,7 +19,8 @@ middleware(Store<AppState> store, action, NextDispatcher next) {
   next(action);
 }
 
-_handleLoginWithGoogle(Store<AppState> store, LoginWithGoogleAction action, NextDispatcher next) async {
+_handleLoginWithGoogle(Store<AppState> store, LoginWithGoogleAction action,
+    NextDispatcher next) async {
   GoogleSignInAccount googleSignInAccount = await _googleSignIn.signIn();
   GoogleSignInAuthentication googleSignInAuthentication =
       await googleSignInAccount.authentication;
@@ -31,8 +32,8 @@ _handleLoginWithGoogle(Store<AppState> store, LoginWithGoogleAction action, Next
 
   final AuthResult authResult = await _auth.signInWithCredential(credential);
 
-  if(authResult.additionalUserInfo.isNewUser){
-    store.dispatch(UserIsNew(true));  
+  if (authResult.additionalUserInfo.isNewUser) {
+    store.dispatch(UserIsNew(true));
     next(UserIsNew);
   }
 
@@ -44,13 +45,11 @@ _handleLoginWithGoogle(Store<AppState> store, LoginWithGoogleAction action, Next
   final FirebaseUser currentUser = await _auth.currentUser();
   assert(user.uid == currentUser.uid);
 
-  final IdTokenResult token = await currentUser.getIdToken();  
+  final IdTokenResult token = await currentUser.getIdToken();
 
-  store.dispatch(UserLoadedAction(currentUser, token.token));  
+  store.dispatch(UserLoadedAction(currentUser, token.token));
 
   action.completer.complete();
-
-  
 }
 
 _handleLogoutAction(Store<AppState> store, LogoutAction action) async {

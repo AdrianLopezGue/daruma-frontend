@@ -12,7 +12,6 @@ FirebaseState _reduceFirebaseState(AppState state, dynamic action) {
   FirebaseState newState = state.firebaseState;
 
   if (action is UserLoadedAction) {
-
     newState = newState.copyWith(
         firebaseUser: action.firebaseUser, idTokenUser: action.idTokenUser);
   }
@@ -23,7 +22,6 @@ bool _reduceUserIsNew(AppState state, dynamic action) {
   bool userIsNew = state.userIsNew;
 
   if (action is UserIsNew) {
-
     userIsNew = action.userIsNew;
   }
 

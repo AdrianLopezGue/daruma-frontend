@@ -37,7 +37,7 @@ class _AddMembersPageState extends State<AddMembersPage> {
 
   @override
   void initState() {
-    super.initState();    
+    super.initState();
     refreshContacts();
   }
 
@@ -64,27 +64,27 @@ class _AddMembersPageState extends State<AddMembersPage> {
             ),
       floatingActionButton: new FloatingActionButton.extended(
         backgroundColor: floatingButtonColor,
-        onPressed: (){
-              if (!_isSelectedContactsView) {
-                setState(() {
-                  _uiCustomContacts =
-                  _allContacts.where((contact) => contact.isChecked == true).toList();
-                  _isSelectedContactsView = true;
-                  _restateFloatingButton(
-                    widget.reloadLabel,
-                    Icons.refresh,
-                    Colors.green,
-                  );
-                });            
-              }
-              else{
-                List<Contact> members = new List<Contact>();
-                for(var i=0;i<_uiCustomContacts.length;i++){
-                    members.add(_uiCustomContacts[i].contact);
-                } 
+        onPressed: () {
+          if (!_isSelectedContactsView) {
+            setState(() {
+              _uiCustomContacts = _allContacts
+                  .where((contact) => contact.isChecked == true)
+                  .toList();
+              _isSelectedContactsView = true;
+              _restateFloatingButton(
+                widget.reloadLabel,
+                Icons.refresh,
+                Colors.green,
+              );
+            });
+          } else {
+            List<Contact> members = new List<Contact>();
+            for (var i = 0; i < _uiCustomContacts.length; i++) {
+              members.add(_uiCustomContacts[i].contact);
+            }
 
-                Navigator.pop(context, members);
-              }
+            Navigator.pop(context, members);
+          }
         },
         icon: Icon(icon),
         label: Text(floatingButtonLabel),

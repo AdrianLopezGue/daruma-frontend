@@ -54,8 +54,7 @@ class GroupsList extends StatelessWidget {
                     child: Text(
                       "No hay grupos:(",
                       style: GoogleFonts.aBeeZee(
-                          fontSize: 22,
-                          textStyle: TextStyle(color: white)),
+                          fontSize: 22, textStyle: TextStyle(color: white)),
                     ),
                   ),
                 );

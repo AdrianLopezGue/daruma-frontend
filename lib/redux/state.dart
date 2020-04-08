@@ -12,9 +12,8 @@ class AppState {
 
   AppState copyWith({FirebaseState firebaseState}) {
     return new AppState(
-      firebaseState: firebaseState ?? this.firebaseState,
-      userIsNew: userIsNew ?? this.userIsNew
-      );
+        firebaseState: firebaseState ?? this.firebaseState,
+        userIsNew: userIsNew ?? this.userIsNew);
   }
 
   factory AppState.initial() => AppState();
@@ -27,8 +26,7 @@ class FirebaseState {
 
   const FirebaseState({this.firebaseUser, this.idTokenUser});
 
-  FirebaseState copyWith(
-      {FirebaseUser firebaseUser, String idTokenUser}) {
+  FirebaseState copyWith({FirebaseUser firebaseUser, String idTokenUser}) {
     return new FirebaseState(
         firebaseUser: firebaseUser ?? this.firebaseUser,
         idTokenUser: idTokenUser ?? this.idTokenUser);

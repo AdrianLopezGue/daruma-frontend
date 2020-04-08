@@ -11,8 +11,7 @@ class UserRepository {
     final String url = Url.apiBaseUrl + "/users";
 
     var requestBody = jsonEncode(user);
-    final response =
-        await _provider.post(url, requestBody, idToken);
+    final response = await _provider.post(url, requestBody, idToken);
 
     return response;
   }

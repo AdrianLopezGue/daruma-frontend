@@ -7,32 +7,38 @@ class Group {
   String idOwner;
   List<Member> members;
 
-  Group({this.idGroup, this.name, this.currencyCode, this.idOwner, this.members});
+  Group(
+      {this.idGroup, this.name, this.currencyCode, this.idOwner, this.members});
 
-  Group copyWith({String id, String name, String currencyCode, String idOwner, List<Member> members}) {
+  Group copyWith(
+      {String id,
+      String name,
+      String currencyCode,
+      String idOwner,
+      List<Member> members}) {
     return Group(
-      idGroup: id ?? this.idGroup,
-      name: name ?? this.name,
-      currencyCode: currencyCode ?? this.currencyCode,
-      idOwner: idOwner ?? this.idOwner,
-      members: members ?? this.members
-    );
+        idGroup: id ?? this.idGroup,
+        name: name ?? this.name,
+        currencyCode: currencyCode ?? this.currencyCode,
+        idOwner: idOwner ?? this.idOwner,
+        members: members ?? this.members);
   }
 
-  Map toJson(){
-    List<Map> members =
-        this.members != null ? this.members.map((member) => member.toJson()).toList() : null;
+  Map toJson() {
+    List<Map> members = this.members != null
+        ? this.members.map((member) => member.toJson()).toList()
+        : null;
 
     return {
-    'groupId': this.idGroup,
-    'name': this.name,
-    'currencyCode': this.currencyCode,
-    'idOwner': this.idOwner,
-    'members': members
+      'groupId': this.idGroup,
+      'name': this.name,
+      'currencyCode': this.currencyCode,
+      'idOwner': this.idOwner,
+      'members': members
     };
   }
 
-  Group.fromJson(Map<String, dynamic> json){
+  Group.fromJson(Map<String, dynamic> json) {
     this.name = json['name'];
     this.currencyCode = json['currencyCode'];
     this.idOwner = json['idOwner'];

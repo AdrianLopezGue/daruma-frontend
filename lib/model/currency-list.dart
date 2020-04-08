@@ -16,7 +16,5 @@ class Currency {
 }
 
 List<Currency> _parseRates(Map<String, dynamic> json) {
-  return json.keys
-      .map((code) => Currency(code, json[code]))
-      .toList();
+  return json.keys.map((code) => Currency(code, json[code])).toList();
 }

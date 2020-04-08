@@ -43,7 +43,10 @@ class LoginPage extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Image(image: AssetImage("assets/daruma-logo.jpg"), height: 200.0,),
+              Image(
+                image: AssetImage("assets/daruma-logo.jpg"),
+                height: 200.0,
+              ),
               SizedBox(height: 50),
               OAuthLoginButton(
                 onPressed: vm.login,

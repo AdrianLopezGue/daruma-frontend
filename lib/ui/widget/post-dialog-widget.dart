@@ -29,12 +29,12 @@ class PostDialog extends StatelessWidget {
 
     _bloc.postGroup(
         Group(
-            idGroup: group.idGroup,
-            name: group.name,
-            currencyCode: group.currencyCode,
-            idOwner: vm.user.uid,
-            members: group.members,
-            ),
+          idGroup: group.idGroup,
+          name: group.name,
+          currencyCode: group.currencyCode,
+          idOwner: vm.user.uid,
+          members: group.members,
+        ),
         vm.idToken);
 
     return StreamBuilder<Response<bool>>(
@@ -55,7 +55,7 @@ class PostDialog extends StatelessWidget {
                       Text("Post completed!"),
                       FlatButton(
                         onPressed: () {
-                        Navigator.of(context).push(
+                          Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) {
                                 return WelcomeScreen();

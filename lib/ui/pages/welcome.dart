@@ -15,8 +15,9 @@ class WelcomeScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new _WelcomeScreenState();
 }
-class _WelcomeScreenState extends State<WelcomeScreen>  with WidgetsBindingObserver {
 
+class _WelcomeScreenState extends State<WelcomeScreen>
+    with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
@@ -25,22 +26,20 @@ class _WelcomeScreenState extends State<WelcomeScreen>  with WidgetsBindingObser
 
   @override
   Widget build(BuildContext context) {
-    return new StoreConnector<AppState, _ViewModel>(  
-      onInit: (store){
-          if(store.state.userIsNew == true){
-          UserRepository userRepository = new UserRepository();
+    return new StoreConnector<AppState, _ViewModel>(onInit: (store) {
+      if (store.state.userIsNew == true) {
+        UserRepository userRepository = new UserRepository();
 
-          User user = new User();
-          user.idUser = store.state.firebaseState.firebaseUser.uid;
-          user.name = store.state.firebaseState.firebaseUser.displayName;
-          user.email = store.state.firebaseState.firebaseUser.email;
+        User user = new User();
+        user.idUser = store.state.firebaseState.firebaseUser.uid;
+        user.name = store.state.firebaseState.firebaseUser.displayName;
+        user.email = store.state.firebaseState.firebaseUser.email;
 
-          userRepository.createUser(user, store.state.firebaseState.idTokenUser);
+        userRepository.createUser(user, store.state.firebaseState.idTokenUser);
 
-          store.dispatch(UserIsNew(false));
-        }
-      },   
-      converter: (store) {
+        store.dispatch(UserIsNew(false));
+      }
+    }, converter: (store) {
       return new _ViewModel(
         user: store.state.firebaseState.firebaseUser,
         idToken: store.state.firebaseState.idTokenUser,
@@ -53,48 +52,43 @@ class _WelcomeScreenState extends State<WelcomeScreen>  with WidgetsBindingObser
         },
       );
     }, builder: (BuildContext context, _ViewModel vm) {
-      
       return _loginView(context, vm);
     });
   }
 
   Widget _loginView(BuildContext context, _ViewModel vm) {
-
     var scaffold = Scaffold(
       body: SingleChildScrollView(
-        child: Column(          
+        child: Column(
           children: <Widget>[
             SizedBox(height: 40),
             SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Column(                                       
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            'Bienvenido,',
-                            style: GoogleFonts.aBeeZee(
-                                fontSize: 30,    
-                                textStyle: TextStyle(color: black)                            
-                                ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            vm.user.displayName,
-                            style: GoogleFonts.aBeeZee(
-                                fontSize: 20,    
-                                textStyle: TextStyle(color: redPrimaryColor)                            
-                                ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          'Bienvenido,',
+                          style: GoogleFonts.aBeeZee(
+                              fontSize: 30, textStyle: TextStyle(color: black)),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          vm.user.displayName,
+                          style: GoogleFonts.aBeeZee(
+                              fontSize: 20,
+                              textStyle: TextStyle(color: redPrimaryColor)),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
+              ),
             ),
             SizedBox(height: 20),
             Padding(
@@ -104,10 +98,9 @@ class _WelcomeScreenState extends State<WelcomeScreen>  with WidgetsBindingObser
                   Text(
                     "Tus grupos",
                     style: GoogleFonts.aBeeZee(
-                                fontSize: 25,    
-                                textStyle: TextStyle(color: black),
-                                fontWeight: FontWeight.bold                            
-                                ),
+                        fontSize: 25,
+                        textStyle: TextStyle(color: black),
+                        fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -121,41 +114,42 @@ class _WelcomeScreenState extends State<WelcomeScreen>  with WidgetsBindingObser
               ),
             ),
             RaisedButton(
-                onPressed: () {
-                  vm.logout();
-                },
-                color: Colors.deepPurple,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Sign Out',
-                    style: TextStyle(fontSize: 25, color: Colors.white),
-                  ),
+              onPressed: () {
+                vm.logout();
+              },
+              color: Colors.deepPurple,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Sign Out',
+                  style: TextStyle(fontSize: 25, color: Colors.white),
                 ),
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(40)),
-              )
+              ),
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(40)),
+            )
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-              child: Icon(Icons.add),
-              backgroundColor: redPrimaryColor,
-              onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return CreateGroupPage();
-                      },
-                    ),
-                  );
+        child: Icon(Icons.add),
+        backgroundColor: redPrimaryColor,
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) {
+                return CreateGroupPage();
               },
-            ),      
+            ),
+          );
+        },
+      ),
     );
     return scaffold;
   }
 }
+
 class _ViewModel {
   final FirebaseUser user;
   final String idToken;
@@ -167,4 +161,3 @@ class _ViewModel {
     @required this.logout,
   });
 }
-

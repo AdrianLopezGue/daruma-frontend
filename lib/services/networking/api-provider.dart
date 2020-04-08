@@ -5,12 +5,12 @@ import 'dart:convert';
 import 'dart:async';
 
 class ApiProvider {
-
   Future<dynamic> get(String url, {String header}) async {
     var responseJson;
 
     try {
-      final response = await http.get(url, headers: {HttpHeaders.authorizationHeader: '$header'});
+      final response = await http
+          .get(url, headers: {HttpHeaders.authorizationHeader: '$header'});
       responseJson = _response(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');
@@ -20,10 +20,13 @@ class ApiProvider {
 
   Future<dynamic> post(String url, String body, String header) async {
     var responseJson;
-    
+
     try {
       final response = await http.post(url,
-          headers: {HttpHeaders.contentTypeHeader: 'application/json', HttpHeaders.authorizationHeader: '$header'},
+          headers: {
+            HttpHeaders.contentTypeHeader: 'application/json',
+            HttpHeaders.authorizationHeader: '$header'
+          },
           body: body);
 
       responseJson = _response(response);
@@ -40,8 +43,7 @@ class ApiProvider {
 
         return responseJson;
 
-      case 204:       
-
+      case 204:
         return true;
       case 400:
         throw BadRequestException(response.body);

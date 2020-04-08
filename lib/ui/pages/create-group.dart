@@ -181,7 +181,6 @@ class _NewGroupFormState extends State<NewGroupForm> {
                           member.name = result[i].displayName;
                           group.members.add(member);
                         });
-
                       }
                       sameMember = false;
                     }

@@ -13,8 +13,10 @@ class GroupBloc {
   StreamSink<Response<bool>> get groupSink => _groupController.sink;
   Stream<Response<bool>> get groupStream => _groupController.stream;
 
-  StreamSink<Response<List<Group>>> get groupSinkGroups => _groupControllerGroups.sink;
-  Stream<Response<List<Group>>> get groupStreamGroups => _groupControllerGroups.stream;
+  StreamSink<Response<List<Group>>> get groupSinkGroups =>
+      _groupControllerGroups.sink;
+  Stream<Response<List<Group>>> get groupStreamGroups =>
+      _groupControllerGroups.stream;
 
   GroupBloc() {
     _groupController = BehaviorSubject<Response<bool>>();

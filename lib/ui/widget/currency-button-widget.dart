@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CurrencyButton extends StatefulWidget {
-
-  final String currentCurrencyCode;  
+  final String currentCurrencyCode;
   final ValueChanged<String> selectedCode;
 
   CurrencyButton({this.currentCurrencyCode, this.selectedCode});
@@ -18,7 +17,7 @@ class _CurrencyButtonState extends State<CurrencyButton> {
   String _currentCode;
 
   @override
-  void initState(){
+  void initState() {
     _currentCode = widget.currentCurrencyCode;
     super.initState();
   }
@@ -49,13 +48,13 @@ class _CurrencyButtonState extends State<CurrencyButton> {
                 title: new Text("Selecciona una divisa"),
                 children: <Widget>[
                   CurrenciesList(
-                    currentCurrencyCode: _currentCode,
-                    selectedCurrency: (currencyCode){
-                    setState((){
-                      _currentCode = currencyCode;
-                    });
-                    widget.selectedCode(_currentCode);
-                  }),
+                      currentCurrencyCode: _currentCode,
+                      selectedCurrency: (currencyCode) {
+                        setState(() {
+                          _currentCode = currencyCode;
+                        });
+                        widget.selectedCode(_currentCode);
+                      }),
                 ]));
       },
     );

@@ -7,10 +7,7 @@ class CurrenciesList extends StatefulWidget {
   final String currentCurrencyCode;
   final ValueChanged<String> selectedCurrency;
 
-  CurrenciesList(
-      {Key key,
-      this.currentCurrencyCode,
-      this.selectedCurrency})
+  CurrenciesList({Key key, this.currentCurrencyCode, this.selectedCurrency})
       : super(key: key);
 
   @override
@@ -18,12 +15,11 @@ class CurrenciesList extends StatefulWidget {
 }
 
 class _CurrenciesListState extends State<CurrenciesList> {
-
   CurrencyListBloc _bloc;
   String _selectedCurrency;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     _selectedCurrency = widget.currentCurrencyCode;
     _bloc = CurrencyListBloc();
@@ -31,9 +27,7 @@ class _CurrenciesListState extends State<CurrenciesList> {
 
   @override
   Widget build(BuildContext context) {
-
     _bloc.fetchCurrencyList();
-
 
     return StreamBuilder<Response<CurrencyList>>(
         stream: _bloc.currencyListStream,
@@ -52,19 +46,18 @@ class _CurrenciesListState extends State<CurrenciesList> {
                       itemCount: snapshot.data.data.rates.length,
                       itemBuilder: (context, index) {
                         return ListTile(
-                          title: Text(
-                              snapshot.data.data.rates[index].name),
-                          subtitle: Text(
-                              snapshot.data.data.rates[index].code),
-                          onTap: (){
-                            setState(() {
-                              _selectedCurrency = snapshot.data.data.rates[index].code;
-                            });
+                            title: Text(snapshot.data.data.rates[index].name),
+                            subtitle:
+                                Text(snapshot.data.data.rates[index].code),
+                            onTap: () {
+                              setState(() {
+                                _selectedCurrency =
+                                    snapshot.data.data.rates[index].code;
+                              });
 
-                            widget.selectedCurrency(_selectedCurrency);
-                            Navigator.pop(context, true);
-                          } 
-                        );
+                              widget.selectedCurrency(_selectedCurrency);
+                              Navigator.pop(context, true);
+                            });
                       }),
                 );
                 break;
