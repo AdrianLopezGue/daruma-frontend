@@ -3,13 +3,18 @@ import 'package:flutter/material.dart';
 
 class AppState {
   final FirebaseState firebaseState;
+  final bool userIsNew;
 
   const AppState({
     this.firebaseState = const FirebaseState(),
+    this.userIsNew,
   });
 
   AppState copyWith({FirebaseState firebaseState}) {
-    return new AppState(firebaseState: firebaseState ?? this.firebaseState);
+    return new AppState(
+      firebaseState: firebaseState ?? this.firebaseState,
+      userIsNew: userIsNew ?? this.userIsNew
+      );
   }
 
   factory AppState.initial() => AppState();

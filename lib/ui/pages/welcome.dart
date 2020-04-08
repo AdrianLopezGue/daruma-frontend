@@ -1,4 +1,7 @@
+import 'package:daruma/model/user.dart';
 import 'package:daruma/redux/index.dart';
+import 'package:daruma/services/dynamic_link/dynamic_links.dart';
+import 'package:daruma/services/repository/user-repository.dart';
 import 'package:daruma/ui/pages/create-group.dart';
 import 'package:daruma/ui/widget/groups-list-widget.dart';
 import 'package:daruma/util/colors.dart';
@@ -8,10 +11,36 @@ import 'package:daruma/ui/pages/login.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => new _WelcomeScreenState();
+}
+class _WelcomeScreenState extends State<WelcomeScreen>  with WidgetsBindingObserver {
+
+  @override
+  void initState() {
+    super.initState();
+    AppDynamicLinks.initDynamicLinks();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return new StoreConnector<AppState, _ViewModel>(converter: (store) {
+    return new StoreConnector<AppState, _ViewModel>(  
+      onInit: (store){
+          if(store.state.userIsNew == true){
+          UserRepository userRepository = new UserRepository();
+
+          User user = new User();
+          user.idUser = store.state.firebaseState.firebaseUser.uid;
+          user.name = store.state.firebaseState.firebaseUser.displayName;
+          user.email = store.state.firebaseState.firebaseUser.email;
+
+          userRepository.createUser(user, store.state.firebaseState.idTokenUser);
+
+          store.dispatch(UserIsNew(false));
+        }
+      },   
+      converter: (store) {
       return new _ViewModel(
         user: store.state.firebaseState.firebaseUser,
         idToken: store.state.firebaseState.idTokenUser,
@@ -24,12 +53,14 @@ class WelcomeScreen extends StatelessWidget {
         },
       );
     }, builder: (BuildContext context, _ViewModel vm) {
+      
       return _loginView(context, vm);
     });
   }
 
   Widget _loginView(BuildContext context, _ViewModel vm) {
-    return Scaffold(
+
+    var scaffold = Scaffold(
       body: SingleChildScrollView(
         child: Column(          
           children: <Widget>[
@@ -89,6 +120,22 @@ class WelcomeScreen extends StatelessWidget {
                 ],
               ),
             ),
+            RaisedButton(
+                onPressed: () {
+                  vm.logout();
+                },
+                color: Colors.deepPurple,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Sign Out',
+                    style: TextStyle(fontSize: 25, color: Colors.white),
+                  ),
+                ),
+                elevation: 5,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(40)),
+              )
           ],
         ),
       ),
@@ -104,9 +151,9 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                   );
               },
-            ),  
-      
+            ),      
     );
+    return scaffold;
   }
 }
 class _ViewModel {

@@ -19,3 +19,9 @@ class UserLoadedAction {
 
   UserLoadedAction(this.firebaseUser, this.idTokenUser);
 }
+
+class UserIsNew {
+  final bool userIsNew;
+
+  UserIsNew(this.userIsNew);
+}
