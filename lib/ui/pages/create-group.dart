@@ -192,7 +192,7 @@ class _NewGroupFormState extends State<NewGroupForm> {
                     builder: (context) => AlertDialog(
                       title: const Text('Oops!'),
                       content: const Text(
-                          'Looks like permission to read contacts is not granted.'),
+                          'No se han otorgado los permisos necesarios para explorar los contactos.'),
                       actions: <Widget>[
                         FlatButton(
                           child: const Text('OK'),
