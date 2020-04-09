@@ -39,6 +39,7 @@ class Group {
   }
 
   Group.fromJson(Map<String, dynamic> json) {
+    this.idGroup = json['_id'];
     this.name = json['name'];
     this.currencyCode = json['currencyCode'];
     this.idOwner = json['idOwner'];

@@ -1,7 +1,6 @@
 import 'package:daruma/model/group.dart';
 import 'package:daruma/services/bloc/group-bloc.dart';
 import 'package:daruma/services/networking/response.dart';
-import 'package:daruma/ui/widget/group-button-widget.dart';
 import 'package:daruma/util/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -33,9 +32,17 @@ class GroupsList extends StatelessWidget {
                     child: ListView.builder(
                         itemCount: snapshot.data.data.length,
                         itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),                            
-                            child: GroupButton(idGroup: snapshot.data.data[index].idGroup, name: snapshot.data.data[index].name),
+                          return Card(
+                            color: redPrimaryColor,
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Text(
+                                snapshot.data.data[index].name,
+                                style: GoogleFonts.aBeeZee(
+                                    fontSize: 22,
+                                    textStyle: TextStyle(color: white)),
+                              ),
+                            ),
                           );
                         }));
                 break;

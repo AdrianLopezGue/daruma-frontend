@@ -37,6 +37,7 @@ dependencies:
   firebase_dynamic_links: ^0.5.0+11
   flutter_custom_dialog: ^1.0.16
   toast: ^0.1.5
+  share: ^0.6.3+6
 
 dev_dependencies:
   flutter_test:

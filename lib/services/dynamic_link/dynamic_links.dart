@@ -6,31 +6,27 @@ class AppDynamicLinks {
         await FirebaseDynamicLinks.instance.getInitialLink();
     final Uri deepLink = data?.link;
 
-    if (deepLink != null) {
-      processDynamicLinks(deepLink);
+    if (deepLink != null && deepLink.queryParameters != null) {
+      final type = deepLink.queryParameters['groupId'] ?? '';
+      print(type);
     }
 
     FirebaseDynamicLinks.instance.onLink(onSuccess: (dynamicLink) async {
       final deepLink = dynamicLink?.link;
 
-      if (deepLink != null) {
-        processDynamicLinks(deepLink);
+      if (deepLink != null && deepLink.queryParameters != null) {
+       final type = deepLink.queryParameters['groupId'] ?? '';
+       print(type);
       }
     }, onError: (e) async {
       print(e);
     });
   }
 
-  static void processDynamicLinks(Uri deepLink) {
-    if (deepLink.queryParameters != null) {
-      final type = deepLink.queryParameters['groupId'] ?? '';
-    }
-  }
-
   Future<String> createDynamicLink(String groupId) async {
     final DynamicLinkParameters parameters = DynamicLinkParameters(
-      uriPrefix: 'https://daruma.page.link',
-      link: Uri.parse('https://daruma.page.link/?idgroup=' + groupId),
+      uriPrefix: 'https://daruma.page.link/',
+      link: Uri.parse('https://daruma.page.link/?idgroup=$groupId'),
       androidParameters: AndroidParameters(
         packageName: 'io.flutter.plugins.firebasedynamiclinksexample',
         minimumVersion: 0,
@@ -45,8 +41,11 @@ class AppDynamicLinks {
     );
 
     Uri url;
-    final ShortDynamicLink shortLink = await parameters.buildShortLink();
-    url = shortLink.shortUrl;
+    
+    //final ShortDynamicLink shortLink = await parameters.buildShortLink();
+    //url = shortLink.shortUrl;
+
+    url = await parameters.buildUrl();
 
     return url.toString();
   }
