@@ -1,14 +1,15 @@
 import 'package:daruma/model/member.dart';
+import 'package:daruma/model/owner.dart';
 
 class Group {
   String idGroup;
   String name;
   String currencyCode;
-  String idOwner;
+  Owner owner;
   List<Member> members;
 
   Group(
-      {this.idGroup, this.name, this.currencyCode, this.idOwner, this.members});
+      {this.idGroup, this.name, this.currencyCode, this.owner, this.members});
 
   Group copyWith(
       {String id,
@@ -20,7 +21,7 @@ class Group {
         idGroup: id ?? this.idGroup,
         name: name ?? this.name,
         currencyCode: currencyCode ?? this.currencyCode,
-        idOwner: idOwner ?? this.idOwner,
+        owner: owner ?? this.owner,
         members: members ?? this.members);
   }
 
@@ -29,11 +30,13 @@ class Group {
         ? this.members.map((member) => member.toJson()).toList()
         : null;
 
+    Map owner = this.owner != null ? this.owner.toJson() : null;
+
     return {
       'groupId': this.idGroup,
       'name': this.name,
       'currencyCode': this.currencyCode,
-      'idOwner': this.idOwner,
+      'owner': owner,
       'members': members
     };
   }
@@ -42,7 +45,10 @@ class Group {
     this.idGroup = json['_id'];
     this.name = json['name'];
     this.currencyCode = json['currencyCode'];
-    this.idOwner = json['idOwner'];
-    //this.members = json['members'].map((member) => Member(idMember: member.id, name: member.name)).toList();
+
+    Owner owner = new Owner();
+    owner.idOwner = json['idOwner'];
+    owner.name = '';
+    this.owner = owner;
   }
 }

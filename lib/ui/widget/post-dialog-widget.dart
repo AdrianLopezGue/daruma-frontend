@@ -1,4 +1,5 @@
 import 'package:daruma/model/group.dart';
+import 'package:daruma/model/owner.dart';
 import 'package:daruma/redux/state.dart';
 import 'package:daruma/services/bloc/group-bloc.dart';
 import 'package:daruma/services/networking/index.dart';
@@ -27,12 +28,16 @@ class PostDialog extends StatelessWidget {
   Widget _postDialogView(BuildContext context, _ViewModel vm) {
     final GroupBloc _bloc = GroupBloc();
 
+    Owner owner = new Owner();
+    owner.idOwner = vm.user.uid;
+    owner.name = vm.user.displayName;
+
     _bloc.postGroup(
         Group(
           idGroup: group.idGroup,
           name: group.name,
           currencyCode: group.currencyCode,
-          idOwner: vm.user.uid,
+          owner: owner,
           members: group.members,
         ),
         vm.idToken);

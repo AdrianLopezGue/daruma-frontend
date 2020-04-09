@@ -28,7 +28,7 @@ class AppDynamicLinks {
       uriPrefix: 'https://daruma.page.link/',
       link: Uri.parse('https://daruma.page.link/?idgroup=$groupId'),
       androidParameters: AndroidParameters(
-        packageName: 'io.flutter.plugins.firebasedynamiclinksexample',
+        packageName: 'com.tfg.daruma',
         minimumVersion: 0,
       ),
       dynamicLinkParametersOptions: DynamicLinkParametersOptions(

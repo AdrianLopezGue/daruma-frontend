@@ -36,7 +36,7 @@ class GroupBloc {
   }
 
   getGroups(String idToken) async {
-    groupSinkGroups.add(Response.loading('Post new group.'));
+    groupSinkGroups.add(Response.loading('Get groups.'));
     try {
       List<Group> groupResponse = await _groupRepository.getGroups(idToken);
 
