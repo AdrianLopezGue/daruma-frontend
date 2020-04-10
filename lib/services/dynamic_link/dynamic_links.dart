@@ -7,7 +7,7 @@ class AppDynamicLinks {
     final Uri deepLink = data?.link;
 
     if (deepLink != null && deepLink.queryParameters != null) {
-      final type = deepLink.queryParameters['groupId'] ?? '';
+      final type = deepLink.queryParameters['idgroup'] ?? '';
       print(type);
     }
 
@@ -15,7 +15,7 @@ class AppDynamicLinks {
       final deepLink = dynamicLink?.link;
 
       if (deepLink != null && deepLink.queryParameters != null) {
-       final type = deepLink.queryParameters['groupId'] ?? '';
+       final type = deepLink.queryParameters['idgroup'] ?? '';
        print(type);
       }
     }, onError: (e) async {

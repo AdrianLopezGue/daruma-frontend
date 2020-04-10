@@ -9,8 +9,10 @@ class ApiProvider {
     var responseJson;
 
     try {
-      final response = await http
-          .get(url, headers: {HttpHeaders.authorizationHeader: '$header'});
+      final response = await http.get(
+        url,
+        headers: {HttpHeaders.authorizationHeader: '$header'},
+      );
       responseJson = _response(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');
