@@ -11,7 +11,7 @@ class ApiProvider {
     try {
       final response = await http.get(
         url,
-        headers: {HttpHeaders.authorizationHeader: '$header'},
+        headers: {HttpHeaders.authorizationHeader: 'Bearer $header'},
       );
       responseJson = _response(response);
     } on SocketException {
@@ -27,7 +27,7 @@ class ApiProvider {
       final response = await http.post(url,
           headers: {
             HttpHeaders.contentTypeHeader: 'application/json',
-            HttpHeaders.authorizationHeader: '$header'
+            HttpHeaders.authorizationHeader: 'Bearer $header'
           },
           body: body);
 

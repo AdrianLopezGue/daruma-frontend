@@ -20,7 +20,6 @@ class GroupRepository {
     final response =
         await _provider.get(Url.apiBaseUrl + "/groups", header: idToken);
 
-    print(response);
     var list = response as List;
     list = response.map<Group>((json) => Group.fromJson(json)).toList();
 
