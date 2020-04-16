@@ -1,5 +1,9 @@
 import 'package:daruma/redux/index.dart';
 import 'package:daruma/redux/store.dart';
+import 'package:daruma/ui/pages/group.page.dart';
+import 'package:daruma/util/colors.dart';
+import 'package:daruma/util/keys.dart';
+import 'package:daruma/util/routes.dart';
 import 'package:flutter/material.dart';
 
 import 'package:daruma/ui/pages/login.page.dart';
@@ -17,6 +21,12 @@ class MyApp extends StatelessWidget {
       store: this.store,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
+        navigatorKey: Keys.navKey,
+        routes: {
+          Routes.groupPage:(context){
+            return GroupPage();
+          }
+        },
         title: 'Flutter Login',
         theme: ThemeData(
           primarySwatch: Colors.red,

@@ -1,6 +1,8 @@
 import 'package:daruma/redux/index.dart';
 import 'package:daruma/redux/state.dart';
 import 'package:daruma/services/repository/group.repository.dart';
+import 'package:daruma/util/keys.dart';
+import 'package:daruma/util/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:redux/redux.dart';
@@ -58,7 +60,7 @@ _handleLogoutAction(Store<AppState> store, LogoutAction action) async {
   await _googleSignIn.signOut();
 }
 
-ThunkAction loginUser(String idGroup, String idToken) {
+ThunkAction loadGroup(String idGroup, String idToken) {
 
   GroupRepository _repository = new GroupRepository();
 
@@ -67,6 +69,7 @@ ThunkAction loginUser(String idGroup, String idToken) {
       store.dispatch(new StartLoadingGroupAction());
       _repository.getGroup(idGroup, idToken).then((group) {
         store.dispatch(new LoadingGroupSuccessAction(group));
+        Keys.navKey.currentState.pushNamed(Routes.groupPage);
       }, onError: (error) {
         store.dispatch(new LoadingGroupFailedAction());
       });
