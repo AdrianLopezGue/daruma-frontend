@@ -1,13 +1,13 @@
 import 'package:daruma/model/user.dart';
 import 'package:daruma/redux/index.dart';
 import 'package:daruma/services/dynamic_link/dynamic_links.dart';
-import 'package:daruma/services/repository/user-repository.dart';
-import 'package:daruma/ui/pages/create-group.dart';
-import 'package:daruma/ui/widget/groups-list-widget.dart';
+import 'package:daruma/services/repository/user.repository.dart';
+import 'package:daruma/ui/pages/create-group.page.dart';
+import 'package:daruma/ui/widget/groups-list.widget.dart';
 import 'package:daruma/util/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:daruma/ui/pages/login.dart';
+import 'package:daruma/ui/pages/login.page.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:google_fonts/google_fonts.dart';
 

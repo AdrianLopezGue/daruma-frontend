@@ -2,7 +2,7 @@ import 'package:daruma/redux/index.dart';
 import 'package:daruma/redux/store.dart';
 import 'package:flutter/material.dart';
 
-import 'package:daruma/ui/pages/login.dart';
+import 'package:daruma/ui/pages/login.page.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 

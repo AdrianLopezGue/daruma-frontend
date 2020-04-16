@@ -1,7 +1,7 @@
 import 'package:daruma/model/group.dart';
-import 'package:daruma/services/bloc/group-bloc.dart';
+import 'package:daruma/services/bloc/group.bloc.dart';
 import 'package:daruma/services/networking/response.dart';
-import 'package:daruma/ui/widget/group-button-widget.dart';
+import 'package:daruma/ui/widget/group-button.widget.dart';
 import 'package:daruma/util/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

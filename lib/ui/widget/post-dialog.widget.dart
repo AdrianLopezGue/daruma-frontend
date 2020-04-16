@@ -1,9 +1,9 @@
 import 'package:daruma/model/group.dart';
 import 'package:daruma/model/owner.dart';
 import 'package:daruma/redux/state.dart';
-import 'package:daruma/services/bloc/group-bloc.dart';
+import 'package:daruma/services/bloc/group.bloc.dart';
 import 'package:daruma/services/networking/index.dart';
-import 'package:daruma/ui/pages/welcome.dart';
+import 'package:daruma/ui/pages/welcome.page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';

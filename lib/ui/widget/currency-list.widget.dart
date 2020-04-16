@@ -1,5 +1,5 @@
 import 'package:daruma/model/currency-list.dart';
-import 'package:daruma/services/bloc/currency-list-bloc.dart';
+import 'package:daruma/services/bloc/currency-list.bloc.dart';
 import 'package:daruma/services/networking/response.dart';
 import 'package:flutter/material.dart';
 

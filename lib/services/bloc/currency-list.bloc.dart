@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:daruma/model/currency-list.dart';
 import 'package:daruma/services/networking/index.dart';
-import 'package:daruma/services/repository/currency-list-repository.dart';
+import 'package:daruma/services/repository/currency-list.repository.dart';
 import 'package:rxdart/subjects.dart';
 
 class CurrencyListBloc {
