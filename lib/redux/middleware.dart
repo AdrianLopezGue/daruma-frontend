@@ -1,8 +1,10 @@
 import 'package:daruma/redux/index.dart';
 import 'package:daruma/redux/state.dart';
+import 'package:daruma/services/repository/group.repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:redux/redux.dart';
+import 'package:redux_thunk/redux_thunk.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn _googleSignIn = GoogleSignIn();
@@ -54,4 +56,20 @@ _handleLoginWithGoogle(Store<AppState> store, LoginWithGoogleAction action,
 
 _handleLogoutAction(Store<AppState> store, LogoutAction action) async {
   await _googleSignIn.signOut();
+}
+
+ThunkAction loginUser(String idGroup, String idToken) {
+
+  GroupRepository _repository = new GroupRepository();
+
+  return (Store store) async {
+    new Future(() async{
+      store.dispatch(new StartLoadingGroupAction());
+      _repository.getGroup(idGroup, idToken).then((group) {
+        store.dispatch(new LoadingGroupSuccessAction(group));
+      }, onError: (error) {
+        store.dispatch(new LoadingGroupFailedAction());
+      });
+    });
+  };
 }

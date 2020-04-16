@@ -25,4 +25,14 @@ class GroupRepository {
 
     return list;
   }
+
+  Future<Group> getGroup(String idGroup, String idToken) async {
+    final response =
+        await _provider.get(Url.apiBaseUrl + "/groups/"+ idGroup, header: idToken);
+
+    var group = response as Group;
+    group = Group.fromJson(response);
+
+    return group;
+  }
 }
