@@ -1,6 +1,7 @@
 import 'package:daruma/redux/index.dart';
 import 'package:daruma/redux/state.dart';
 import 'package:daruma/services/repository/group.repository.dart';
+import 'package:daruma/services/repository/member.repository.dart';
 import 'package:daruma/util/keys.dart';
 import 'package:daruma/util/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -62,12 +63,16 @@ _handleLogoutAction(Store<AppState> store, LogoutAction action) async {
 
 ThunkAction loadGroup(String idGroup, String idToken) {
 
-  GroupRepository _repository = new GroupRepository();
+  GroupRepository _groupRepository = new GroupRepository();
+  MemberRepository _memberRepository = new MemberRepository();
 
   return (Store store) async {
     new Future(() async{
       store.dispatch(new StartLoadingGroupAction());
-      _repository.getGroup(idGroup, idToken).then((group) {
+      _groupRepository.getGroup(idGroup, idToken).then((group) async {
+        var members = await _memberRepository.getMembers(idGroup, idToken);
+        
+        group = group.copyWith(members: members);
         store.dispatch(new LoadingGroupSuccessAction(group));
         Keys.navKey.currentState.pushNamed(Routes.groupPage);
       }, onError: (error) {

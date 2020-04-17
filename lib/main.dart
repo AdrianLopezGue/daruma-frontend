@@ -1,7 +1,6 @@
 import 'package:daruma/redux/index.dart';
 import 'package:daruma/redux/store.dart';
 import 'package:daruma/ui/pages/group.page.dart';
-import 'package:daruma/util/colors.dart';
 import 'package:daruma/util/keys.dart';
 import 'package:daruma/util/routes.dart';
 import 'package:flutter/material.dart';

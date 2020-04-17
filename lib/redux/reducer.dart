@@ -23,11 +23,12 @@ GroupState _reduceGroupState(AppState state, dynamic action) {
   GroupState newState = state.groupState;
 
   if (action is StartLoadingGroupAction) {
-    newState.copyWith(isLoading: true, loadingError: false);
+    newState = newState.copyWith(isLoading: true, loadingError: false);
   } else if(action is LoadingGroupSuccessAction){
-    newState.copyWith(group: action.group, isLoading: false, loadingError: false);
+    newState = newState.copyWith(group: action.group, isLoading: false, loadingError: false);
+    print(newState.group.name);
   } else if(action is LoadingGroupFailedAction){
-    newState.copyWith(group: null, isLoading: false, loadingError: true);
+    newState = newState.copyWith(group: null, isLoading: false, loadingError: true);
   }
   return newState;
 }

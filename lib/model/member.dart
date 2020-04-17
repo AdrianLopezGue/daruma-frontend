@@ -10,4 +10,9 @@ class Member {
       'name': this.name,
     };
   }
+
+  Member.fromJson(Map<String, dynamic> json) {
+    this.idMember = json['_id'];
+    this.name = json['name'];
+  }
 }

@@ -23,8 +23,16 @@ class GroupButton extends StatelessWidget {
       converter: (store) => _ViewModel.fromStore(store),
       builder: (BuildContext context, _ViewModel vm) {
         return _groupButtonView(context, vm);
-      },
-      onDidChange: (_ViewModel vm) {
+      }
+    );
+  }
+
+  Widget _groupButtonView(BuildContext context, _ViewModel vm) {
+    return FlatButton(
+      color: redPrimaryColor,
+      onPressed: () async {
+        vm.load(idGroup, vm.idToken);
+
         if (vm.loadingError) {
           showDialog(
               context: context,
@@ -47,23 +55,13 @@ class GroupButton extends StatelessWidget {
                   ),
                 )
               ]));
-        }
-        if (vm.isLoading) {
+        }else if (vm.isLoading) {
           showDialog(
               context: context,
               child: new SimpleDialog(children: <Widget>[
                 Center(child: CircularProgressIndicator())
               ]));
         }
-      },
-    );
-  }
-
-  Widget _groupButtonView(BuildContext context, _ViewModel vm) {
-    return FlatButton(
-      color: redPrimaryColor,
-      onPressed: () async {
-        vm.load(idGroup, vm.idToken);
       },
       child: Padding(
         padding: const EdgeInsets.all(16.0),

@@ -47,8 +47,20 @@ class Group {
     this.currencyCode = json['currencyCode'];
 
     Owner owner = new Owner();
-    owner.idOwner = json['idOwner'];
+    owner.idOwner = json['ownerId'];
     owner.name = '';
     this.owner = owner;
+    this.members = [];
+  }
+
+  String getMembersAsString(){
+    String result  = "";
+    for(int i = 0; i < this.members.length-1; i++){
+      result += this.members[i].name + ", ";
+    }
+
+    result += this.members.last.name;
+
+    return result;
   }
 }
