@@ -1,5 +1,6 @@
 import 'package:daruma/model/group.dart';
 import 'package:daruma/redux/index.dart';
+import 'package:daruma/ui/widget/create-bill-floating-button.widget.dart';
 import 'package:daruma/util/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -67,6 +68,7 @@ class GroupBalance extends StatelessWidget {
             ),
           ],
         ),
+        floatingActionButton: NewBillFloatingButton()
     );
   }
 }

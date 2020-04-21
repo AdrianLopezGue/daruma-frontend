@@ -2,6 +2,7 @@ import 'package:contacts_service/contacts_service.dart';
 import 'package:daruma/model/group.dart';
 import 'package:daruma/model/member.dart';
 import 'package:daruma/ui/pages/add-members.page.dart';
+import 'package:daruma/ui/widget/text-form-field.widget.dart';
 import 'package:daruma/ui/widget/currency-button.widget.dart';
 import 'package:daruma/ui/widget/post-dialog.widget.dart';
 import 'package:daruma/util/colors.dart';
@@ -65,6 +66,7 @@ class _NewGroupFormState extends State<NewGroupForm> {
   final _formKey = GlobalKey<FormState>();
   Group group = Group();
   List<Contact> members = new List<Contact>();
+  
 
   @override
   void initState() {
@@ -92,7 +94,7 @@ class _NewGroupFormState extends State<NewGroupForm> {
                 Container(
                   alignment: Alignment.topCenter,
                   width: halfMediaWidth,
-                  child: MyTextFormField(
+                  child: CustomTextFormField(
                     hintText: 'Nombre del grupo',
                     validator: (String value) {
                       if (value.isEmpty) {
@@ -255,32 +257,6 @@ class _NewGroupFormState extends State<NewGroupForm> {
       subtitle: list.length >= 1 && list[0]?.value != null
           ? Text(list[0].value)
           : Text(''),
-    );
-  }
-}
-
-class MyTextFormField extends StatelessWidget {
-  final String hintText;
-  final Function validator;
-  final Function onSaved;
-
-  MyTextFormField({
-    this.hintText,
-    this.validator,
-    this.onSaved,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      decoration: InputDecoration(
-        hintText: hintText,
-        contentPadding: EdgeInsets.all(15.0),
-        filled: true,
-        fillColor: white,
-      ),
-      validator: validator,
-      onSaved: onSaved,
     );
   }
 }

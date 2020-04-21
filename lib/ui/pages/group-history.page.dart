@@ -1,76 +1,77 @@
 import 'package:daruma/model/group.dart';
 import 'package:daruma/redux/index.dart';
+import 'package:daruma/ui/widget/create-bill-floating-button.widget.dart';
 import 'package:daruma/util/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class GroupHistory extends StatelessWidget {
-
   @override
-  Widget build(BuildContext context){
-    return new StoreConnector<AppState, _ViewModel>(converter: (store) => _ViewModel(group: store.state.groupState.group),
-    builder: (BuildContext context, _ViewModel vm) => _historyView(context, vm),
+  Widget build(BuildContext context) {
+    return new StoreConnector<AppState, _ViewModel>(
+      converter: (store) => _ViewModel(group: store.state.groupState.group),
+      builder: (BuildContext context, _ViewModel vm) =>
+          _historyView(context, vm),
     );
   }
 
   Widget _historyView(BuildContext context, _ViewModel vm) {
     return Scaffold(
       body: Column(
-          children: <Widget>[
-            SizedBox(height: 40),
-            SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 15.0, left: 25.0),
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          SizedBox(height: 40),
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 15.0, left: 25.0),
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        vm.group.name,
+                        style: GoogleFonts.aBeeZee(
+                            fontSize: 30, textStyle: TextStyle(color: black)),
+                      ),
+                      BackButton(color: Colors.grey),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Row(
                       children: <Widget>[
                         Text(
-                          vm.group.name,
+                          vm.group.getMembersAsString(),
                           style: GoogleFonts.aBeeZee(
-                              fontSize: 30, textStyle: TextStyle(color: black)),
+                              fontSize: 15,
+                              textStyle: TextStyle(color: redPrimaryColor)),
                         ),
-                        BackButton(color: Colors.grey),
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            vm.group.getMembersAsString(),
-                            style: GoogleFonts.aBeeZee(
-                                fontSize: 15,
-                                textStyle: TextStyle(color: redPrimaryColor)),
-                          ),
-                        ],
-                      ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15.0),
+                    child: Row(
+                      children: <Widget>[
+                        Text(
+                          "HISTORIAL",
+                          style: GoogleFonts.aBeeZee(
+                              fontSize: 15, textStyle: TextStyle(color: black)),
+                        ),
+                      ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15.0),
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            "HISTORIAL",
-                            style: GoogleFonts.aBeeZee(
-                                fontSize: 15,
-                                textStyle: TextStyle(color: black)),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
+      ),
+      floatingActionButton: NewBillFloatingButton()
     );
   }
 }
-
 
 class _ViewModel {
   final Group group;
