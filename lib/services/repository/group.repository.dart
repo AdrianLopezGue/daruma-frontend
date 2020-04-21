@@ -28,7 +28,7 @@ class GroupRepository {
 
   Future<Group> getGroup(String idGroup, String idToken) async {
     final response =
-        await _provider.get(Url.apiBaseUrl + "/groups/{id}?id="+ idGroup, header: idToken);
+        await _provider.get(Url.apiBaseUrl + "/groups/"+ idGroup, header: idToken);
     var group = Group.fromJson(response);
 
     return group;

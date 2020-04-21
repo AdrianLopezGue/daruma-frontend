@@ -8,7 +8,7 @@ class MemberRepository {
 
   Future<List<Member>> getMembers(String idGroup, String idToken) async {
     final response =
-        await _provider.get(Url.apiBaseUrl + "/members/{id}?id=" + idGroup, header: idToken);
+        await _provider.get(Url.apiBaseUrl + "/members/" + idGroup, header: idToken);
 
     var list = response as List;
     list = response.map<Member>((json) => Member.fromJson(json)).toList();
