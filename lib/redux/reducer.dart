@@ -26,7 +26,6 @@ GroupState _reduceGroupState(AppState state, dynamic action) {
     newState = newState.copyWith(isLoading: true, loadingError: false);
   } else if(action is LoadingGroupSuccessAction){
     newState = newState.copyWith(group: action.group, isLoading: false, loadingError: false);
-    print(newState.group.name);
   } else if(action is LoadingGroupFailedAction){
     newState = newState.copyWith(group: null, isLoading: false, loadingError: true);
   }

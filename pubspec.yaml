@@ -39,6 +39,10 @@ dependencies:
   toast: ^0.1.5
   share: ^0.6.3+6
   provider: ^4.0.4
+  datetime_picker_formfield: ^1.0.0
+  intl: ^0.16.1
+  flutter_multi_formatter: ^1.1.5
+  grouped_buttons: ^1.0.4
 
 dev_dependencies:
   flutter_test:

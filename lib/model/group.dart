@@ -63,4 +63,9 @@ class Group {
 
     return result;
   }
+
+  String getMemberNameById(String idMember){
+    var selectedMember = this.members.singleWhere((member) => member.idMember == idMember);
+    return selectedMember.name;
+  }
 }
