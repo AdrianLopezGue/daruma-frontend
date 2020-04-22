@@ -22,6 +22,20 @@ class Bill {
       this.debtors,
       this.idCreator});
 
+  factory Bill.initial(){
+    return new Bill(
+      idBill: '',
+      idGroup: '',
+      name: '',
+      date: DateTime.now(),
+      money: 0,
+      currencyCode: 'EUR',
+      payers: [],
+      debtors: [],
+      idCreator: '',
+    );
+  }
+
   Bill copyWith(
       {String idBill,
       String idGroup,

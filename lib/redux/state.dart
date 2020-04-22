@@ -1,3 +1,4 @@
+import 'package:daruma/model/bill.dart';
 import 'package:daruma/model/group.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -5,27 +6,30 @@ import 'package:flutter/material.dart';
 class AppState {
   final FirebaseState firebaseState;
   final GroupState groupState;
+  final BillState billState;
   final bool userIsNew;
 
   const AppState({
     @required this.firebaseState,
     @required this.groupState,
+    @required this.billState,
     @required this.userIsNew,
   });
 
-  AppState copyWith({FirebaseState firebaseState, GroupState groupState}) {
+  AppState copyWith({FirebaseState firebaseState, GroupState groupState, BillState billState}) {
     return new AppState(
         firebaseState: firebaseState ?? this.firebaseState,
         groupState: groupState ?? this.groupState,
+        billState: billState ?? this.billState,
         userIsNew: userIsNew ?? this.userIsNew);
   }
 
   factory AppState.initial() {
     return AppState(
-      firebaseState: FirebaseState.initial(),
-      groupState: GroupState.initial(),
-      userIsNew: false
-      );
+        firebaseState: FirebaseState.initial(),
+        groupState: GroupState.initial(),
+        billState: BillState.initial(),
+        userIsNew: false);
   }
 }
 
@@ -57,7 +61,7 @@ class GroupState {
   GroupState({
     @required this.group,
     @required this.isLoading,
-    @required this.loadingError,    
+    @required this.loadingError,
   });
 
   factory GroupState.initial() {
@@ -66,9 +70,31 @@ class GroupState {
 
   GroupState copyWith({bool isLoading, bool loadingError, Group group}) {
     return new GroupState(
-        group: group ?? this.group,
-        isLoading: isLoading ?? this.isLoading,
-        loadingError: loadingError ?? this.loadingError,
+      group: group ?? this.group,
+      isLoading: isLoading ?? this.isLoading,
+      loadingError: loadingError ?? this.loadingError,
+    );
+  }
+}
+
+@immutable
+class BillState {
+  final Bill bill;
+
+  BillState({
+    @required this.bill,
+  });
+
+  factory BillState.initial() {
+    return new BillState(
+      bill: Bill.initial()
+    );
+  }
+
+  BillState copyWith(
+      {Bill bill}) {
+    return new BillState(
+      bill: bill ?? this.bill
     );
   }
 }

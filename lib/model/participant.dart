@@ -1,8 +1,9 @@
 class Participant {
   String idParticipant;
+  String name;
   int money;
 
-  Participant({this.idParticipant, this.money});
+  Participant({this.idParticipant, this.name, this.money});
 
   Map toJson() {
     return {
@@ -12,6 +13,6 @@ class Participant {
   }
 
   factory Participant.fromJson(Map<String, dynamic> json) {
-    return Participant(idParticipant: json['_id'], money: json['money']);
+    return Participant(idParticipant: json['id'], money: json['money']);
   }
 }

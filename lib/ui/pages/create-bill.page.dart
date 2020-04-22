@@ -1,10 +1,9 @@
 import 'package:daruma/model/bill.dart';
 import 'package:daruma/model/group.dart';
 import 'package:daruma/model/participant.dart';
-import 'package:daruma/ui/widget/members-list.widget.dart';
+import 'package:daruma/ui/widget/members-button.widget.dart';
 import 'package:daruma/ui/widget/number-form-field.widget.dart';
-import 'package:daruma/ui/widget/payers-button.widget.dart';
-import 'package:grouped_buttons/grouped_buttons.dart';
+import 'package:daruma/ui/widget/post-bill-dialog.widget.dart';
 import 'package:intl/intl.dart';
 import 'package:daruma/redux/index.dart';
 import 'package:daruma/ui/widget/text-form-field.widget.dart';
@@ -13,14 +12,8 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:uuid/uuid.dart';
 
-class CreateBillPage extends StatefulWidget {
-  @override
-  _CreateBillPageState createState() => _CreateBillPageState();
-}
-
-class _CreateBillPageState extends State<CreateBillPage> {
+class CreateBillPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,42 +63,43 @@ class NewBillForm extends StatefulWidget {
 
 class _NewBillFormState extends State<NewBillForm> {
   final _formKey = GlobalKey<FormState>();
-  Bill bill = Bill();
 
   @override
   void initState() {
-    var uuid = new Uuid();
-    bill.idBill = uuid.v4();
-    bill.money = 0;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return new StoreConnector<AppState, _ViewModel>(converter: (store) {
-      return new _ViewModel(
-          idUser: store.state.firebaseState.firebaseUser.uid,
-          group: store.state.groupState.group);
-    }, builder: (BuildContext context, _ViewModel vm) {
-      return _formView(context, vm);
-    });
+    return new StoreConnector<AppState, _ViewModel>(
+      converter: (store) {
+        return new _ViewModel(
+            idUser: store.state.firebaseState.firebaseUser.uid,
+            group: store.state.groupState.group,
+            bill: store.state.billState.bill);
+      },
+      builder: (BuildContext context, _ViewModel vm) {
+        return _formView(context, vm);
+      },
+      onInit: (store) {
+        store.dispatch(StartCreatingBill(
+            store.state.groupState.group.idGroup,
+            store.state.firebaseState.firebaseUser.uid,
+            store.state.groupState.group.members.first.idMember,
+            store.state.groupState.group.currencyCode));
+      },
+    );
   }
 
   Widget _formView(BuildContext context, _ViewModel vm) {
     final halfMediaWidth = MediaQuery.of(context).size.width / 1.15;
     final format = DateFormat("yyyy-MM-dd");
 
-    bill.idGroup = vm.group.idGroup;
-    bill.idCreator = vm.idUser;
-    bill.payers = [];
-    bill.debtors = [];
-
-    Participant creator = new Participant(
-        idParticipant: vm.group.members.first.idMember, money: 0);
-
-    bill.payers.add(creator);
-
-    bill.date = DateTime.now();
+    List<Participant> debtors = vm.group.members
+        .map((member) => Participant(
+            idParticipant: member.idMember, name: member.name, money: 0))
+        .toList();
+    List<Participant> selectedDebtors = [];
 
     return Form(
         key: _formKey,
@@ -126,9 +120,8 @@ class _NewBillFormState extends State<NewBillForm> {
                           return null;
                         },
                         onSaved: (String value) {
-                          setState(() {
-                            bill.name = value;
-                          });
+                          StoreProvider.of<AppState>(context)
+                              .dispatch(BillNameChangedAction(value));
                         },
                       )),
                 ],
@@ -142,20 +135,26 @@ class _NewBillFormState extends State<NewBillForm> {
                       alignment: Alignment.topCenter,
                       width: halfMediaWidth,
                       child: CustomNumberFormField(
-                        hintText: '10.00',
-                        validator: (String value) {
-                          if (int.parse(value) < 0) {
-                            return 'Valor negativo no permitido';
-                          }
+                          hintText: '10.00',
+                          validator: (String value) {
+                            if (double.parse(value) < 0) {
+                              return 'Valor negativo no permitido';
+                            }
 
-                          return null;
-                        },
-                        onChanged: (String value) {
+                            return null;
+                          },
+                          onChanged: (String value) {
                             var moneyNumber = double.parse(value) * 100;
-                            bill.money = moneyNumber.toInt();
-                            bill.currencyCode = vm.group.currencyCode;                                                                          
-                        },
-                      )),
+                            StoreProvider.of<AppState>(context).dispatch(
+                                new BillMoneyChangedAction(
+                                    moneyNumber.toInt()));
+
+                            selectedDebtors.map((debtor) => debtor.money =
+                                ((double.parse(value) /
+                                            selectedDebtors.length) *
+                                        100)
+                                    .toInt());
+                          })),
                 ],
               ),
             ),
@@ -165,19 +164,21 @@ class _NewBillFormState extends State<NewBillForm> {
               child: DateTimeField(
                 format: format,
                 decoration: InputDecoration(
-                  hintText: bill.date.toIso8601String().substring(0, 10),
+                  hintText: vm.bill.date.toIso8601String().substring(0, 10),
                   contentPadding: EdgeInsets.all(15.0),
                   filled: true,
                   fillColor: white,
                 ),
                 onShowPicker: (context, currentValue) async {
-                  bill.date = await showDatePicker(
+                  DateTime date = await showDatePicker(
                       context: context,
                       firstDate: DateTime(1900),
                       initialDate: currentValue ?? DateTime.now(),
                       lastDate: DateTime(2100));
 
-                  return bill.date;
+                  StoreProvider.of<AppState>(context)
+                      .dispatch(BillDateChangedAction(date));
+                  return date;
                 },
               ),
             ),
@@ -187,31 +188,80 @@ class _NewBillFormState extends State<NewBillForm> {
               child: Row(
                 children: <Widget>[
                   Text("Pagado por "),
-                  PayersButton(
-                    money: bill.money,
-                    payer: vm.group
-                        .getMemberNameById(bill.payers.first.idParticipant),
+                  MembersButton(
                     members: vm.group.members,
-                    selectedPayer: (idPayer) {
-                      bill.payers.clear();
-                      Participant billPayer = new Participant(
-                          idParticipant: idPayer, money: bill.money);
-                      bill.payers.add(billPayer);
+                    selectedMembers: (nameMembers) {
+                      List<Participant> payers = nameMembers.map((name) =>
+                          new Participant(
+                              idParticipant: vm.group.getMemberIdByName(name),
+                              name: name,
+                              money: vm.bill.money ~/ nameMembers.length)).toList();
 
-                      print(bill.payers.first.idParticipant);
-                      print(bill.payers.first.money);
+                      StoreProvider.of<AppState>(context)
+                          .dispatch(BillPayersChangedAction(payers));
+                      print(vm.bill.payers);
+                      
                     },
                   )
                 ],
               ),
             ),
             SizedBox(height: 30.0),
-            Row(children: <Widget>[Text("Para quién")],),
-            CheckboxGroup(
-                labels: vm.group.members.map((member) => member.name).toList(),
-                onChange: (bool isChecked, String label, int index) => print("isChecked: $isChecked   label: $label  index: $index"),
-                onSelected: (List<String> checked) => print("checked: ${checked.toString()}"),
-              )
+            Row(
+              children: <Widget>[
+                Text("Para quién"),
+                MembersButton(
+                    members: vm.group.members,
+                    selectedMembers: (nameMembers) {
+                      List<Participant> debtors = nameMembers.map((name) =>
+                          new Participant(
+                              idParticipant: vm.group.getMemberIdByName(name),
+                              name: name,
+                              money: vm.bill.money ~/ nameMembers.length)).toList();
+
+                      StoreProvider.of<AppState>(context)
+                          .dispatch(BillDebtorsChangedAction(debtors));
+                    },
+                  )
+                ],
+            ),
+            SizedBox(height: 20.0),
+
+          RaisedButton(
+            color: redPrimaryColor,
+            onPressed: () {
+              if (_formKey.currentState.validate()) {
+                _formKey.currentState.save();
+
+                showDialog(
+                    context: context,
+                    child: new SimpleDialog(children: <Widget>[
+                      PostBillDialog(),
+                    ]));
+              }
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Icon(Icons.done, color: white),
+                  SizedBox(
+                    width: 5.0,
+                  ),
+                  Text(
+                    'Guardar',
+                    style: GoogleFonts.aBeeZee(
+                        textStyle:
+                            TextStyle(fontSize: 20, color: Colors.white)),
+                  ),
+                ],
+              ),
+            ),
+            elevation: 5,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+          )
           ],
         ));
   }
@@ -220,9 +270,11 @@ class _NewBillFormState extends State<NewBillForm> {
 class _ViewModel {
   final String idUser;
   final Group group;
+  final Bill bill;
 
   _ViewModel({
     @required this.idUser,
     @required this.group,
+    @required this.bill,
   });
 }
