@@ -73,13 +73,15 @@ class Bill {
       'billId': this.idBill,
       'groupId': this.idGroup,
       'name': this.name,
-      'date': this.date,
+      'date': this.date.toIso8601String(),
       'money': this.money,
       'currencyCode': this.currencyCode,
       'payers': payers,
       'debtors': debtors,
       'creatorId': this.idCreator,
     };
+
+    print(json);
 
     return json;
   }
