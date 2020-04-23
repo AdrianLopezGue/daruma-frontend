@@ -1,5 +1,6 @@
 import 'package:daruma/model/group.dart';
 import 'package:daruma/redux/index.dart';
+import 'package:daruma/ui/widget/bills-list.widget.dart';
 import 'package:daruma/ui/widget/create-bill-floating-button.widget.dart';
 import 'package:daruma/util/colors.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,10 @@ class GroupHistory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(
-      converter: (store) => _ViewModel(group: store.state.groupState.group),
+      converter: (store) => _ViewModel(
+        group: store.state.groupState.group,
+        idToken: store.state.firebaseState.idTokenUser
+        ),
       builder: (BuildContext context, _ViewModel vm) =>
           _historyView(context, vm),
     );
@@ -18,7 +22,8 @@ class GroupHistory extends StatelessWidget {
 
   Widget _historyView(BuildContext context, _ViewModel vm) {
     return Scaffold(
-      body: Column(
+      body: ListView(
+        shrinkWrap: true,
         children: <Widget>[
           SizedBox(height: 40),
           SafeArea(
@@ -62,6 +67,14 @@ class GroupHistory extends StatelessWidget {
                       ],
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15.0),
+                    child: Row(
+                      children: <Widget>[
+                        BillsList(idToken: vm.idToken, group: vm.group),
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),
@@ -75,8 +88,10 @@ class GroupHistory extends StatelessWidget {
 
 class _ViewModel {
   final Group group;
+  final String idToken;
 
   _ViewModel({
     @required this.group,
+    @required this.idToken,
   });
 }
