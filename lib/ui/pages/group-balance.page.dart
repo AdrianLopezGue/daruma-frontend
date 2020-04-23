@@ -17,7 +17,8 @@ class GroupBalance extends StatelessWidget {
 
   Widget _balanceView(BuildContext context, _ViewModel vm) {
     return Scaffold(
-      body: Column(
+      body: ListView(
+          shrinkWrap: true,
           children: <Widget>[
             SizedBox(height: 40),
             SafeArea(
