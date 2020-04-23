@@ -17,6 +17,7 @@ class CurrencyListBloc {
   CurrencyListBloc() {
     _currencyListController = BehaviorSubject<Response<CurrencyList>>();
     _currencyListRepository = CurrencyListRepository();
+    
   }
 
   fetchCurrencyList() async {

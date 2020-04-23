@@ -16,9 +16,9 @@ class BillRepository {
     return response;
   }
 
-  Future<List<Bill>> getBills(String idToken) async {
+  Future<List<Bill>> getBills(String idToken, String idGroup) async {
     final response =
-        await _provider.get(Url.apiBaseUrl + "/bills", header: idToken);
+        await _provider.get(Url.apiBaseUrl + "/bills/" + idGroup, header: idToken);
 
     var list = response as List;
     list = response.map<Bill>((json) => Bill.fromJson(json)).toList();

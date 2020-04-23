@@ -13,9 +13,9 @@ class BillBloc {
   StreamSink<Response<bool>> get billSink => _billController.sink;
   Stream<Response<bool>> get billStream => _billController.stream;
 
-  StreamSink<Response<List<Bill>>> get billSinkGroups =>
+  StreamSink<Response<List<Bill>>> get billSinkBills =>
       _billControllerGroups.sink;
-  Stream<Response<List<Bill>>> get billStreamGroups =>
+  Stream<Response<List<Bill>>> get billStreamBills =>
       _billControllerGroups.stream;
 
   BillBloc() {
@@ -35,14 +35,14 @@ class BillBloc {
     }
   }
 
-  getBills(String idToken) async {
-    billSinkGroups.add(Response.loading('Get bills.'));
+  getBills(String idToken, String idGroup) async {
+    billSinkBills.add(Response.loading('Get bills.'));
     try {
-      List<Bill> billResponse = await _billRepository.getBills(idToken);
+      List<Bill> billResponse = await _billRepository.getBills(idToken, idGroup);
 
-      billSinkGroups.add(Response.completed(billResponse));
+      billSinkBills.add(Response.completed(billResponse));
     } catch (e) {
-      billSinkGroups.add(Response.error(e.toString()));
+      billSinkBills.add(Response.error(e.toString()));
       print(e);
     }
   }
