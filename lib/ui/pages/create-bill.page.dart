@@ -4,6 +4,7 @@ import 'package:daruma/model/participant.dart';
 import 'package:daruma/ui/widget/members-button.widget.dart';
 import 'package:daruma/ui/widget/number-form-field.widget.dart';
 import 'package:daruma/ui/widget/post-bill-dialog.widget.dart';
+import 'package:grouped_buttons/grouped_buttons.dart';
 import 'package:intl/intl.dart';
 import 'package:daruma/redux/index.dart';
 import 'package:daruma/ui/widget/text-form-field.widget.dart';
@@ -63,6 +64,7 @@ class NewBillForm extends StatefulWidget {
 
 class _NewBillFormState extends State<NewBillForm> {
   final _formKey = GlobalKey<FormState>();
+  List<String> nameDebtors = [];
 
   @override
   void initState() {
@@ -82,11 +84,11 @@ class _NewBillFormState extends State<NewBillForm> {
         return _formView(context, vm);
       },
       onInit: (store) {
+        this.nameDebtors = store.state.billState.bill.debtors.map((debtor) => debtor.name).toList();
         store.dispatch(StartCreatingBill(
-            store.state.groupState.group.idGroup,
-            store.state.firebaseState.firebaseUser.uid,
-            store.state.groupState.group.members.first.idMember,
-            store.state.groupState.group.currencyCode));
+            store.state.groupState.group,
+            store.state.firebaseState.firebaseUser.uid
+            ));
       },
     );
   }
@@ -95,11 +97,6 @@ class _NewBillFormState extends State<NewBillForm> {
     final halfMediaWidth = MediaQuery.of(context).size.width / 1.15;
     final format = DateFormat("yyyy-MM-dd");
 
-    List<Participant> debtors = vm.group.members
-        .map((member) => Participant(
-            idParticipant: member.idMember, name: member.name, money: 0))
-        .toList();
-    List<Participant> selectedDebtors = [];
 
     return Form(
         key: _formKey,
@@ -148,12 +145,6 @@ class _NewBillFormState extends State<NewBillForm> {
                             StoreProvider.of<AppState>(context).dispatch(
                                 new BillMoneyChangedAction(
                                     moneyNumber.toInt()));
-
-                            selectedDebtors.map((debtor) => debtor.money =
-                                ((double.parse(value) /
-                                            selectedDebtors.length) *
-                                        100)
-                                    .toInt());
                           })),
                 ],
               ),
@@ -199,7 +190,6 @@ class _NewBillFormState extends State<NewBillForm> {
 
                       StoreProvider.of<AppState>(context)
                           .dispatch(BillPayersChangedAction(payers));
-                      print(vm.bill.payers);
                       
                     },
                   )
@@ -210,22 +200,40 @@ class _NewBillFormState extends State<NewBillForm> {
             Row(
               children: <Widget>[
                 Text("Para quién"),
-                MembersButton(
-                    members: vm.group.members,
-                    selectedMembers: (nameMembers) {
-                      List<Participant> debtors = nameMembers.map((name) =>
-                          new Participant(
-                              idParticipant: vm.group.getMemberIdByName(name),
-                              name: name,
-                              money: vm.bill.money ~/ nameMembers.length)).toList();
-
-                      StoreProvider.of<AppState>(context)
-                          .dispatch(BillDebtorsChangedAction(debtors));
-                    },
-                  )
                 ],
             ),
             SizedBox(height: 20.0),
+            CheckboxGroup(
+                labels: vm.bill.debtors.map((debtor) => debtor.name).toList(),
+                checked: nameDebtors,
+                onChange: (bool isChecked, String label, int index){
+                  if(isChecked){
+                    setState(() {
+                      nameDebtors.add(label);                      
+                    });
+                    StoreProvider.of<AppState>(context)
+                          .dispatch(BillDebtorWasAddedAction(index));
+                  }
+                  else{
+                    setState(() {
+                      nameDebtors.removeWhere((name) => name == label);                     
+                    });
+                    
+                    StoreProvider.of<AppState>(context)
+                          .dispatch(BillDebtorWasDeletedAction(index));
+                  }
+                },
+                activeColor: redPrimaryColor,
+                itemBuilder: (Checkbox cb, Text txt, int i){
+                  return Row(
+                    children: <Widget>[
+                      Expanded(child: cb, flex: 1),
+                      Expanded(child: txt, flex: 7),
+                      vm.bill.debtors[i].money == -1 ? Expanded(child: Text('0.0'), flex: 2)  : Expanded(child: Text((vm.bill.debtors[i].money/100).toString()), flex: 2),
+                    ],
+                  );
+                },
+              ),
 
           RaisedButton(
             color: redPrimaryColor,
@@ -236,7 +244,7 @@ class _NewBillFormState extends State<NewBillForm> {
                 showDialog(
                     context: context,
                     child: new SimpleDialog(children: <Widget>[
-                      PostBillDialog(),
+                      PostBillDialog(bill: vm.bill),
                     ]));
               }
             },

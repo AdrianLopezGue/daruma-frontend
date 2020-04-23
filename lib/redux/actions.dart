@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:daruma/model/group.dart';
+import 'package:daruma/model/member.dart';
 import 'package:daruma/model/participant.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -43,12 +44,10 @@ class LoadingGroupFailedAction {
 }
 
 class StartCreatingBill{
-  final String idGroup;
+  final Group group;
   final String idCreator;
-  final String idFirstPayer;
-  final String currencyCode;
 
-  StartCreatingBill(this.idGroup, this.idCreator, this.idFirstPayer, this.currencyCode);
+  StartCreatingBill(this.group, this.idCreator);
 }
 
 class BillNameChangedAction {
@@ -67,6 +66,23 @@ class BillMoneyChangedAction {
   final int newMoney;
 
   BillMoneyChangedAction(this.newMoney);
+}
+
+class BillDebtorWasAddedAction {
+  final int index;
+
+  BillDebtorWasAddedAction(this.index);
+}
+
+class BillDebtorWasDeletedAction {
+  final int index;
+
+  BillDebtorWasDeletedAction(this.index);
+}
+
+class RemoveNegatedDebtorsAction {
+  
+  RemoveNegatedDebtorsAction();
 }
 
 class BillPayersChangedAction {

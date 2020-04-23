@@ -8,13 +8,14 @@ import 'package:flutter_redux/flutter_redux.dart';
 
 class PostBillDialog extends StatelessWidget {
 
-  PostBillDialog();
+  final Bill bill;
+
+  PostBillDialog({this.bill});
 
   @override
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(converter: (store) {
       return new _ViewModel(
-        bill: store.state.billState.bill,
         idToken: store.state.firebaseState.idTokenUser,
       );
     }, builder: (BuildContext context, _ViewModel vm) {
@@ -25,8 +26,8 @@ class PostBillDialog extends StatelessWidget {
   Widget _postDialogView(BuildContext context, _ViewModel vm) {
     final BillBloc _bloc = BillBloc();
 
-    _bloc.postGroup(
-        vm.bill,
+    _bloc.postBill(
+        this.bill,
         vm.idToken);
 
     return StreamBuilder<Response<bool>>(
@@ -90,11 +91,9 @@ class PostBillDialog extends StatelessWidget {
 }
 
 class _ViewModel {
-  final Bill bill;
   final String idToken;
 
   _ViewModel({
-    @required this.bill,
     @required this.idToken
   });
 }

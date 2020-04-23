@@ -9,14 +9,6 @@ class BillRepository {
 
   Future<bool> createBill(Bill bill, String idToken) async {
     final String url = Url.apiBaseUrl + "/bills";
-    print(bill.idBill);
-    print(bill.idGroup);
-    print(bill.idCreator);
-    print(bill.money);
-    print(bill.name);
-    print(bill.debtors);
-    print(bill.payers);
-    print(bill.date);
 
     var requestBody = jsonEncode(bill);
     final response = await _provider.post(url, requestBody, idToken);

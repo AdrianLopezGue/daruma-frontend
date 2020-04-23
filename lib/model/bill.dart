@@ -22,7 +22,7 @@ class Bill {
       this.debtors,
       this.idCreator});
 
-  factory Bill.initial(){
+  factory Bill.initial() {
     return new Bill(
       idBill: '',
       idGroup: '',
@@ -45,8 +45,7 @@ class Bill {
       String currencyCode,
       List<Participant> payers,
       List<Participant> debtors,
-      String idCreator      
-      }) {
+      String idCreator}) {
     return Bill(
         idBill: idBill ?? this.idBill,
         idGroup: idGroup ?? this.idGroup,
@@ -56,8 +55,7 @@ class Bill {
         currencyCode: currencyCode ?? this.currencyCode,
         payers: payers ?? this.payers,
         debtors: debtors ?? this.debtors,
-        idCreator: idCreator ?? this.idCreator        
-        );
+        idCreator: idCreator ?? this.idCreator);
   }
 
   Map toJson() {
@@ -65,11 +63,13 @@ class Bill {
         ? this.payers.map((payer) => payer.toJson()).toList()
         : null;
 
-    List<Map> debtors = this.debtors != null
-        ? this.debtors.map((debtor) => debtor.toJson()).toList()
+    List<Participant> finalDebtors = this.debtors.where((debtor) => debtor.money != -1).toList();
+
+    List<Map> debtors = finalDebtors != null
+        ? finalDebtors.map((debtor) => debtor.toJson()).toList()
         : null;
 
-    return {
+    var json = {
       'billId': this.idBill,
       'groupId': this.idGroup,
       'name': this.name,
@@ -80,6 +80,8 @@ class Bill {
       'debtors': debtors,
       'creatorId': this.idCreator,
     };
+
+    return json;
   }
 
   Bill.fromJson(Map<String, dynamic> json) {
@@ -94,11 +96,11 @@ class Bill {
     this.idCreator = json['creatorId'];
   }
 
-  List<Participant> _parseParticipants(Map<String, dynamic> participants){
-
+  List<Participant> _parseParticipants(Map<String, dynamic> participants) {
     var list = participants as List;
-    List<Participant> billParticipants = list.map((participant) => Participant.fromJson(participant)).toList();
-    
+    List<Participant> billParticipants =
+        list.map((participant) => Participant.fromJson(participant)).toList();
+
     return billParticipants;
   }
 }

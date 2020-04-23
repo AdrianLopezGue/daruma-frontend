@@ -24,7 +24,7 @@ class BillBloc {
     _billControllerGroups = BehaviorSubject<Response<List<Bill>>>();
   }
 
-  postGroup(Bill bill, String idToken) async {
+  postBill(Bill bill, String idToken) async {
     billSink.add(Response.loading('Post new bill.'));
     try {
       bool billResponse = await _billRepository.createBill(bill, idToken);
@@ -35,7 +35,7 @@ class BillBloc {
     }
   }
 
-  getGroups(String idToken) async {
+  getBills(String idToken) async {
     billSinkGroups.add(Response.loading('Get bills.'));
     try {
       List<Bill> billResponse = await _billRepository.getBills(idToken);
