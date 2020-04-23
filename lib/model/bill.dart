@@ -81,8 +81,6 @@ class Bill {
       'creatorId': this.idCreator,
     };
 
-    print(json);
-
     return json;
   }
 
@@ -90,16 +88,16 @@ class Bill {
     this.idBill = json['_id'];
     this.idGroup = json['groupId'];
     this.name = json['name'];
-    this.date = json['date'];
+    this.date = DateTime.parse(json['date']);
     this.money = json['money'];
     this.currencyCode = json['currencyCode'];
     this.payers = _parseParticipants(json['payers']);
-    this.payers = _parseParticipants(json['debtors']);
+    this.debtors = _parseParticipants(json['debtors']);
     this.idCreator = json['creatorId'];
   }
 
-  List<Participant> _parseParticipants(Map<String, dynamic> participants) {
-    var list = participants as List;
+  List<Participant> _parseParticipants(List<dynamic> participants) {
+    var list = participants;
     List<Participant> billParticipants =
         list.map((participant) => Participant.fromJson(participant)).toList();
 
