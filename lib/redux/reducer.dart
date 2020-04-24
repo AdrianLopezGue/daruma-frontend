@@ -32,7 +32,8 @@ GroupState _reduceGroupState(AppState state, dynamic action) {
   if (action is StartLoadingGroupAction) {
     newState = newState.copyWith(isLoading: true, loadingError: false);
   } else if (action is LoadingGroupSuccessAction) {
-    newState = newState.copyWith(group: action.group, isLoading: false, loadingError: false);
+    newState = newState.copyWith(
+        group: action.group, isLoading: false, loadingError: false);
   } else if (action is LoadingGroupFailedAction) {
     newState =
         newState.copyWith(group: null, isLoading: false, loadingError: true);
@@ -47,20 +48,23 @@ BillState _reduceBillState(AppState state, dynamic action) {
     newState = BillState.initial();
 
     var uuid = new Uuid();
-    Participant firstPayer =
-        new Participant(idParticipant: action.group.members.first.idMember, money: 0);
+    Participant firstPayer = new Participant(
+        idParticipant: action.group.members.first.idMember, money: 0);
 
     newState = newState.copyWith(
-      bill: newState.bill.copyWith(
-        idBill: uuid.v4(),
-        idGroup: action.group.idGroup,
-        currencyCode: action.group.currencyCode,
-        payers: [firstPayer],
-        debtors: action.group.members.map((member) => Participant(idParticipant: member.idMember, name: member.name, money: 0)).toList(),
-        idCreator: action.idCreator,
-        money: 0
-      )
-    );
+        bill: newState.bill.copyWith(
+            idBill: uuid.v4(),
+            idGroup: action.group.idGroup,
+            currencyCode: action.group.currencyCode,
+            payers: [firstPayer],
+            debtors: action.group.members
+                .map((member) => Participant(
+                    idParticipant: member.idMember,
+                    name: member.name,
+                    money: 0))
+                .toList(),
+            idCreator: action.idCreator,
+            money: 0));
   } else if (action is BillNameChangedAction) {
     newState =
         newState.copyWith(bill: newState.bill.copyWith(name: action.newName));
@@ -68,44 +72,63 @@ BillState _reduceBillState(AppState state, dynamic action) {
     newState =
         newState.copyWith(bill: newState.bill.copyWith(date: action.newDate));
   } else if (action is BillMoneyChangedAction) {
-    var count = newState.bill.debtors.where((debtor) => debtor.money != -1).length;
+    var count =
+        newState.bill.debtors.where((debtor) => debtor.money != -1).length;
 
-    List<Participant> newDebtors = newState.bill.debtors.map((debtor){
-      if(debtor.money != -1){
-        return Participant(idParticipant: debtor.idParticipant, name: debtor.name, money: (action.newMoney~/count)); 
-      }
-      else{
-        return Participant(idParticipant: debtor.idParticipant, name: debtor.name, money: -1); 
+    List<Participant> newDebtors = newState.bill.debtors.map((debtor) {
+      if (debtor.money != -1) {
+        return Participant(
+            idParticipant: debtor.idParticipant,
+            name: debtor.name,
+            money: (action.newMoney ~/ count));
+      } else {
+        return Participant(
+            idParticipant: debtor.idParticipant, name: debtor.name, money: -1);
       }
     }).toList();
 
-    newState =
-        newState.copyWith(bill: newState.bill.copyWith(money: action.newMoney, debtors: newDebtors));
+    List<Participant> newPayers = newState.bill.payers
+        .map((payer) => Participant(
+            idParticipant: payer.idParticipant,
+            name: payer.name,
+            money: action.newMoney ~/ newState.bill.payers.length))
+        .toList();
 
+    newState = newState.copyWith(
+        bill: newState.bill.copyWith(
+            money: action.newMoney, debtors: newDebtors, payers: newPayers));
   } else if (action is BillDebtorWasDeletedAction) {
     newState.bill.debtors[action.index].money = -1;
-    var count = newState.bill.debtors.where((debtor) => debtor.money != -1).length;
+    var count =
+        newState.bill.debtors.where((debtor) => debtor.money != -1).length;
 
-    List<Participant> newDebtors = newState.bill.debtors.map((debtor){
-      if(debtor.money != -1){
-        return Participant(idParticipant: debtor.idParticipant, name: debtor.name, money: (newState.bill.money~/count)); 
-      }
-      else{
-        return Participant(idParticipant: debtor.idParticipant, name: debtor.name, money: -1); 
+    List<Participant> newDebtors = newState.bill.debtors.map((debtor) {
+      if (debtor.money != -1) {
+        return Participant(
+            idParticipant: debtor.idParticipant,
+            name: debtor.name,
+            money: (newState.bill.money ~/ count));
+      } else {
+        return Participant(
+            idParticipant: debtor.idParticipant, name: debtor.name, money: -1);
       }
     }).toList();
     newState =
         newState.copyWith(bill: newState.bill.copyWith(debtors: newDebtors));
   } else if (action is BillDebtorWasAddedAction) {
     newState.bill.debtors[action.index].money = 0;
-    var count = newState.bill.debtors.where((debtor) => debtor.money != -1).length;
+    var count =
+        newState.bill.debtors.where((debtor) => debtor.money != -1).length;
 
-    List<Participant> newDebtors = newState.bill.debtors.map((debtor){
-      if(debtor.money != -1){
-        return Participant(idParticipant: debtor.idParticipant, name: debtor.name, money: (newState.bill.money~/count)); 
-      }
-      else{
-        return Participant(idParticipant: debtor.idParticipant, name: debtor.name, money: -1); 
+    List<Participant> newDebtors = newState.bill.debtors.map((debtor) {
+      if (debtor.money != -1) {
+        return Participant(
+            idParticipant: debtor.idParticipant,
+            name: debtor.name,
+            money: (newState.bill.money ~/ count));
+      } else {
+        return Participant(
+            idParticipant: debtor.idParticipant, name: debtor.name, money: -1);
       }
     }).toList();
     newState =
@@ -113,7 +136,7 @@ BillState _reduceBillState(AppState state, dynamic action) {
   } else if (action is BillPayersChangedAction) {
     newState = newState.copyWith(
         bill: newState.bill.copyWith(payers: action.newPayers));
-  } 
+  }
 
   return newState;
 }
