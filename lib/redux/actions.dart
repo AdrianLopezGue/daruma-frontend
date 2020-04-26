@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:daruma/model/group.dart';
-import 'package:daruma/model/member.dart';
 import 'package:daruma/model/participant.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
