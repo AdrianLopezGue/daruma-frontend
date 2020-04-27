@@ -1,5 +1,6 @@
 import 'package:daruma/model/group.dart';
 import 'package:daruma/redux/index.dart';
+import 'package:daruma/ui/pages/welcome.page.dart';
 import 'package:daruma/ui/widget/balance-list.widget.dart';
 import 'package:daruma/ui/widget/create-bill-floating-button.widget.dart';
 import 'package:daruma/util/colors.dart';
@@ -21,38 +22,41 @@ class GroupBalance extends StatelessWidget {
 
   Widget _balanceView(BuildContext context, _ViewModel vm) {
     return Scaffold(
-        body: ListView(
+      appBar: new AppBar(
+          title: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-            SizedBox(height: 40),
+              Row(
+                children: <Widget>[
+                  Text(vm.group.name),
+                ],
+              ),
+              SizedBox(height: 5.0,),
+              Row(
+                children: <Widget>[
+                  Text(vm.group.getMembersAsString(), style: GoogleFonts.aBeeZee(
+                                fontSize: 12, textStyle: TextStyle(color: white)),),
+                ],
+              )
+            ],
+          ),
+          leading: BackButton(color: Colors.white, onPressed: (){
+            Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) {
+                return WelcomeScreen();
+              },
+            ),
+          );
+          },),
+          ),
+        body: SingleChildScrollView(
+            child:
             SafeArea(
               child: Padding(
                 padding: const EdgeInsets.only(top: 15.0, left: 25.0),
                 child: Column(
                   children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          vm.group.name,
-                          style: GoogleFonts.aBeeZee(
-                              fontSize: 30, textStyle: TextStyle(color: black)),
-                        ),
-                        BackButton(color: Colors.grey),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            vm.group.getMembersAsString(),
-                            style: GoogleFonts.aBeeZee(
-                                fontSize: 15,
-                                textStyle: TextStyle(color: redPrimaryColor)),
-                          ),
-                        ],
-                      ),
-                    ),
                     Padding(
                       padding: const EdgeInsets.only(top: 15.0),
                       child: Row(
@@ -60,12 +64,16 @@ class GroupBalance extends StatelessWidget {
                           Text(
                             "BALANCES",
                             style: GoogleFonts.aBeeZee(
-                                fontSize: 15,
+                                fontSize: 24,
                                 textStyle: TextStyle(color: black)),
                           ),
                         ],
                       ),
                     ),
+                    Divider(
+                        color: black,
+                        endIndent: 25.0,
+                      ),
                     Padding(
                       padding: const EdgeInsets.only(top: 15.0),
                       child: Row(
@@ -79,7 +87,6 @@ class GroupBalance extends StatelessWidget {
                 ),
               ),
             ),
-                  ] 
         ),
         floatingActionButton: NewBillFloatingButton());
   }

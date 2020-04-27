@@ -18,9 +18,9 @@ class CreateBillPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        shrinkWrap: true,
-        children: <Widget>[
+      appBar: new AppBar(title: new Text("Nuevo Gasto")),
+      body: SingleChildScrollView(
+        child:
           Container(
             color: white,
             child: Padding(
@@ -29,29 +29,11 @@ class CreateBillPage extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      BackButton(color: Colors.grey),
-                    ],
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Text(
-                          'Añadir gasto',
-                          style: GoogleFonts.aBeeZee(
-                              fontSize: 30, textStyle: TextStyle(color: black)),
-                        ),
-                      ),
-                    ],
-                  ),
                   NewBillForm()
                 ],
               ),
             ),
           )
-        ],
       ),
     );
   }
@@ -173,7 +155,7 @@ class _NewBillFormState extends State<NewBillForm> {
                 },
               ),
             ),
-            SizedBox(height: 30.0),
+            SizedBox(height: 15.0),
             Container(
               alignment: Alignment.topCenter,
               child: Row(
@@ -196,7 +178,7 @@ class _NewBillFormState extends State<NewBillForm> {
                 ],
               ),
             ),
-            SizedBox(height: 30.0),
+            SizedBox(height: 15.0),
             Row(
               children: <Widget>[
                 Text("Para quién"),
@@ -269,7 +251,8 @@ class _NewBillFormState extends State<NewBillForm> {
             elevation: 5,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-          )
+          ),
+          SizedBox(height: 15.0),
           ],
         ));
   }

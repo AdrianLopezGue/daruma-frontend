@@ -27,17 +27,18 @@ class GroupsList extends StatelessWidget {
                 break;
 
               case Status.COMPLETED:
-                return Container(
-                    height: 300.0, // Change as per your requirement
-                    width: 300.0,
+                return Expanded(
                     child: ListView.builder(
-                        itemCount: snapshot.data.data.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),                            
-                            child: GroupButton(idGroup: snapshot.data.data[index].idGroup, name: snapshot.data.data[index].name),
-                          );
-                        }));
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                      itemCount: snapshot.data.data.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),                            
+                          child: GroupButton(idGroup: snapshot.data.data[index].idGroup, name: snapshot.data.data[index].name),
+                        );
+                      }),
+                );
                 break;
               case Status.ERROR:
                 return Card(

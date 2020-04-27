@@ -1,16 +1,16 @@
-import 'package:daruma/model/bill.dart';
+import 'package:daruma/model/transaction.dart';
 import 'package:daruma/redux/state.dart';
-import 'package:daruma/services/bloc/bill.bloc.dart';
+import 'package:daruma/services/bloc/transaction.bloc.dart';
 import 'package:daruma/services/networking/index.dart';
 import 'package:daruma/ui/pages/group.page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
-class PostBillDialog extends StatelessWidget {
+class PostTransferDialog extends StatelessWidget {
 
-  final Bill bill;
+  final Transaction transaction;
 
-  PostBillDialog({this.bill});
+  PostTransferDialog({this.transaction});
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +24,14 @@ class PostBillDialog extends StatelessWidget {
   }
 
   Widget _postDialogView(BuildContext context, _ViewModel vm) {
-    final BillBloc _bloc = BillBloc();
+    final TransactionBloc _bloc = TransactionBloc();
 
-    _bloc.postBill(
-        this.bill,
+    _bloc.postTransaction(
+        this.transaction,
         vm.idToken);
 
     return StreamBuilder<Response<bool>>(
-        stream: _bloc.billStream,
+        stream: _bloc.transactionStream,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             switch (snapshot.data.status) {

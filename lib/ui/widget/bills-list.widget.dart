@@ -27,10 +27,10 @@ class BillsList extends StatelessWidget {
                 break;
 
               case Status.COMPLETED:
-                return Container(
-                    height: 300.0, // Change as per your requirement
-                    width: 300.0,
+                return Expanded(
                     child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: snapshot.data.data.length,
                         itemBuilder: (context, index) {
                           return Padding(

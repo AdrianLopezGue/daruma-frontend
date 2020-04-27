@@ -20,6 +20,7 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: new AppBar(title: new Text("Crear un grupo"), backgroundColor: redPrimaryColor,),
       body: ListView(
         shrinkWrap: true,
         children: <Widget>[
@@ -29,23 +30,6 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
               padding: const EdgeInsets.only(left: 25.0, top: 15.0),
               child: Column(
                 children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      BackButton(color: Colors.grey),
-                    ],
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Text(
-                          'Crear un grupo',
-                          style: GoogleFonts.aBeeZee(
-                              fontSize: 30, textStyle: TextStyle(color: black)),
-                        ),
-                      ),
-                    ],
-                  ),
                   NewGroupForm(),
                 ],
               ),

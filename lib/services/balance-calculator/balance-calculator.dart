@@ -13,7 +13,6 @@ class BalanceCalculator {
   }
 
   void _calculateBalance(HashMap<String, int> transactions) {
-    print(transactions);
 
     var maxValue = transactions.values.reduce((curr, next) => curr > next? curr: next);
     var minValue = transactions.values.reduce((curr, next) => curr < next? curr: next);
@@ -28,8 +27,6 @@ class BalanceCalculator {
             transactions.remove(minKey);
             transactions[maxKey] = result;
             transactions[minKey] = 0;
-            print("first");
-            print(transactions);
         } else {
             finalTransactions.add(new Transaction(sender: minKey, beneficiary: maxKey, money: maxValue.abs()));
 
@@ -37,10 +34,6 @@ class BalanceCalculator {
             transactions.remove(minKey);
             transactions[maxKey] = 0;
             transactions[minKey] = result;
-            print("second");
-
-
-            print(transactions);
         }
 
         _calculateBalance(transactions);

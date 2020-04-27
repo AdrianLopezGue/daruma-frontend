@@ -12,6 +12,7 @@ class BalanceBloc {
 
   StreamSink<Response<List<Transaction>>> get balanceSink =>
       _balanceController.sink;
+      
 
   Stream<Response<List<Transaction>>> get balanceStream =>
       _balanceController.stream;

@@ -58,51 +58,104 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
   Widget _loginView(BuildContext context, _ViewModel vm) {
     var scaffold = Scaffold(
+      appBar: new AppBar(title: new Text("Daruma"), backgroundColor: redPrimaryColor, actions: <Widget>[
+        PopupMenuButton<String>(
+            onSelected: (choice) => handleClick(choice, context),
+            itemBuilder: (BuildContext context) {
+              return {'Crear grupo', 'Configuracion'}.map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
+            },
+          ),
+      ],),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: redPrimaryColor,
+              ),
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      CircleAvatar(
+                        radius: 35,
+                        backgroundColor: redPrimaryColor,
+                        backgroundImage: NetworkImage(vm.user.photoUrl),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 20.0),
+                  Row(
+                    children: <Widget>[
+                      Text(
+                        vm.user.displayName,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 5.0),
+                  Row(children: <Widget>[
+                    Text(
+                        vm.user.email,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                        ),
+                      ),
+                  ],)
+                ],
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.home),
+              title: Text('Inicio'),
+              onTap: (){
+                Navigator.of(context).pop();
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text('Configuración'),
+            ),
+            ListTile(
+              leading: Icon(Icons.power_settings_new),
+              title: Text('Cerrar sesión'),
+              onTap: () {
+                vm.logout();
+              },
+            ),
+          ],
+        ),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            SizedBox(height: 40),
-            SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          'Bienvenido,',
-                          style: GoogleFonts.aBeeZee(
-                              fontSize: 30, textStyle: TextStyle(color: black)),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          vm.user.displayName,
-                          style: GoogleFonts.aBeeZee(
-                              fontSize: 20,
-                              textStyle: TextStyle(color: redPrimaryColor)),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(height: 20),
             Padding(
-              padding: const EdgeInsets.only(left: 15.0, top: 15.0),
+              padding: const EdgeInsets.only(left: 25.0, top: 30.0),
               child: Row(
                 children: <Widget>[
                   Text(
                     "Tus grupos",
                     style: GoogleFonts.aBeeZee(
-                        fontSize: 25,
-                        textStyle: TextStyle(color: black),
-                        fontWeight: FontWeight.bold),
+                        fontSize: 24, textStyle: TextStyle(color: black)),
                   ),
                 ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 15.0, left: 25.0),
+              child: Divider(
+                color: black,
+                endIndent: 25.0,
               ),
             ),
             Padding(
@@ -113,22 +166,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                 ],
               ),
             ),
-            RaisedButton(
-              onPressed: () {
-                vm.logout();
-              },
-              color: Colors.deepPurple,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Sign Out',
-                  style: TextStyle(fontSize: 25, color: Colors.white),
-                ),
-              ),
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(40)),
-            )
           ],
         ),
       ),
@@ -148,6 +185,24 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     );
     return scaffold;
   }
+
+  void handleClick(String value, BuildContext context) {
+    switch (value) {
+      case 'Crear grupo': {
+        Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) {
+                return CreateGroupPage();
+              },
+            ),
+          );
+      }
+      break;
+        
+      case 'Configuración':
+        break;
+    }
+}
 }
 
 class _ViewModel {
