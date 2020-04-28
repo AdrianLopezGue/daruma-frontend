@@ -1,4 +1,5 @@
 import 'package:daruma/model/participant.dart';
+import 'package:daruma/model/user.dart';
 import 'package:daruma/redux/index.dart';
 import 'package:daruma/redux/state.dart';
 import 'package:uuid/uuid.dart';
@@ -18,10 +19,15 @@ AppState mainReducer(AppState state, dynamic action) {
 
 UserState _reduceUserState(AppState state, dynamic action) {
   UserState newState = state.userState;
+  
 
   if (action is UserLoadedAction) {
     newState = newState.copyWith(
         user: action.user, idTokenUser: action.idTokenUser, photoUrl: action.photoUrl);
+  } else if(action is UserUpdatedAction){
+    User newUser = newState.user.copyWith(name: action.name, paypal: action.paypal);
+    newState = newState.copyWith(
+        user: newUser);
   }
   return newState;
 }

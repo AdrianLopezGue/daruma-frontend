@@ -42,7 +42,7 @@ class GroupButton extends StatelessWidget {
                   width: 300.0,
                   child: Row(
                     children: <Widget>[
-                      Text("Post completed!"),
+                      Text("Error loading groups"),
                       FlatButton(
                         onPressed: () {
                           Navigator.pop(context, true);

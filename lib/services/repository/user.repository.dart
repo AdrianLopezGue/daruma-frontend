@@ -28,4 +28,19 @@ class UserRepository {
 
     return user;
   }
+
+  Future<bool> updateUser(String idUser, String name, String paypal, String idToken) async {
+    final String url = Url.apiBaseUrl + "/users/" + idUser;
+
+    final Map body = {
+      'name': name,
+      'paypal': paypal,
+    };
+
+    var requestBody = jsonEncode(body);
+
+    final response = await _provider.put(url, requestBody, idToken);
+
+    return response;
+  }
 }

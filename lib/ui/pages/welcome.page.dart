@@ -2,6 +2,7 @@ import 'package:daruma/model/user.dart';
 import 'package:daruma/redux/index.dart';
 import 'package:daruma/services/dynamic_link/dynamic_links.dart';
 import 'package:daruma/ui/pages/create-group.page.dart';
+import 'package:daruma/ui/pages/edit-profile.page.dart';
 import 'package:daruma/ui/widget/groups-list.widget.dart';
 import 'package:daruma/util/colors.dart';
 import 'package:flutter/material.dart';
@@ -48,19 +49,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
   Widget _loginView(BuildContext context, _ViewModel vm) {
     var scaffold = Scaffold(
-      appBar: new AppBar(title: new Text("Daruma"), backgroundColor: redPrimaryColor, actions: <Widget>[
-        PopupMenuButton<String>(
-            onSelected: (choice) => handleClick(choice, context),
-            itemBuilder: (BuildContext context) {
-              return {'Crear grupo', 'Configuracion'}.map((String choice) {
-                return PopupMenuItem<String>(
-                  value: choice,
-                  child: Text(choice),
-                );
-              }).toList();
-            },
-          ),
-      ],),
+      appBar: new AppBar(title: new Text("Daruma"), backgroundColor: redPrimaryColor),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -115,6 +104,15 @@ class _WelcomeScreenState extends State<WelcomeScreen>
             ListTile(
               leading: Icon(Icons.settings),
               title: Text('Configuración'),
+              onTap: (){
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return EditProfilePage(name: vm.user.name, paypal: vm.user.paypal,);
+                    },
+                  ),
+                );
+              },
             ),
             ListTile(
               leading: Icon(Icons.power_settings_new),
@@ -175,24 +173,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     );
     return scaffold;
   }
-
-  void handleClick(String value, BuildContext context) {
-    switch (value) {
-      case 'Crear grupo': {
-        Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) {
-                return CreateGroupPage();
-              },
-            ),
-          );
-      }
-      break;
-        
-      case 'Configuración':
-        break;
-    }
-}
 }
 
 class _ViewModel {

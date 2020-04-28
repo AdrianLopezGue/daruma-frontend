@@ -23,6 +23,13 @@ class UserLoadedAction {
   UserLoadedAction(this.user, this.photoUrl, this.idTokenUser);
 }
 
+class UserUpdatedAction {
+  final String name;
+  final String paypal;
+
+  UserUpdatedAction(this.name, this.paypal);
+}
+
 class UserIsNew {
   final bool userIsNew;
 

@@ -1,15 +1,16 @@
-import 'package:daruma/util/colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final String hintText;
   final Function validator;
   final Function onSaved;
+  final String initialValue;
 
   CustomTextFormField({
     this.hintText,
     this.validator,
     this.onSaved,
+    this.initialValue,
   });
 
   @override
@@ -19,11 +20,12 @@ class CustomTextFormField extends StatelessWidget {
         hintText: hintText,
         contentPadding: EdgeInsets.all(15.0),
         filled: true,
-        fillColor: white,
+        fillColor: Colors.transparent,
       ),
       validator: validator,
       onSaved: onSaved,
       onChanged: onSaved,
+      initialValue: initialValue,
     );
   }
 }
