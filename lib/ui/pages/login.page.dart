@@ -1,9 +1,9 @@
 import 'dart:async';
 
+import 'package:daruma/model/user.dart';
 import 'package:daruma/redux/index.dart';
 import 'package:daruma/ui/widget/index.dart';
 import 'package:daruma/util/colors.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:daruma/ui/pages/welcome.page.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -13,7 +13,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(converter: (store) {
       return new _ViewModel(
-          user: store.state.firebaseState.firebaseUser,
+          user: store.state.userState.user,
           login: () {
             final result = LoginWithGoogleAction();
 
@@ -63,7 +63,7 @@ class LoginPage extends StatelessWidget {
 }
 
 class _ViewModel {
-  final FirebaseUser user;
+  final User user;
   final Function() login;
 
   _ViewModel({

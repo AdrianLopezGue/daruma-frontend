@@ -35,7 +35,7 @@ class _MembersButtonState extends State<MembersButton> {
               membersNames.isEmpty
                   ? widget.members.first.name
                   : (membersNames.length.toString() + "+ PERSONAS"),
-              style: GoogleFonts.aBeeZee(
+              style: GoogleFonts.roboto(
                   textStyle: TextStyle(fontSize: 15, color: Colors.white)),
             ),
           ],

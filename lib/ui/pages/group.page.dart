@@ -11,7 +11,7 @@ class GroupPage extends StatelessWidget {
       title: 'Group',
       theme: ThemeData(
           primaryColor: redPrimaryColor,
-          fontFamily: 'Montserrat'),
+          fontFamily: 'roboto'),
       home: ChangeNotifierProvider<BottomNavigationBarProvider>(
         child: BottomNavigationBarWidget(),
         create: (BuildContext context) => BottomNavigationBarProvider(),

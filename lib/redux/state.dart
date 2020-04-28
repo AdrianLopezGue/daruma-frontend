@@ -1,24 +1,24 @@
 import 'package:daruma/model/bill.dart';
 import 'package:daruma/model/group.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:daruma/model/user.dart';
 import 'package:flutter/material.dart';
 
 class AppState {
-  final FirebaseState firebaseState;
+  final UserState userState;
   final GroupState groupState;
   final BillState billState;
   final bool userIsNew;
 
   const AppState({
-    @required this.firebaseState,
+    @required this.userState,
     @required this.groupState,
     @required this.billState,
     @required this.userIsNew,
   });
 
-  AppState copyWith({FirebaseState firebaseState, GroupState groupState, BillState billState}) {
+  AppState copyWith({UserState userState, GroupState groupState, BillState billState}) {
     return new AppState(
-        firebaseState: firebaseState ?? this.firebaseState,
+        userState: userState ?? this.userState,
         groupState: groupState ?? this.groupState,
         billState: billState ?? this.billState,
         userIsNew: userIsNew ?? this.userIsNew);
@@ -26,7 +26,7 @@ class AppState {
 
   factory AppState.initial() {
     return AppState(
-        firebaseState: FirebaseState.initial(),
+        userState: UserState.initial(),
         groupState: GroupState.initial(),
         billState: BillState.initial(),
         userIsNew: false);
@@ -34,20 +34,22 @@ class AppState {
 }
 
 @immutable
-class FirebaseState {
-  final FirebaseUser firebaseUser;
+class UserState {
+  final User user;
+  final String photoUrl;
   final String idTokenUser;
 
-  const FirebaseState(
-      {@required this.firebaseUser, @required this.idTokenUser});
+  const UserState(
+      {@required this.user, @required this.photoUrl, @required this.idTokenUser});
 
-  factory FirebaseState.initial() {
-    return new FirebaseState(firebaseUser: null, idTokenUser: null);
+  factory UserState.initial() {
+    return new UserState(user: null, photoUrl:null, idTokenUser: null);
   }
 
-  FirebaseState copyWith({FirebaseUser firebaseUser, String idTokenUser}) {
-    return new FirebaseState(
-        firebaseUser: firebaseUser ?? this.firebaseUser,
+  UserState copyWith({User user, String photoUrl, String idTokenUser}) {
+    return new UserState(
+        user: user ?? this.user,
+        photoUrl: photoUrl ?? this.photoUrl,
         idTokenUser: idTokenUser ?? this.idTokenUser);
   }
 }

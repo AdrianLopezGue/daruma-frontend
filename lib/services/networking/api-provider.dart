@@ -53,6 +53,9 @@ class ApiProvider {
 
       case 403:
         throw UnauthorisedException(response.body);
+      
+      case 404:
+        return null;
       case 500:
 
       default:

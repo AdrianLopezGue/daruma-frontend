@@ -58,7 +58,7 @@ class _NewBillFormState extends State<NewBillForm> {
     return new StoreConnector<AppState, _ViewModel>(
       converter: (store) {
         return new _ViewModel(
-            idUser: store.state.firebaseState.firebaseUser.uid,
+            idUser: store.state.userState.user.idUser,
             group: store.state.groupState.group,
             bill: store.state.billState.bill);
       },
@@ -69,7 +69,7 @@ class _NewBillFormState extends State<NewBillForm> {
         this.nameDebtors = store.state.billState.bill.debtors.map((debtor) => debtor.name).toList();
         store.dispatch(StartCreatingBill(
             store.state.groupState.group,
-            store.state.firebaseState.firebaseUser.uid
+            store.state.userState.user.idUser
             ));
       },
     );
@@ -241,9 +241,9 @@ class _NewBillFormState extends State<NewBillForm> {
                   ),
                   Text(
                     'Guardar',
-                    style: GoogleFonts.aBeeZee(
-                        textStyle:
+                    style: GoogleFonts.roboto(textStyle:
                             TextStyle(fontSize: 20, color: Colors.white)),
+                        
                   ),
                 ],
               ),

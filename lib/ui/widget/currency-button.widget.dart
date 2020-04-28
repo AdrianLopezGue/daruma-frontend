@@ -33,7 +33,7 @@ class _CurrencyButtonState extends State<CurrencyButton> {
           children: <Widget>[
             Text(
               _currentCode,
-              style: GoogleFonts.aBeeZee(
+              style: GoogleFonts.roboto(
                   textStyle: TextStyle(fontSize: 17, color: Colors.white)),
             ),
           ],

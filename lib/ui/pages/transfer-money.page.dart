@@ -32,7 +32,7 @@ class TranferMoneyPage extends StatelessWidget {
                           group.getMemberNameById(transaction.sender) +
                               " pagó a " +
                               group.getMemberNameById(transaction.beneficiary),
-                          style: GoogleFonts.aBeeZee(
+                          style: GoogleFonts.roboto(
                               fontSize: 20, textStyle: TextStyle(color: black)),
                         ),
                       ),
@@ -47,7 +47,7 @@ class TranferMoneyPage extends StatelessWidget {
                           (transaction.money / 100).toString() +
                               " " +
                               group.currencyCode,
-                          style: GoogleFonts.aBeeZee(
+                          style: GoogleFonts.roboto(
                               fontSize: 30,
                               textStyle: TextStyle(color: Colors.grey)),
                         ),
@@ -77,8 +77,8 @@ class TranferMoneyPage extends StatelessWidget {
                                 width: 5.0,
                               ),
                               Text(
-                                'Guardar',
-                                style: GoogleFonts.aBeeZee(
+                                'Liquidar',
+                                style: GoogleFonts.roboto(
                                     textStyle: TextStyle(
                                         fontSize: 20, color: Colors.white)),
                               ),

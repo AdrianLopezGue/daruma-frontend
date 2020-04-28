@@ -1,10 +1,10 @@
 import 'package:daruma/model/group.dart';
 import 'package:daruma/model/owner.dart';
+import 'package:daruma/model/user.dart';
 import 'package:daruma/redux/state.dart';
 import 'package:daruma/services/bloc/group.bloc.dart';
 import 'package:daruma/services/networking/index.dart';
 import 'package:daruma/ui/pages/welcome.page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
@@ -17,8 +17,8 @@ class PostDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(converter: (store) {
       return new _ViewModel(
-        user: store.state.firebaseState.firebaseUser,
-        idToken: store.state.firebaseState.idTokenUser,
+        user: store.state.userState.user,
+        idToken: store.state.userState.idTokenUser,
       );
     }, builder: (BuildContext context, _ViewModel vm) {
       return _postDialogView(context, vm);
@@ -29,8 +29,8 @@ class PostDialog extends StatelessWidget {
     final GroupBloc _bloc = GroupBloc();
 
     Owner owner = new Owner();
-    owner.idOwner = vm.user.uid;
-    owner.name = vm.user.displayName;
+    owner.idOwner = vm.user.idUser;
+    owner.name = vm.user.name;
 
     _bloc.postGroup(
         Group(
@@ -103,7 +103,7 @@ class PostDialog extends StatelessWidget {
 }
 
 class _ViewModel {
-  final FirebaseUser user;
+  final User user;
   final String idToken;
 
   _ViewModel({

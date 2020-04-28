@@ -1,7 +1,9 @@
+import 'package:daruma/model/user.dart';
 import 'package:daruma/redux/index.dart';
 import 'package:daruma/redux/state.dart';
 import 'package:daruma/services/repository/group.repository.dart';
 import 'package:daruma/services/repository/member.repository.dart';
+import 'package:daruma/services/repository/user.repository.dart';
 import 'package:daruma/util/keys.dart';
 import 'package:daruma/util/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -52,7 +54,25 @@ _handleLoginWithGoogle(Store<AppState> store, LoginWithGoogleAction action,
 
   final IdTokenResult token = await currentUser.getIdToken();
 
-  store.dispatch(UserLoadedAction(currentUser, token.token));
+  UserRepository userRepository = new UserRepository();
+  var systemUser = await userRepository.getUser(currentUser.uid, token.token);
+
+
+  if(systemUser != null){
+
+    store.dispatch(UserLoadedAction(systemUser, currentUser.photoUrl ,token.token));
+  }
+  else{
+    User newUser = new User();
+    newUser.idUser = currentUser.uid;
+    newUser.name = currentUser.displayName;
+    newUser.email = currentUser.email;
+
+    userRepository.createUser(newUser, token.token);
+
+    store.dispatch(UserLoadedAction(newUser, currentUser.photoUrl, token.token));
+  }
+
 
   action.completer.complete();
 }

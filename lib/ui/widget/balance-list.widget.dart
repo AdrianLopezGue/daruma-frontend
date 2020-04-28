@@ -53,7 +53,7 @@ class BalanceList extends StatelessWidget {
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
                       "Error recibiendo transactions",
-                      style: GoogleFonts.aBeeZee(
+                      style: GoogleFonts.roboto(
                           fontSize: 22, textStyle: TextStyle(color: white)),
                     ),
                   ),

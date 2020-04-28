@@ -3,15 +3,13 @@ import 'package:daruma/services/bloc/group.bloc.dart';
 import 'package:daruma/services/networking/response.dart';
 import 'package:daruma/ui/widget/group-button.widget.dart';
 import 'package:daruma/util/colors.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class GroupsList extends StatelessWidget {
-  final FirebaseUser user;
   final String idToken;
 
-  GroupsList({this.user, this.idToken});
+  GroupsList({this.idToken});
 
   Widget build(BuildContext context) {
     final GroupBloc _bloc = GroupBloc();
@@ -47,7 +45,7 @@ class GroupsList extends StatelessWidget {
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
                       "No hay grupos:(",
-                      style: GoogleFonts.aBeeZee(
+                      style: GoogleFonts.roboto(
                           fontSize: 22, textStyle: TextStyle(color: white)),
                     ),
                   ),

@@ -15,4 +15,17 @@ class UserRepository {
 
     return response;
   }
+
+  Future<User> getUser(String idUser, String idToken) async {
+    final response =
+        await _provider.get(Url.apiBaseUrl + "/users/"+ idUser, header: idToken);
+    
+    var user;
+
+    if(response != null){
+      user = User.fromJson(response);
+    } 
+
+    return user;
+  }
 }

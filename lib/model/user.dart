@@ -12,4 +12,10 @@ class User {
       'email': this.email,
     };
   }
+
+  User.fromJson(Map<String, dynamic> json) {
+    this.idUser = json['_id'];
+    this.name = json['name'];
+    this.email = json['email'];
+  }
 }

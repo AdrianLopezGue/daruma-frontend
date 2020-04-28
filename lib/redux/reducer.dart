@@ -4,24 +4,24 @@ import 'package:daruma/redux/state.dart';
 import 'package:uuid/uuid.dart';
 
 AppState mainReducer(AppState state, dynamic action) {
-  FirebaseState firebaseState = _reduceFirebaseState(state, action);
+  UserState userState = _reduceUserState(state, action);
   GroupState groupState = _reduceGroupState(state, action);
   BillState billState = _reduceBillState(state, action);
   bool userIsNew = _reduceUserIsNew(state, action);
 
   return AppState(
-      firebaseState: firebaseState,
+      userState: userState,
       groupState: groupState,
       billState: billState,
       userIsNew: userIsNew);
 }
 
-FirebaseState _reduceFirebaseState(AppState state, dynamic action) {
-  FirebaseState newState = state.firebaseState;
+UserState _reduceUserState(AppState state, dynamic action) {
+  UserState newState = state.userState;
 
   if (action is UserLoadedAction) {
     newState = newState.copyWith(
-        firebaseUser: action.firebaseUser, idTokenUser: action.idTokenUser);
+        user: action.user, idTokenUser: action.idTokenUser, photoUrl: action.photoUrl);
   }
   return newState;
 }

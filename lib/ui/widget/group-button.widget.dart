@@ -67,7 +67,7 @@ class GroupButton extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Text(
           name,
-          style: GoogleFonts.aBeeZee(
+          style: GoogleFonts.roboto(
               fontSize: 22, textStyle: TextStyle(color: white)),
         ),
       ),
@@ -97,7 +97,7 @@ class _ViewModel {
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
-      idToken: store.state.firebaseState.idTokenUser,
+      idToken: store.state.userState.idTokenUser,
       isLoading: store.state.groupState.isLoading,
       loadingError: store.state.groupState.loadingError,
       group: store.state.groupState.group,

@@ -108,7 +108,7 @@ class _NewGroupFormState extends State<NewGroupForm> {
               children: <Widget>[
                 Text(
                   'Miembros del grupo',
-                  style: GoogleFonts.aBeeZee(
+                  style: GoogleFonts.roboto(
                       fontSize: 18, textStyle: TextStyle(color: black)),
                 ),
               ],
@@ -135,7 +135,7 @@ class _NewGroupFormState extends State<NewGroupForm> {
               color: redPrimaryColor,
               child: new Text(
                 'Añadir personas al grupo',
-                style: GoogleFonts.aBeeZee(
+                style: GoogleFonts.roboto(
                     fontSize: 18, textStyle: TextStyle(color: white)),
               ),
               onPressed: () async {
@@ -213,7 +213,7 @@ class _NewGroupFormState extends State<NewGroupForm> {
                   ),
                   Text(
                     'Guardar',
-                    style: GoogleFonts.aBeeZee(
+                    style: GoogleFonts.roboto(
                         textStyle:
                             TextStyle(fontSize: 20, color: Colors.white)),
                   ),
@@ -231,12 +231,6 @@ class _NewGroupFormState extends State<NewGroupForm> {
 
   ListTile _buildListTile(Contact c, List<Item> list) {
     return ListTile(
-      leading: (c.avatar != null)
-          ? CircleAvatar(backgroundImage: MemoryImage(c.avatar))
-          : CircleAvatar(
-              child: Text((c.displayName[0] + c.displayName[1].toUpperCase()),
-                  style: TextStyle(color: Colors.white)),
-            ),
       title: Text(c.displayName ?? ""),
       subtitle: list.length >= 1 && list[0]?.value != null
           ? Text(list[0].value)

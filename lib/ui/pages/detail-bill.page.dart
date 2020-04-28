@@ -32,7 +32,7 @@ class DetailBillPage extends StatelessWidget {
                             padding: const EdgeInsets.all(10.0),
                             child: Text(
                               bill.name,
-                              style: GoogleFonts.aBeeZee(
+                              style: GoogleFonts.roboto(
                                   fontSize: 30, textStyle: TextStyle(color: black)),
                             ),
                           ),
@@ -47,7 +47,7 @@ class DetailBillPage extends StatelessWidget {
                               (bill.money / 100).toString() +
                                   " " +
                                   bill.currencyCode,
-                              style: GoogleFonts.aBeeZee(
+                              style: GoogleFonts.roboto(
                                   fontSize: 30,
                                   textStyle: TextStyle(color: Colors.grey)),
                             ),
@@ -65,7 +65,7 @@ class DetailBillPage extends StatelessWidget {
                         children: <Widget>[
                           Text(
                             "Fecha",
-                            style: GoogleFonts.aBeeZee(
+                            style: GoogleFonts.roboto(
                                 fontSize: 16,
                                 textStyle: TextStyle(color: Colors.grey)),
                           )
@@ -78,7 +78,7 @@ class DetailBillPage extends StatelessWidget {
                         children: <Widget>[
                           Text(
                             bill.date.toIso8601String().substring(0, 10),
-                            style: GoogleFonts.aBeeZee(
+                            style: GoogleFonts.roboto(
                                 fontSize: 14, textStyle: TextStyle(color: black)),
                           )
                         ],
@@ -90,7 +90,7 @@ class DetailBillPage extends StatelessWidget {
                         children: <Widget>[
                           Text(
                             "Pagado por",
-                            style: GoogleFonts.aBeeZee(
+                            style: GoogleFonts.roboto(
                                 fontSize: 16,
                                 textStyle: TextStyle(color: Colors.grey)),
                           )
@@ -103,7 +103,7 @@ class DetailBillPage extends StatelessWidget {
                         children: <Widget>[
                           Text(
                             this.payers.toString().substring(1, payers.toString().length-1),
-                            style: GoogleFonts.aBeeZee(
+                            style: GoogleFonts.roboto(
                                 fontSize: 14, textStyle: TextStyle(color: black)),
                           )
                         ],
@@ -115,7 +115,7 @@ class DetailBillPage extends StatelessWidget {
                         children: <Widget>[
                           Text(
                             "Para " + bill.debtors.length.toString() + " participantes",
-                            style: GoogleFonts.aBeeZee(
+                            style: GoogleFonts.roboto(
                                 fontSize: 16,
                                 textStyle: TextStyle(color: Colors.grey)),
                           )
@@ -128,7 +128,7 @@ class DetailBillPage extends StatelessWidget {
                         children: <Widget>[
                           Text(
                             this.debtors.toString().substring(1, debtors.toString().length-1),
-                            style: GoogleFonts.aBeeZee(
+                            style: GoogleFonts.roboto(
                                 fontSize: 14, textStyle: TextStyle(color: black)),
                           )
                         ],

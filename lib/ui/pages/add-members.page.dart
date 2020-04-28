@@ -1,4 +1,5 @@
 import 'package:contacts_service/contacts_service.dart';
+import 'package:daruma/util/colors.dart';
 import 'package:flutter/material.dart';
 
 class AddMembersPage extends StatefulWidget {
@@ -7,7 +8,7 @@ class AddMembersPage extends StatefulWidget {
   final String title;
   final String reloadLabel = 'Finalizar';
   final String fireLabel = 'Confirmar';
-  final Color floatingButtonColor = Colors.red;
+  final Color floatingButtonColor = redPrimaryColor;
   final IconData reloadIcon = Icons.refresh;
   final IconData fireIcon = Icons.check;
 
@@ -46,6 +47,7 @@ class _AddMembersPageState extends State<AddMembersPage> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(widget.title),
+        backgroundColor: redPrimaryColor,
       ),
       body: !_isLoading
           ? Container(
@@ -95,14 +97,6 @@ class _AddMembersPageState extends State<AddMembersPage> {
 
   ListTile _buildListTile(CustomContact c, List<Item> list) {
     return ListTile(
-      leading: (c.contact.avatar != null)
-          ? CircleAvatar(backgroundImage: MemoryImage(c.contact.avatar))
-          : CircleAvatar(
-              child: Text(
-                  (c.contact.displayName[0] +
-                      c.contact.displayName[1].toUpperCase()),
-                  style: TextStyle(color: Colors.white)),
-            ),
       title: Text(c.contact.displayName ?? ""),
       subtitle: list.length >= 1 && list[0]?.value != null
           ? Text(list[0].value)

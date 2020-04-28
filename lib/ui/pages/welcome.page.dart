@@ -1,11 +1,9 @@
 import 'package:daruma/model/user.dart';
 import 'package:daruma/redux/index.dart';
 import 'package:daruma/services/dynamic_link/dynamic_links.dart';
-import 'package:daruma/services/repository/user.repository.dart';
 import 'package:daruma/ui/pages/create-group.page.dart';
 import 'package:daruma/ui/widget/groups-list.widget.dart';
 import 'package:daruma/util/colors.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:daruma/ui/pages/login.page.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -28,21 +26,13 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(onInit: (store) {
       if (store.state.userIsNew == true) {
-        UserRepository userRepository = new UserRepository();
-
-        User user = new User();
-        user.idUser = store.state.firebaseState.firebaseUser.uid;
-        user.name = store.state.firebaseState.firebaseUser.displayName;
-        user.email = store.state.firebaseState.firebaseUser.email;
-
-        userRepository.createUser(user, store.state.firebaseState.idTokenUser);
-
         store.dispatch(UserIsNew(false));
       }
     }, converter: (store) {
       return new _ViewModel(
-        user: store.state.firebaseState.firebaseUser,
-        idToken: store.state.firebaseState.idTokenUser,
+        user: store.state.userState.user,
+        photoUrl: store.state.userState.photoUrl,
+        idToken: store.state.userState.idTokenUser,
         logout: () {
           store.dispatch(LogoutAction());
           Navigator.of(context).pushAndRemoveUntil(
@@ -86,7 +76,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                       CircleAvatar(
                         radius: 35,
                         backgroundColor: redPrimaryColor,
-                        backgroundImage: NetworkImage(vm.user.photoUrl),
+                        backgroundImage: NetworkImage(vm.photoUrl),
                       )
                     ],
                   ),
@@ -94,7 +84,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   Row(
                     children: <Widget>[
                       Text(
-                        vm.user.displayName,
+                        vm.user.name,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -145,7 +135,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                 children: <Widget>[
                   Text(
                     "Tus grupos",
-                    style: GoogleFonts.aBeeZee(
+                    style: GoogleFonts.roboto(
                         fontSize: 24, textStyle: TextStyle(color: black)),
                   ),
                 ],
@@ -162,7 +152,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
               padding: const EdgeInsets.only(left: 15.0),
               child: Row(
                 children: <Widget>[
-                  GroupsList(user: vm.user, idToken: vm.idToken),
+                  GroupsList(idToken: vm.idToken),
                 ],
               ),
             ),
@@ -206,12 +196,14 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 }
 
 class _ViewModel {
-  final FirebaseUser user;
+  final User user;
+  final String photoUrl;
   final String idToken;
   final Function() logout;
 
   _ViewModel({
     @required this.user,
+    @required this.photoUrl,
     @required this.idToken,
     @required this.logout,
   });

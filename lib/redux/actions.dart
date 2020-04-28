@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:daruma/model/group.dart';
 import 'package:daruma/model/participant.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:daruma/model/user.dart';
 
 class LoginWithGoogleAction {
   final Completer completer;
@@ -16,10 +16,11 @@ class LogoutAction {
 }
 
 class UserLoadedAction {
-  final FirebaseUser firebaseUser;
+  final User user;
+  final String photoUrl;
   final String idTokenUser;
 
-  UserLoadedAction(this.firebaseUser, this.idTokenUser);
+  UserLoadedAction(this.user, this.photoUrl, this.idTokenUser);
 }
 
 class UserIsNew {

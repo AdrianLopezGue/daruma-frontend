@@ -16,7 +16,7 @@ class PostBillDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(converter: (store) {
       return new _ViewModel(
-        idToken: store.state.firebaseState.idTokenUser,
+        idToken: store.state.userState.idTokenUser,
       );
     }, builder: (BuildContext context, _ViewModel vm) {
       return _postDialogView(context, vm);

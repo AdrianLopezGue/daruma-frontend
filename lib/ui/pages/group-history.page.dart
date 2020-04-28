@@ -14,7 +14,7 @@ class GroupHistory extends StatelessWidget {
     return new StoreConnector<AppState, _ViewModel>(
       converter: (store) => _ViewModel(
           group: store.state.groupState.group,
-          idToken: store.state.firebaseState.idTokenUser),
+          idToken: store.state.userState.idTokenUser),
       builder: (BuildContext context, _ViewModel vm) =>
           _historyView(context, vm),
     );
@@ -34,7 +34,7 @@ class GroupHistory extends StatelessWidget {
               SizedBox(height: 5.0,),
               Row(
                 children: <Widget>[
-                  Text(vm.group.getMembersAsString(), style: GoogleFonts.aBeeZee(
+                  Text(vm.group.getMembersAsString(), style: GoogleFonts.roboto(
                                 fontSize: 12, textStyle: TextStyle(color: white)),),
                 ],
               )
@@ -62,7 +62,7 @@ class GroupHistory extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           "HISTORIAL",
-                          style: GoogleFonts.aBeeZee(
+                          style: GoogleFonts.roboto(
                               fontSize: 24, textStyle: TextStyle(color: black)),
                         ),
                       ],
