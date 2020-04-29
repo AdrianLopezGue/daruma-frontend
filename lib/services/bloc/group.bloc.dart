@@ -35,6 +35,17 @@ class GroupBloc {
     }
   }
 
+  deleteGroup(String idGroup, String idToken) async {
+    groupSink.add(Response.loading('Delete group.'));
+    try {
+      bool groupResponse = await _groupRepository.deleteGroup(idGroup, idToken);
+      groupSink.add(Response.completed(groupResponse));
+    } catch (e) {
+      groupSink.add(Response.error(e.toString()));
+      print(e);
+    }
+  }
+
   getGroups(String idToken) async {
     groupSinkGroups.add(Response.loading('Get groups.'));
     try {

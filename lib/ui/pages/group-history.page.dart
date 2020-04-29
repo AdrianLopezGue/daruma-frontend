@@ -1,5 +1,7 @@
 import 'package:daruma/model/group.dart';
 import 'package:daruma/redux/index.dart';
+import 'package:daruma/services/dynamic_link/dynamic_links.dart';
+import 'package:daruma/ui/pages/edit-group.page.dart';
 import 'package:daruma/ui/pages/welcome.page.dart';
 import 'package:daruma/ui/widget/bills-list.widget.dart';
 import 'package:daruma/ui/widget/create-bill-floating-button.widget.dart';
@@ -7,6 +9,7 @@ import 'package:daruma/util/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:share/share.dart';
 
 class GroupHistory extends StatelessWidget {
   @override
@@ -49,6 +52,19 @@ class GroupHistory extends StatelessWidget {
             ),
           );
           },),
+          actions: <Widget>[
+            PopupMenuButton<String>(
+              onSelected: (choice) => handleClick(choice, context, vm.group.idGroup),
+              itemBuilder: (BuildContext context) {
+                return {'Compartir', 'Configuración'}.map((String choice) {
+                  return PopupMenuItem<String>(
+                    value: choice,
+                    child: Text(choice),
+                  );
+                }).toList();
+              },
+            ),
+          ],
         ),
         body: SingleChildScrollView(
           child: SafeArea(
@@ -61,7 +77,7 @@ class GroupHistory extends StatelessWidget {
                     child: Row(
                       children: <Widget>[
                         Text(
-                          "HISTORIAL",
+                          "Historial",
                           style: GoogleFonts.roboto(
                               fontSize: 24, textStyle: TextStyle(color: black)),
                         ),
@@ -86,6 +102,30 @@ class GroupHistory extends StatelessWidget {
           ),
         ),
         floatingActionButton: NewBillFloatingButton());
+  }
+  Future<void> handleClick(String value, BuildContext context, String groupId) async {
+    switch (value) {
+      case 'Compartir':
+        {
+          final RenderBox box = context.findRenderObject();
+          final AppDynamicLinks _appDynamicLinks = AppDynamicLinks();
+          final String urlLink = await _appDynamicLinks.createDynamicLink(groupId);
+          Share.share(urlLink,
+              sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+          }
+        break;
+
+      case 'Configuración': {
+        Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return EditGroupPage(groupId: groupId);
+                  },
+                ),
+              );
+      }
+        break;
+    }
   }
 }
 

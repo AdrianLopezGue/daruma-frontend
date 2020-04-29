@@ -32,7 +32,7 @@ class GroupsList extends StatelessWidget {
                       itemCount: snapshot.data.data.length,
                       itemBuilder: (context, index) {
                         return Padding(
-                          padding: const EdgeInsets.all(8.0),                            
+                          padding: const EdgeInsets.only(left: 8.0, right: 25.0, top: 8.0, bottom: 8.0),                            
                           child: GroupButton(idGroup: snapshot.data.data[index].idGroup, name: snapshot.data.data[index].name),
                         );
                       }),

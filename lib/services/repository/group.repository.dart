@@ -33,4 +33,12 @@ class GroupRepository {
 
     return group;
   }
+
+  Future<bool> deleteGroup(String idGroup, String idToken) async {
+
+    final response =
+        await _provider.delete(Url.apiBaseUrl + "/groups/"+ idGroup, idToken);
+
+    return response;
+  }
 }
