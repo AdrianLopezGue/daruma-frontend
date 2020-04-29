@@ -15,7 +15,7 @@ class BalanceList extends StatelessWidget {
 
   Widget build(BuildContext context) {
     final BalanceBloc _bloc = new BalanceBloc();
-    _bloc.getBalance(idToken, this.group.idGroup);
+    _bloc.getBalance(idToken, this.group);
 
     return StreamBuilder<Response<List<Transaction>>>(
         stream: _bloc.balanceStream,

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
+import 'package:daruma/model/group.dart';
 import 'package:daruma/model/transaction.dart';
 import 'package:daruma/services/balance-calculator/balance-calculator.dart';
 import 'package:daruma/services/networking/index.dart';
@@ -23,13 +24,13 @@ class BalanceBloc {
     
   }
 
-  getBalance(String idToken, String idGroup) async {
+  getBalance(String idToken, Group group) async {
     balanceSink.add(Response.loading('Getting Balance of Group.'));
     try {
       HashMap<String, int> balance =
-          await _balanceRepository.getBalance(idToken, idGroup);
+          await _balanceRepository.getBalance(idToken, group.idGroup);
       
-      BalanceCalculator balanceCalculator = new BalanceCalculator(transactions: balance);
+      BalanceCalculator balanceCalculator = new BalanceCalculator(transactions: balance, group: group);
 
       balanceSink.add(Response.completed(balanceCalculator.getTransactions()));
     } catch (e) {

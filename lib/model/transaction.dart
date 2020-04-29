@@ -4,8 +4,10 @@ class Transaction{
   final String sender;
   final String beneficiary;
   final int money;
+  final String currencyCode;
+  final String idGroup;
 
-  Transaction({this.sender, this.beneficiary, this.money});
+  Transaction({this.sender, this.beneficiary, this.money, this.currencyCode, this.idGroup});
 
   Map toJson() {
     var uuid = new Uuid();
@@ -15,7 +17,8 @@ class Transaction{
       'senderId': this.sender,
       'beneficiaryId': this.beneficiary,
       'money': this.money,
-      'currencyCode': "EUR",
+      'currencyCode': this.currencyCode,
+      'idGroup': this.idGroup,
     };
   }
 }

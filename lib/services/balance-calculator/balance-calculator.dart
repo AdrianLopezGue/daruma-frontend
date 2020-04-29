@@ -1,13 +1,15 @@
 
 
 import 'dart:collection';
+import 'package:daruma/model/group.dart';
 import 'package:daruma/model/transaction.dart';
 
 class BalanceCalculator {
   final HashMap<String, int> transactions;
+  final Group group;
   List<Transaction> finalTransactions;
 
-  BalanceCalculator({this.transactions}){
+  BalanceCalculator({this.transactions, this.group}){
     finalTransactions = [];
     _calculateBalance(transactions);
   }
@@ -22,13 +24,13 @@ class BalanceCalculator {
         String minKey = _getKeyFromValue(minValue) ;
         int result = maxValue + minValue;
         if ((result >= 0)) {
-            finalTransactions.add(new Transaction(sender: minKey, beneficiary: maxKey, money: minValue.abs()));
+            finalTransactions.add(new Transaction(sender: minKey, beneficiary: maxKey, money: minValue.abs(), currencyCode: group.currencyCode, idGroup: group.idGroup));
             transactions.remove(maxKey);
             transactions.remove(minKey);
             transactions[maxKey] = result;
             transactions[minKey] = 0;
         } else {
-            finalTransactions.add(new Transaction(sender: minKey, beneficiary: maxKey, money: maxValue.abs()));
+            finalTransactions.add(new Transaction(sender: minKey, beneficiary: maxKey, money: maxValue.abs(), currencyCode: group.currencyCode, idGroup: group.idGroup));
 
             transactions.remove(maxKey);
             transactions.remove(minKey);
