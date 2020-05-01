@@ -62,7 +62,7 @@ class GroupBalance extends StatelessWidget {
           ),
           actions: <Widget>[
             PopupMenuButton<String>(
-              onSelected: (choice) => handleClick(choice, context, vm.group.idGroup),
+              onSelected: (choice) => handleClick(choice, context, vm.group),
               itemBuilder: (BuildContext context) {
                 return {'Compartir', 'Configuración'}.map((String choice) {
                   return PopupMenuItem<String>(
@@ -112,13 +112,13 @@ class GroupBalance extends StatelessWidget {
         floatingActionButton: NewBillFloatingButton());
   }
 
-  Future<void> handleClick(String value, BuildContext context, String groupId) async {
+  Future<void> handleClick(String value, BuildContext context, Group group) async {
     switch (value) {
       case 'Compartir':
         {
           final RenderBox box = context.findRenderObject();
           final AppDynamicLinks _appDynamicLinks = AppDynamicLinks();
-          final String urlLink = await _appDynamicLinks.createDynamicLink(groupId);
+          final String urlLink = await _appDynamicLinks.createDynamicLink(group.idGroup);
           Share.share(urlLink,
               sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
           }
@@ -128,7 +128,7 @@ class GroupBalance extends StatelessWidget {
         Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) {
-                    return EditGroupPage(groupId: groupId);
+                    return EditGroupPage(group: group);
                   },
                 ),
               );

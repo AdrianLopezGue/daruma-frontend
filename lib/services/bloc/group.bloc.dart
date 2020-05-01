@@ -46,6 +46,17 @@ class GroupBloc {
     }
   }
 
+  updateGroupName(String idGroup, String name, String idToken) async {
+    groupSink.add(Response.loading('Update group name.'));
+    try {
+      bool groupResponse = await _groupRepository.updateGroupName(idGroup, name, idToken);
+      groupSink.add(Response.completed(groupResponse));
+    } catch (e) {
+      groupSink.add(Response.error(e.toString()));
+      print(e);
+    }
+  }
+
   getGroups(String idToken) async {
     groupSinkGroups.add(Response.loading('Get groups.'));
     try {

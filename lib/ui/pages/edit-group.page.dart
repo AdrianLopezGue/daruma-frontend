@@ -1,14 +1,15 @@
+import 'package:daruma/model/group.dart';
 import 'package:daruma/ui/widget/delete-group-dialog.widget.dart';
+import 'package:daruma/ui/widget/edit-group-name-dialog.widget.dart';
 import 'package:daruma/ui/widget/text-form-field.widget.dart';
 import 'package:daruma/util/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class EditGroupPage extends StatefulWidget {
+  final Group group;
 
-  final String groupId;
-
-  EditGroupPage({this.groupId});
+  EditGroupPage({this.group});
 
   @override
   _EditGroupPageState createState() => _EditGroupPageState();
@@ -17,12 +18,13 @@ class EditGroupPage extends StatefulWidget {
 class _EditGroupPageState extends State<EditGroupPage> {
   final _formKey = GlobalKey<FormState>();
 
+  String groupId = "";
   String newName = "";
-  String newPaypal = "";
 
   @override
   void initState() {
-    newName = widget.groupId;
+    groupId = widget.group.idGroup;
+    newName = widget.group.name;
     super.initState();
   }
 
@@ -31,13 +33,17 @@ class _EditGroupPageState extends State<EditGroupPage> {
     final halfMediaWidth = MediaQuery.of(context).size.width / 2.0;
 
     return Scaffold(
-      appBar: new AppBar(title: new Text("Editar grupo"), backgroundColor: redPrimaryColor,),
-      body: 
-          SingleChildScrollView(
-                child: SafeArea(
-                child: Form(
+        appBar: new AppBar(
+          title: new Text("Editar grupo"),
+          backgroundColor: redPrimaryColor,
+        ),
+        body: SingleChildScrollView(
+          child: SafeArea(
+            child: Column(
+              children: <Widget>[
+                Form(
                   key: _formKey,
-                    child: Padding(
+                  child: Padding(
                     padding: const EdgeInsets.only(left: 25.0, top: 15.0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
@@ -64,10 +70,19 @@ class _EditGroupPageState extends State<EditGroupPage> {
                               width: halfMediaWidth,
                               child: CustomTextFormField(
                                 initialValue: newName,
+                                validator: (String value) {
+                                  if (value.isEmpty) {
+                                    return 'El nuevo nombre no puede estar vacio';
+                                  }
+                                  if (value == widget.group.name) {
+                                    return 'El nombre es igual que antes';
+                                  }
+                                  return null;
+                                },
                                 onSaved: (String value) {
                                   setState(() {
                                     newName = value;
-                                  });                                  
+                                  });
                                 },
                               ),
                             ),
@@ -85,7 +100,7 @@ class _EditGroupPageState extends State<EditGroupPage> {
                               showDialog(
                                 context: context,
                                 child: new SimpleDialog(children: <Widget>[
-                                  DeleteDialog(groupId: newName),
+                                  EditGroupNameDialog(name: newName),
                                 ]));
                             }
                           },
@@ -94,12 +109,12 @@ class _EditGroupPageState extends State<EditGroupPage> {
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
-                                Icon(Icons.delete, color: white),
+                                Icon(Icons.done, color: white),
                                 SizedBox(
                                   width: 5.0,
                                 ),
                                 Text(
-                                  'Borrar',
+                                  'Guardar',
                                   style: GoogleFonts.roboto(
                                       textStyle:
                                           TextStyle(fontSize: 20, color: Colors.white)),
@@ -115,8 +130,40 @@ class _EditGroupPageState extends State<EditGroupPage> {
                     ),
                   ),
                 ),
+                RaisedButton(
+                  color: redPrimaryColor,
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        child: new SimpleDialog(children: <Widget>[
+                          DeleteDialog(groupId: groupId),
+                        ]));
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Icon(Icons.delete, color: white),
+                        SizedBox(
+                          width: 5.0,
+                        ),
+                        Text(
+                          'Borrar',
+                          style: GoogleFonts.roboto(
+                              textStyle:
+                                  TextStyle(fontSize: 20, color: Colors.white)),
+                        ),
+                      ],
+                    ),
+                  ),
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(40)),
+                )
+              ],
             ),
-          )
-    );
+          ),
+        ));
   }
 }

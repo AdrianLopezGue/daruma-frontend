@@ -30,6 +30,12 @@ class UserUpdatedAction {
   UserUpdatedAction(this.name, this.paypal);
 }
 
+class GroupNameUpdatedAction {
+  final String name;
+
+  GroupNameUpdatedAction(this.name);
+}
+
 class UserIsNew {
   final bool userIsNew;
 

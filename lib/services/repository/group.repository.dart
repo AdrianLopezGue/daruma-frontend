@@ -41,4 +41,18 @@ class GroupRepository {
 
     return response;
   }
+
+  Future<bool> updateGroupName(String idGroup, String name, String idToken) async {
+    final String url = Url.apiBaseUrl + "/groups/" + idGroup;
+
+    final Map body = {
+      'name': name
+    };
+
+    var requestBody = jsonEncode(body);
+
+    final response = await _provider.put(url, requestBody, idToken);
+
+    return response;
+  }
 }
