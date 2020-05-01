@@ -35,10 +35,21 @@ class BillBloc {
     }
   }
 
-  getBills(String idToken, String idGroup) async {
+  deleteBill(String idBill, String idToken) async {
+    billSink.add(Response.loading('Delete bill.'));
+    try {
+      bool billResponse = await _billRepository.deleteBill(idBill, idToken);
+      billSink.add(Response.completed(billResponse));
+    } catch (e) {
+      billSink.add(Response.error(e.toString()));
+      print(e);
+    }
+  }
+
+  getBills( String idGroup, String idToken) async {
     billSinkBills.add(Response.loading('Get bills.'));
     try {
-      List<Bill> billResponse = await _billRepository.getBills(idToken, idGroup);
+      List<Bill> billResponse = await _billRepository.getBills(idGroup, idToken);
 
       billSinkBills.add(Response.completed(billResponse));
     } catch (e) {

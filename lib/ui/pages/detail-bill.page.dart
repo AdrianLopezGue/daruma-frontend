@@ -1,5 +1,6 @@
 import 'package:daruma/model/bill.dart';
 import 'package:daruma/model/group.dart';
+import 'package:daruma/ui/widget/delete-bill-dialog.widget.dart';
 import 'package:daruma/util/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -131,6 +132,47 @@ class DetailBillPage extends StatelessWidget {
                             style: GoogleFonts.roboto(
                                 fontSize: 14, textStyle: TextStyle(color: black)),
                           )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 25.0,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          RaisedButton(
+                          color: redPrimaryColor,
+                          onPressed: () {
+                            
+                              showDialog(
+                                  context: context,
+                                  child: new SimpleDialog(children: <Widget>[
+                                    DeleteBillDialog(billId: this.bill.idBill),
+                                  ]));
+                            
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Icon(Icons.delete, color: white),
+                                SizedBox(
+                                  width: 5.0,
+                                ),
+                                Text(
+                                  'Borrar',
+                                  style: GoogleFonts.roboto(
+                                      textStyle:
+                                          TextStyle(fontSize: 20, color: Colors.white)),
+                                ),
+                              ],
+                            ),
+                          ),
+                          elevation: 5,
+                          shape:
+                              RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+                    ),
                         ],
                       )
                     ],

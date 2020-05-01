@@ -15,7 +15,7 @@ class BillsList extends StatelessWidget {
 
   Widget build(BuildContext context) {
     final BillBloc _bloc = BillBloc();
-    _bloc.getBills(idToken, this.group.idGroup);
+    _bloc.getBills(this.group.idGroup, idToken);
 
     return StreamBuilder<Response<List<Bill>>>(
         stream: _bloc.billStreamBills,
