@@ -1,6 +1,7 @@
 import 'package:daruma/model/group.dart';
 import 'package:daruma/model/member.dart';
 import 'package:daruma/redux/index.dart';
+import 'package:daruma/ui/widget/delete-member-dialog.widget.dart';
 import 'package:daruma/util/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -43,7 +44,15 @@ class MembersList extends StatelessWidget {
           Icons.clear,
           color: black,
         ),
-        onPressed: () {},
+        onPressed: () {
+          showDialog(
+          context: context,
+          child:
+              new SimpleDialog(children: <Widget>[
+            DeleteMemberDialog(
+                member: member),
+          ]));
+        },
       ),
     );
   }

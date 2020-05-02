@@ -28,6 +28,17 @@ class MemberBloc {
     }
   }
 
+  deleteMember(String idMember, String idToken) async {
+    memberSink.add(Response.loading('Delete member.'));
+    try {
+      bool memberResponse = await _memberRepository.deleteMember(idMember, idToken);
+      memberSink.add(Response.completed(memberResponse));
+    } catch (e) {
+      memberSink.add(Response.error(e.toString()));
+      print(e);
+    }
+  }
+
   dispose() {
     _memberController?.close();
   }

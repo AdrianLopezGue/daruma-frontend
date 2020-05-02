@@ -167,7 +167,7 @@ class _EditGroupPageState extends State<EditGroupPage> {
                           children: <Widget>[
                             Container(
                               alignment: Alignment.topCenter,
-                              width: halfMediaWidth,
+                              width: halfMediaWidth * 1.3,
                               child: CustomTextFormField(
                                 hintText: "Otro participante",
                                 validator: (String value) {
@@ -208,13 +208,7 @@ class _EditGroupPageState extends State<EditGroupPage> {
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: <Widget>[
-                                    Text(
-                                      'Añadir',
-                                      style: GoogleFonts.roboto(
-                                          textStyle: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.white)),
-                                    ),
+                                    Icon(Icons.person_add, color: white,)
                                   ],
                                 ),
                               ),

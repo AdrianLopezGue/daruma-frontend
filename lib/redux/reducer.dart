@@ -56,6 +56,13 @@ GroupState _reduceGroupState(AppState state, dynamic action) {
     Group newGroup = newState.group.copyWith(members: newMembers);
     newState =
         newState.copyWith(group: newGroup);
+  } else if (action is DeleteMemberToGroupAction) {
+    List<Member> newMembers = newState.group.members;
+    newMembers.removeWhere((member) => member.idMember == action.member.idMember);
+
+    Group newGroup = newState.group.copyWith(members: newMembers);
+    newState =
+        newState.copyWith(group: newGroup);
   }
   return newState;
 }

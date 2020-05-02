@@ -43,6 +43,12 @@ class AddMemberToGroupAction {
   AddMemberToGroupAction(this.member);
 }
 
+class DeleteMemberToGroupAction {
+  final Member member;
+
+  DeleteMemberToGroupAction(this.member);
+}
+
 class LoadingMembersSuccessAction {
   final List<Member> members;
   

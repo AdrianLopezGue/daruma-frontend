@@ -91,6 +91,9 @@ class ApiProvider {
       
       case 404:
         return null;
+      
+      case 406:
+        throw BadRequestException(response.body);
       case 500:
 
       default:

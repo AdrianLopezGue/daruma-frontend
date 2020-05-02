@@ -32,4 +32,12 @@ class MemberRepository {
 
     return response;
   }
+
+  Future<bool> deleteMember(String idMember, String idToken) async {
+
+    final response =
+        await _provider.delete(Url.apiBaseUrl + "/members/"+ idMember, idToken);
+
+    return response;
+  }
 }
