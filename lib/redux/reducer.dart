@@ -1,4 +1,5 @@
 import 'package:daruma/model/group.dart';
+import 'package:daruma/model/member.dart';
 import 'package:daruma/model/participant.dart';
 import 'package:daruma/model/user.dart';
 import 'package:daruma/redux/index.dart';
@@ -34,7 +35,7 @@ UserState _reduceUserState(AppState state, dynamic action) {
 }
 
 GroupState _reduceGroupState(AppState state, dynamic action) {
-  GroupState newState = state.groupState;
+  GroupState newState = state.groupState;  
 
   if (action is StartLoadingGroupAction) {
     newState = newState.copyWith(isLoading: true, loadingError: false);
@@ -46,6 +47,13 @@ GroupState _reduceGroupState(AppState state, dynamic action) {
         newState.copyWith(group: null, isLoading: false, loadingError: true);
   } else if (action is GroupNameUpdatedAction) {
     Group newGroup = newState.group.copyWith(name: action.name);
+    newState =
+        newState.copyWith(group: newGroup);
+  } else if (action is AddMemberToGroupAction) {
+    List<Member> newMembers = newState.group.members;
+    newMembers.add(action.member);
+
+    Group newGroup = newState.group.copyWith(members: newMembers);
     newState =
         newState.copyWith(group: newGroup);
   }

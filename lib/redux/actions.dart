@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:daruma/model/group.dart';
+import 'package:daruma/model/member.dart';
 import 'package:daruma/model/participant.dart';
 import 'package:daruma/model/user.dart';
 
@@ -34,6 +35,18 @@ class GroupNameUpdatedAction {
   final String name;
 
   GroupNameUpdatedAction(this.name);
+}
+
+class AddMemberToGroupAction {
+  final Member member;
+
+  AddMemberToGroupAction(this.member);
+}
+
+class LoadingMembersSuccessAction {
+  final List<Member> members;
+  
+  LoadingMembersSuccessAction(this.members);
 }
 
 class UserIsNew {

@@ -21,21 +21,18 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(title: new Text("Crear un grupo"), backgroundColor: redPrimaryColor,),
-      body: ListView(
-        shrinkWrap: true,
-        children: <Widget>[
-          Container(
-            color: white,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 25.0, top: 15.0),
-              child: Column(
-                children: <Widget>[
-                  NewGroupForm(),
-                ],
+      body: SingleChildScrollView(
+        child:
+          SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 25.0, top: 15.0),
+                child: Column(
+                  children: <Widget>[
+                    NewGroupForm(),
+                  ],
+                ),
               ),
-            ),
           )
-        ],
       ),
     );
   }
@@ -120,6 +117,7 @@ class _NewGroupFormState extends State<NewGroupForm> {
                   constraints: BoxConstraints(minHeight: 50.0),
                   child: ListView.builder(
                     shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
                     itemCount: members?.length,
                     itemBuilder: (BuildContext context, int index) {
                       Contact _member = members[index];
