@@ -17,7 +17,7 @@ class EditGroupNameDialog extends StatelessWidget {
     return new StoreConnector<AppState, _ViewModel>(converter: (store) {
       return new _ViewModel(
           group: store.state.groupState.group,
-          idToken: store.state.userState.idTokenUser,
+          tokenId: store.state.userState.tokenUserId,
           updateGroupName: () {
             store.dispatch(GroupNameUpdatedAction(name));
           });
@@ -29,7 +29,7 @@ class EditGroupNameDialog extends StatelessWidget {
   Widget _editGroupNameDialogView(BuildContext context, _ViewModel vm) {
     final GroupBloc _bloc = GroupBloc();
 
-    _bloc.updateGroupName(vm.group.idGroup, name, vm.idToken);
+    _bloc.updateGroupName(vm.group.groupId, name, vm.tokenId);
 
     return StreamBuilder<Response<bool>>(
         stream: _bloc.groupStream,
@@ -94,12 +94,12 @@ class EditGroupNameDialog extends StatelessWidget {
 
 class _ViewModel {
   final Group group;
-  final String idToken;
+  final String tokenId;
   final Function updateGroupName;
 
   _ViewModel({
     @required this.group,
-    @required this.idToken,
+    @required this.tokenId,
     @required this.updateGroupName,
   });
 }

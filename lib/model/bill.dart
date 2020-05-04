@@ -1,61 +1,61 @@
 import 'package:daruma/model/participant.dart';
 
 class Bill {
-  String idBill;
-  String idGroup;
+  String billId;
+  String groupId;
   String name;
   DateTime date;
   int money;
   String currencyCode;
   List<Participant> payers;
   List<Participant> debtors;
-  String idCreator;
+  String creatorId;
 
   Bill(
-      {this.idBill,
-      this.idGroup,
+      {this.billId,
+      this.groupId,
       this.name,
       this.date,
       this.money,
       this.currencyCode,
       this.payers,
       this.debtors,
-      this.idCreator});
+      this.creatorId});
 
   factory Bill.initial() {
     return new Bill(
-      idBill: '',
-      idGroup: '',
+      billId: '',
+      groupId: '',
       name: '',
       date: DateTime.now(),
       money: 0,
       currencyCode: 'EUR',
       payers: [],
       debtors: [],
-      idCreator: '',
+      creatorId: '',
     );
   }
 
   Bill copyWith(
-      {String idBill,
-      String idGroup,
+      {String billId,
+      String groupId,
       String name,
       DateTime date,
       int money,
       String currencyCode,
       List<Participant> payers,
       List<Participant> debtors,
-      String idCreator}) {
+      String creatorId}) {
     return Bill(
-        idBill: idBill ?? this.idBill,
-        idGroup: idGroup ?? this.idGroup,
+        billId: billId ?? this.billId,
+        groupId: groupId ?? this.groupId,
         name: name ?? this.name,
         date: date ?? this.date,
         money: money ?? this.money,
         currencyCode: currencyCode ?? this.currencyCode,
         payers: payers ?? this.payers,
         debtors: debtors ?? this.debtors,
-        idCreator: idCreator ?? this.idCreator);
+        creatorId: creatorId ?? this.creatorId);
   }
 
   Map toJson() {
@@ -71,30 +71,30 @@ class Bill {
         : null;
 
     var json = {
-      'billId': this.idBill,
-      'groupId': this.idGroup,
+      'billId': this.billId,
+      'groupId': this.groupId,
       'name': this.name,
       'date': this.date.toIso8601String(),
       'money': this.money,
       'currencyCode': this.currencyCode,
       'payers': payers,
       'debtors': debtors,
-      'creatorId': this.idCreator,
+      'creatorId': this.creatorId,
     };
 
     return json;
   }
 
   Bill.fromJson(Map<String, dynamic> json) {
-    this.idBill = json['_id'];
-    this.idGroup = json['groupId'];
+    this.billId = json['_id'];
+    this.groupId = json['groupId'];
     this.name = json['name'];
     this.date = DateTime.parse(json['date']);
     this.money = json['money'];
     this.currencyCode = json['currencyCode'];
     this.payers = _parseParticipants(json['payers']);
     this.debtors = _parseParticipants(json['debtors']);
-    this.idCreator = json['creatorId'];
+    this.creatorId = json['creatorId'];
   }
 
   List<Participant> _parseParticipants(List<dynamic> participants) {

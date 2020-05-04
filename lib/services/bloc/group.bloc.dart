@@ -24,10 +24,10 @@ class GroupBloc {
     _groupControllerGroups = BehaviorSubject<Response<List<Group>>>();
   }
 
-  postGroup(Group group, String idToken) async {
+  postGroup(Group group, String tokenId) async {
     groupSink.add(Response.loading('Post new group.'));
     try {
-      bool groupResponse = await _groupRepository.createGroup(group, idToken);
+      bool groupResponse = await _groupRepository.createGroup(group, tokenId);
       groupSink.add(Response.completed(groupResponse));
     } catch (e) {
       groupSink.add(Response.error(e.toString()));
@@ -35,10 +35,10 @@ class GroupBloc {
     }
   }
 
-  deleteGroup(String idGroup, String idToken) async {
+  deleteGroup(String groupId, String tokenId) async {
     groupSink.add(Response.loading('Delete group.'));
     try {
-      bool groupResponse = await _groupRepository.deleteGroup(idGroup, idToken);
+      bool groupResponse = await _groupRepository.deleteGroup(groupId, tokenId);
       groupSink.add(Response.completed(groupResponse));
     } catch (e) {
       groupSink.add(Response.error(e.toString()));
@@ -46,11 +46,11 @@ class GroupBloc {
     }
   }
 
-  updateGroupName(String idGroup, String name, String idToken) async {
+  updateGroupName(String groupId, String name, String tokenId) async {
     groupSink.add(Response.loading('Update group name.'));
     try {
       bool groupResponse =
-          await _groupRepository.updateGroupName(idGroup, name, idToken);
+          await _groupRepository.updateGroupName(groupId, name, tokenId);
       groupSink.add(Response.completed(groupResponse));
     } catch (e) {
       groupSink.add(Response.error(e.toString()));
@@ -58,10 +58,10 @@ class GroupBloc {
     }
   }
 
-  getGroups(String idToken) async {
+  getGroups(String tokenId) async {
     groupSinkGroups.add(Response.loading('Get groups.'));
     try {
-      List<Group> groupResponse = await _groupRepository.getGroups(idToken);
+      List<Group> groupResponse = await _groupRepository.getGroups(tokenId);
 
       groupSinkGroups.add(Response.completed(groupResponse));
     } catch (e) {

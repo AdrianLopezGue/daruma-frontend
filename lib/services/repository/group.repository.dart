@@ -7,18 +7,18 @@ import 'package:daruma/util/url.dart';
 class GroupRepository {
   ApiProvider _provider = ApiProvider();
 
-  Future<bool> createGroup(Group group, String idToken) async {
+  Future<bool> createGroup(Group group, String tokenId) async {
     final String url = Url.apiBaseUrl + "/groups";
 
     var requestBody = jsonEncode(group);
-    final response = await _provider.post(url, requestBody, idToken);
+    final response = await _provider.post(url, requestBody, tokenId);
 
     return response;
   }
 
-  Future<List<Group>> getGroups(String idToken) async {
+  Future<List<Group>> getGroups(String tokenId) async {
     final response =
-        await _provider.get(Url.apiBaseUrl + "/groups", header: idToken);
+        await _provider.get(Url.apiBaseUrl + "/groups", header: tokenId);
 
     var list = response as List;
     list = response.map<Group>((json) => Group.fromJson(json)).toList();
@@ -26,30 +26,30 @@ class GroupRepository {
     return list;
   }
 
-  Future<Group> getGroup(String idGroup, String idToken) async {
-    final response = await _provider.get(Url.apiBaseUrl + "/groups/" + idGroup,
-        header: idToken);
+  Future<Group> getGroup(String groupId, String tokenId) async {
+    final response = await _provider.get(Url.apiBaseUrl + "/groups/" + groupId,
+        header: tokenId);
     var group = Group.fromJson(response);
 
     return group;
   }
 
-  Future<bool> deleteGroup(String idGroup, String idToken) async {
+  Future<bool> deleteGroup(String groupId, String tokenId) async {
     final response =
-        await _provider.delete(Url.apiBaseUrl + "/groups/" + idGroup, idToken);
+        await _provider.delete(Url.apiBaseUrl + "/groups/" + groupId, tokenId);
 
     return response;
   }
 
   Future<bool> updateGroupName(
-      String idGroup, String name, String idToken) async {
-    final String url = Url.apiBaseUrl + "/groups/" + idGroup;
+      String groupId, String name, String tokenId) async {
+    final String url = Url.apiBaseUrl + "/groups/" + groupId;
 
     final Map body = {'name': name};
 
     var requestBody = jsonEncode(body);
 
-    final response = await _provider.put(url, requestBody, idToken);
+    final response = await _provider.put(url, requestBody, tokenId);
 
     return response;
   }

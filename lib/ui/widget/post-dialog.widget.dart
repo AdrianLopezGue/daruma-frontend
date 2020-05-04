@@ -18,7 +18,7 @@ class PostDialog extends StatelessWidget {
     return new StoreConnector<AppState, _ViewModel>(converter: (store) {
       return new _ViewModel(
         user: store.state.userState.user,
-        idToken: store.state.userState.idTokenUser,
+        tokenId: store.state.userState.tokenUserId,
       );
     }, builder: (BuildContext context, _ViewModel vm) {
       return _postDialogView(context, vm);
@@ -29,18 +29,18 @@ class PostDialog extends StatelessWidget {
     final GroupBloc _bloc = GroupBloc();
 
     Owner owner = new Owner();
-    owner.idOwner = vm.user.idUser;
+    owner.ownerId = vm.user.userId;
     owner.name = vm.user.name;
 
     _bloc.postGroup(
         Group(
-          idGroup: group.idGroup,
+          groupId: group.groupId,
           name: group.name,
           currencyCode: group.currencyCode,
           owner: owner,
           members: group.members,
         ),
-        vm.idToken);
+        vm.tokenId);
 
     return StreamBuilder<Response<bool>>(
         stream: _bloc.groupStream,
@@ -104,10 +104,10 @@ class PostDialog extends StatelessWidget {
 
 class _ViewModel {
   final User user;
-  final String idToken;
+  final String tokenId;
 
   _ViewModel({
     @required this.user,
-    @required this.idToken,
+    @required this.tokenId,
   });
 }

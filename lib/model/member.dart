@@ -1,20 +1,20 @@
 class Member {
-  String idMember;
+  String memberId;
   String name;
-  String idUser;
+  String userId;
 
-  Member({this.idMember, this.name, this.idUser});
+  Member({this.memberId, this.name, this.userId});
 
   Map toJson() {
     return {
-      'id': this.idMember,
+      'id': this.memberId,
       'name': this.name,
     };
   }
 
   Member.fromJson(Map<String, dynamic> json) {
-    this.idMember = json['_id'];
+    this.memberId = json['_id'];
     this.name = json['name'];
-    this.idUser = json['userId'];
+    this.userId = json['userId'];
   }
 }

@@ -17,7 +17,7 @@ class GroupBalance extends StatelessWidget {
     return new StoreConnector<AppState, _ViewModel>(
       converter: (store) => _ViewModel(
           group: store.state.groupState.group,
-          idToken: store.state.userState.idTokenUser),
+          tokenId: store.state.userState.tokenUserId),
       builder: (BuildContext context, _ViewModel vm) =>
           _balanceView(context, vm),
     );
@@ -100,7 +100,7 @@ class GroupBalance extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 15.0),
                     child: Row(
                       children: <Widget>[
-                        BalanceList(idToken: vm.idToken, group: vm.group),
+                        BalanceList(tokenId: vm.tokenId, group: vm.group),
                       ],
                     ),
                   )
@@ -120,7 +120,7 @@ class GroupBalance extends StatelessWidget {
           final RenderBox box = context.findRenderObject();
           final AppDynamicLinks _appDynamicLinks = AppDynamicLinks();
           final String urlLink =
-              await _appDynamicLinks.createDynamicLink(group.idGroup);
+              await _appDynamicLinks.createDynamicLink(group.groupId);
           Share.share(urlLink,
               sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
         }
@@ -143,10 +143,10 @@ class GroupBalance extends StatelessWidget {
 
 class _ViewModel {
   final Group group;
-  final String idToken;
+  final String tokenId;
 
   _ViewModel({
     @required this.group,
-    @required this.idToken,
+    @required this.tokenId,
   });
 }

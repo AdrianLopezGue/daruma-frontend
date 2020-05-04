@@ -11,7 +11,7 @@ class MembersList extends StatelessWidget {
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(converter: (store) {
       return new _ViewModel(
-        idToken: store.state.userState.idTokenUser,
+        tokenId: store.state.userState.tokenUserId,
         group: store.state.groupState.group,
       );
     }, builder: (BuildContext context, _ViewModel vm) {
@@ -57,11 +57,11 @@ class MembersList extends StatelessWidget {
 }
 
 class _ViewModel {
-  final String idToken;
+  final String tokenId;
   final Group group;
 
   _ViewModel({
-    @required this.idToken,
+    @required this.tokenId,
     @required this.group,
   });
 }

@@ -1,12 +1,12 @@
 class Owner {
-  String idOwner;
+  String ownerId;
   String name;
 
-  Owner({this.idOwner, this.name});
+  Owner({this.ownerId, this.name});
 
   Map toJson() {
     return {
-      'id': this.idOwner,
+      'id': this.ownerId,
       'name': this.name,
     };
   }

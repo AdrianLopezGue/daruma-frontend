@@ -1,10 +1,10 @@
 class User {
-  String idUser;
+  String userId;
   String name;
   String email;
   String paypal;
 
-  User({this.idUser, this.name, this.email, this.paypal});
+  User({this.userId, this.name, this.email, this.paypal});
 
   User copyWith({
     String id,
@@ -13,7 +13,7 @@ class User {
     String paypal,
   }) {
     return User(
-      idUser: id ?? this.idUser,
+      userId: id ?? this.userId,
       name: name ?? this.name,
       email: email ?? this.email,
       paypal: paypal ?? this.paypal,
@@ -22,14 +22,14 @@ class User {
 
   Map toJson() {
     return {
-      'id': this.idUser,
+      'id': this.userId,
       'name': this.name,
       'email': this.email,
     };
   }
 
   User.fromJson(Map<String, dynamic> json) {
-    this.idUser = json['_id'];
+    this.userId = json['_id'];
     this.name = json['name'];
     this.email = json['email'];
     this.paypal = json['paypal'];

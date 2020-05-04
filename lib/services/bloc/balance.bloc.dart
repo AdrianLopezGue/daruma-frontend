@@ -22,11 +22,11 @@ class BalanceBloc {
     _balanceRepository = BalanceRepository();
   }
 
-  getBalance(String idToken, Group group) async {
+  getBalance(String tokenId, Group group) async {
     balanceSink.add(Response.loading('Getting Balance of Group.'));
     try {
       HashMap<String, int> balance =
-          await _balanceRepository.getBalance(idToken, group.idGroup);
+          await _balanceRepository.getBalance(tokenId, group.groupId);
 
       BalanceCalculator balanceCalculator =
           new BalanceCalculator(transactions: balance, group: group);

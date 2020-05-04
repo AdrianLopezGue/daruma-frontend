@@ -1,29 +1,29 @@
 import 'package:uuid/uuid.dart';
 
 class Transaction {
-  final String sender;
-  final String beneficiary;
+  final String senderId;
+  final String beneficiaryId;
   final int money;
   final String currencyCode;
-  final String idGroup;
+  final String groupId;
 
   Transaction(
-      {this.sender,
-      this.beneficiary,
+      {this.senderId,
+      this.beneficiaryId,
       this.money,
       this.currencyCode,
-      this.idGroup});
+      this.groupId});
 
   Map toJson() {
     var uuid = new Uuid();
 
     return {
       'transactionId': uuid.v4(),
-      'senderId': this.sender,
-      'beneficiaryId': this.beneficiary,
+      'senderId': this.senderId,
+      'beneficiaryId': this.beneficiaryId,
       'money': this.money,
       'currencyCode': this.currencyCode,
-      'idGroup': this.idGroup,
+      'groupId': this.groupId,
     };
   }
 }

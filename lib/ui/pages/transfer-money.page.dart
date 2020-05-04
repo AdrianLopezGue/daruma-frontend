@@ -29,9 +29,9 @@ class TranferMoneyPage extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Text(
-                          group.getMemberNameById(transaction.sender) +
+                          group.getMemberNameById(transaction.senderId) +
                               " pagó a " +
-                              group.getMemberNameById(transaction.beneficiary),
+                              group.getMemberNameById(transaction.beneficiaryId),
                           style: GoogleFonts.roboto(
                               fontSize: 20, textStyle: TextStyle(color: black)),
                         ),

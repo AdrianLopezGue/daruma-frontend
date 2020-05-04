@@ -9,7 +9,7 @@ class AppDynamicLinks {
     final Uri deepLink = data?.link;
 
     if (deepLink != null && deepLink.queryParameters != null) {
-      final type = deepLink.queryParameters['idgroup'] ?? '';
+      final type = deepLink.queryParameters['groupid'] ?? '';
       print("Created:" + type);
     }
 
@@ -18,14 +18,14 @@ class AppDynamicLinks {
           final deepLink = dynamicLink?.link;
 
           if (deepLink != null && deepLink.queryParameters != null) {
-            final type = deepLink.queryParameters['idgroup'] ?? '';
+            final type = deepLink.queryParameters['groupid'] ?? '';
             print("Opened:" + type);
             if (type != '') {
               showDialog(
                   context: context,
                   builder: (_) {
                     return new SimpleDialog(children: <Widget>[
-                      SelectMemberInGroupDialog(idGroup: type),
+                      SelectMemberInGroupDialog(groupId: type),
                     ]);
                   });
             }
@@ -37,7 +37,7 @@ class AppDynamicLinks {
   Future<String> createDynamicLink(String groupId) async {
     final DynamicLinkParameters parameters = DynamicLinkParameters(
       uriPrefix: 'https://daruma.page.link/',
-      link: Uri.parse('https://daruma.page.link/?idgroup=$groupId'),
+      link: Uri.parse('https://daruma.page.link/?groupid=$groupId'),
       androidParameters: AndroidParameters(
         packageName: 'com.tfg.daruma',
         minimumVersion: 0,

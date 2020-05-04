@@ -17,11 +17,11 @@ class TransactionBloc {
     _transactionRepository = TransactionRepository();
   }
 
-  postTransaction(Transaction transaction, String idToken) async {
+  postTransaction(Transaction transaction, String tokenId) async {
     transactionSink.add(Response.loading('Post new transaction.'));
     try {
       bool transactionResponse =
-          await _transactionRepository.createTransfer(transaction, idToken);
+          await _transactionRepository.createTransfer(transaction, tokenId);
       transactionSink.add(Response.completed(transactionResponse));
     } catch (e) {
       transactionSink.add(Response.error(e.toString()));

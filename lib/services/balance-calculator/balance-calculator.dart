@@ -24,22 +24,22 @@ class BalanceCalculator {
       int result = maxValue + minValue;
       if ((result >= 0)) {
         finalTransactions.add(new Transaction(
-            sender: minKey,
-            beneficiary: maxKey,
+            senderId: minKey,
+            beneficiaryId: maxKey,
             money: minValue.abs(),
             currencyCode: group.currencyCode,
-            idGroup: group.idGroup));
+            groupId: group.groupId));
         transactions.remove(maxKey);
         transactions.remove(minKey);
         transactions[maxKey] = result;
         transactions[minKey] = 0;
       } else {
         finalTransactions.add(new Transaction(
-            sender: minKey,
-            beneficiary: maxKey,
+            senderId: minKey,
+            beneficiaryId: maxKey,
             money: maxValue.abs(),
             currencyCode: group.currencyCode,
-            idGroup: group.idGroup));
+            groupId: group.groupId));
 
         transactions.remove(maxKey);
         transactions.remove(minKey);

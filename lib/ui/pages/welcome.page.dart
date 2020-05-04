@@ -33,7 +33,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       return new _ViewModel(
         user: store.state.userState.user,
         photoUrl: store.state.userState.photoUrl,
-        idToken: store.state.userState.idTokenUser,
+        tokenId: store.state.userState.tokenUserId,
         logout: () {
           store.dispatch(LogoutAction());
           Navigator.of(context).pushAndRemoveUntil(
@@ -156,7 +156,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
               padding: const EdgeInsets.only(left: 15.0),
               child: Row(
                 children: <Widget>[
-                  GroupsList(idToken: vm.idToken),
+                  GroupsList(tokenId: vm.tokenId),
                 ],
               ),
             ),
@@ -184,13 +184,13 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 class _ViewModel {
   final User user;
   final String photoUrl;
-  final String idToken;
+  final String tokenId;
   final Function() logout;
 
   _ViewModel({
     @required this.user,
     @required this.photoUrl,
-    @required this.idToken,
+    @required this.tokenId,
     @required this.logout,
   });
 }

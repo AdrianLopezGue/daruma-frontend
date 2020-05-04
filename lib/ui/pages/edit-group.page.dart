@@ -29,7 +29,7 @@ class _EditGroupPageState extends State<EditGroupPage> {
 
   @override
   void initState() {
-    groupId = widget.group.idGroup;
+    groupId = widget.group.groupId;
     newName = widget.group.name;
     super.initState();
   }
@@ -191,7 +191,7 @@ class _EditGroupPageState extends State<EditGroupPage> {
                                   var uuid = new Uuid();
 
                                   Member newMember = new Member(
-                                      idMember: uuid.v4(), name: newMemberName);
+                                      memberId: uuid.v4(), name: newMemberName);
 
                                   showDialog(
                                       context: context,

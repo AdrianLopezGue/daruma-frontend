@@ -7,18 +7,18 @@ import 'package:daruma/util/url.dart';
 class BillRepository {
   ApiProvider _provider = ApiProvider();
 
-  Future<bool> createBill(Bill bill, String idToken) async {
+  Future<bool> createBill(Bill bill, String tokenId) async {
     final String url = Url.apiBaseUrl + "/bills";
 
     var requestBody = jsonEncode(bill);
-    final response = await _provider.post(url, requestBody, idToken);
+    final response = await _provider.post(url, requestBody, tokenId);
 
     return response;
   }
 
-  Future<List<Bill>> getBills(String idGroup, String idToken) async {
-    final response = await _provider.get(Url.apiBaseUrl + "/bills/" + idGroup,
-        header: idToken);
+  Future<List<Bill>> getBills(String groupId, String tokenId) async {
+    final response = await _provider.get(Url.apiBaseUrl + "/bills/" + groupId,
+        header: tokenId);
 
     var list = response as List;
     list = response.map<Bill>((json) => Bill.fromJson(json)).toList();
@@ -26,9 +26,9 @@ class BillRepository {
     return list;
   }
 
-  Future<bool> deleteBill(String idBill, String idToken) async {
+  Future<bool> deleteBill(String billId, String tokenId) async {
     final response =
-        await _provider.delete(Url.apiBaseUrl + "/bills/" + idBill, idToken);
+        await _provider.delete(Url.apiBaseUrl + "/bills/" + billId, tokenId);
 
     return response;
   }

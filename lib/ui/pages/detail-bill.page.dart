@@ -152,7 +152,7 @@ class DetailBillPage extends StatelessWidget {
                           showDialog(
                               context: context,
                               child: new SimpleDialog(children: <Widget>[
-                                DeleteBillDialog(billId: this.bill.idBill),
+                                DeleteBillDialog(billId: this.bill.billId),
                               ]));
                         },
                         child: Padding(

@@ -7,13 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class GroupsList extends StatelessWidget {
-  final String idToken;
+  final String tokenId;
 
-  GroupsList({this.idToken});
+  GroupsList({this.tokenId});
 
   Widget build(BuildContext context) {
     final GroupBloc _bloc = GroupBloc();
-    _bloc.getGroups(idToken);
+    _bloc.getGroups(tokenId);
 
     return StreamBuilder<Response<List<Group>>>(
         stream: _bloc.groupStreamGroups,
@@ -35,7 +35,7 @@ class GroupsList extends StatelessWidget {
                           padding: const EdgeInsets.only(
                               left: 8.0, right: 25.0, top: 8.0, bottom: 8.0),
                           child: GroupButton(
-                              idGroup: snapshot.data.data[index].idGroup,
+                              groupId: snapshot.data.data[index].groupId,
                               name: snapshot.data.data[index].name),
                         );
                       }),

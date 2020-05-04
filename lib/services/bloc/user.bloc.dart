@@ -16,11 +16,11 @@ class UserBloc {
     _userRepository = UserRepository();
   }
 
-  updateUser(String idUser, String name, String paypal, String idToken) async {
+  updateUser(String userId, String name, String paypal, String tokenId) async {
     userSink.add(Response.loading('Update user.'));
     try {
       bool userResponse =
-          await _userRepository.updateUser(idUser, name, paypal, idToken);
+          await _userRepository.updateUser(userId, name, paypal, tokenId);
       userSink.add(Response.completed(userResponse));
     } catch (e) {
       userSink.add(Response.error(e.toString()));

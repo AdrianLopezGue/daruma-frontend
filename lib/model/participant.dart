@@ -1,20 +1,20 @@
 class Participant {
-  String idParticipant;
+  String participantId;
   String name;
   int money;
 
-  Participant({this.idParticipant, this.name, this.money});
+  Participant({this.participantId, this.name, this.money});
 
   Map toJson() {
     return {
-      'id': this.idParticipant,
+      'id': this.participantId,
       'money': this.money,
     };
   }
 
   factory Participant.fromJson(Map<String, dynamic> json) {
     return Participant(
-        idParticipant: json['props']['memberId']['props']['value'],
+        participantId: json['props']['memberId']['props']['value'],
         money: json['props']['amount']['props']['value']);
   }
 }

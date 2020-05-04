@@ -8,11 +8,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:redux/redux.dart';
 
 class GroupButton extends StatelessWidget {
-  final String idGroup;
+  final String groupId;
   final String name;
 
   const GroupButton({
-    this.idGroup,
+    this.groupId,
     this.name,
     Key key,
   }) : super(key: key);
@@ -30,7 +30,7 @@ class GroupButton extends StatelessWidget {
     return FlatButton(
       color: redPrimaryColor,
       onPressed: () async {
-        vm.load(idGroup, vm.idToken);
+        vm.load(groupId, vm.tokenId);
 
         if (vm.loadingError) {
           showDialog(
@@ -80,14 +80,14 @@ class GroupButton extends StatelessWidget {
 }
 
 class _ViewModel {
-  final String idToken;
+  final String tokenId;
   final bool isLoading;
   final bool loadingError;
   final Group group;
   final Function(String, String) load;
 
   _ViewModel({
-    this.idToken,
+    this.tokenId,
     this.isLoading,
     this.loadingError,
     this.group,
@@ -96,12 +96,12 @@ class _ViewModel {
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
-      idToken: store.state.userState.idTokenUser,
+      tokenId: store.state.userState.tokenUserId,
       isLoading: store.state.groupState.isLoading,
       loadingError: store.state.groupState.loadingError,
       group: store.state.groupState.group,
-      load: (String idGroup, String idToken) {
-        store.dispatch(loadGroup(idGroup, idToken));
+      load: (String groupId, String tokenId) {
+        store.dispatch(loadGroup(groupId, tokenId));
       },
     );
   }

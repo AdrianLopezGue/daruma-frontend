@@ -15,7 +15,7 @@ class DeleteMemberDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(converter: (store) {
       return new _ViewModel(
-          idToken: store.state.userState.idTokenUser,
+          tokenId: store.state.userState.tokenUserId,
           deleteMember: (Member deletedMember) {
             store.dispatch(DeleteMemberToGroupAction(deletedMember));
           });
@@ -27,7 +27,7 @@ class DeleteMemberDialog extends StatelessWidget {
   Widget _deleteMemberDialogView(BuildContext context, _ViewModel vm) {
     final MemberBloc _bloc = MemberBloc();
 
-    _bloc.deleteMember(this.member.idMember, vm.idToken);
+    _bloc.deleteMember(this.member.memberId, vm.tokenId);
 
     return StreamBuilder<Response<bool>>(
         stream: _bloc.memberStream,
@@ -85,11 +85,11 @@ class DeleteMemberDialog extends StatelessWidget {
 }
 
 class _ViewModel {
-  final String idToken;
+  final String tokenId;
   final Function(Member) deleteMember;
 
   _ViewModel({
-    @required this.idToken,
+    @required this.tokenId,
     @required this.deleteMember,
   });
 }

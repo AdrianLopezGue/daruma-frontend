@@ -24,11 +24,11 @@ class MemberBloc {
     _memberControllerMembers = BehaviorSubject<Response<List<Member>>>();
   }
 
-  addMember(Member member, String groupId, String idToken) async {
+  addMember(Member member, String groupId, String tokenId) async {
     memberSink.add(Response.loading('Add new member.'));
     try {
       bool memberResponse =
-          await _memberRepository.addMember(member, groupId, idToken);
+          await _memberRepository.addMember(member, groupId, tokenId);
       memberSink.add(Response.completed(memberResponse));
     } catch (e) {
       memberSink.add(Response.error(e.toString()));
@@ -36,11 +36,11 @@ class MemberBloc {
     }
   }
 
-  deleteMember(String idMember, String idToken) async {
+  deleteMember(String memberId, String tokenId) async {
     memberSink.add(Response.loading('Delete member.'));
     try {
       bool memberResponse =
-          await _memberRepository.deleteMember(idMember, idToken);
+          await _memberRepository.deleteMember(memberId, tokenId);
       memberSink.add(Response.completed(memberResponse));
     } catch (e) {
       memberSink.add(Response.error(e.toString()));
@@ -48,11 +48,11 @@ class MemberBloc {
     }
   }
 
-  getMembers(String idGroup, String idToken) async {
+  getMembers(String groupId, String tokenId) async {
     memberSinkMembers.add(Response.loading('Get members.'));
     try {
       List<Member> memberResponse =
-          await _memberRepository.getMembers(idGroup, idToken);
+          await _memberRepository.getMembers(groupId, tokenId);
 
       memberSinkMembers.add(Response.completed(memberResponse));
     } catch (e) {
@@ -61,11 +61,11 @@ class MemberBloc {
     }
   }
 
-  setUserIdToMember(String idMember, String idUser, String idToken) async {
+  setUserIdToMember(String memberId, String userId, String tokenId) async {
     memberSink.add(Response.loading('Set User Id to member.'));
     try {
       bool memberResponse =
-          await _memberRepository.setUserIdToMember(idMember, idUser, idToken);
+          await _memberRepository.setUserIdToMember(memberId, userId, tokenId);
       memberSink.add(Response.completed(memberResponse));
     } catch (e) {
       memberSink.add(Response.error(e.toString()));

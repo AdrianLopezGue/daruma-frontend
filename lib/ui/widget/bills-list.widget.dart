@@ -8,14 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class BillsList extends StatelessWidget {
-  final String idToken;
+  final String tokenId;
   final Group group;
 
-  BillsList({this.idToken, this.group});
+  BillsList({this.tokenId, this.group});
 
   Widget build(BuildContext context) {
     final BillBloc _bloc = BillBloc();
-    _bloc.getBills(this.group.idGroup, idToken);
+    _bloc.getBills(this.group.groupId, tokenId);
 
     return StreamBuilder<Response<List<Bill>>>(
         stream: _bloc.billStreamBills,
@@ -61,10 +61,10 @@ class BillsList extends StatelessWidget {
 
   ListTile _buildListTile(Bill bill, Group group, BuildContext context) {
     List<String> payers = bill.payers
-        .map((payer) => group.getMemberNameById(payer.idParticipant))
+        .map((payer) => group.getMemberNameById(payer.participantId))
         .toList();
     List<String> debtors = bill.debtors
-        .map((debtor) => group.getMemberNameById(debtor.idParticipant))
+        .map((debtor) => group.getMemberNameById(debtor.participantId))
         .toList();
 
     return ListTile(

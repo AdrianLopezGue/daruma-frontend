@@ -52,7 +52,7 @@ class _NewGroupFormState extends State<NewGroupForm> {
   @override
   void initState() {
     var uuid = new Uuid();
-    group.idGroup = uuid.v4();
+    group.groupId = uuid.v4();
     group.currencyCode = 'EUR';
     group.members = new List<Member>();
     super.initState();
@@ -161,7 +161,7 @@ class _NewGroupFormState extends State<NewGroupForm> {
                           var uuid = new Uuid();
                           Member member = Member();
 
-                          member.idMember = uuid.v4();
+                          member.memberId = uuid.v4();
                           member.name = result[i].displayName;
                           group.members.add(member);
                         });

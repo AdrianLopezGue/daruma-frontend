@@ -24,10 +24,10 @@ class BillBloc {
     _billControllerGroups = BehaviorSubject<Response<List<Bill>>>();
   }
 
-  postBill(Bill bill, String idToken) async {
+  postBill(Bill bill, String tokenId) async {
     billSink.add(Response.loading('Post new bill.'));
     try {
-      bool billResponse = await _billRepository.createBill(bill, idToken);
+      bool billResponse = await _billRepository.createBill(bill, tokenId);
       billSink.add(Response.completed(billResponse));
     } catch (e) {
       billSink.add(Response.error(e.toString()));
@@ -35,10 +35,10 @@ class BillBloc {
     }
   }
 
-  deleteBill(String idBill, String idToken) async {
+  deleteBill(String billId, String tokenId) async {
     billSink.add(Response.loading('Delete bill.'));
     try {
-      bool billResponse = await _billRepository.deleteBill(idBill, idToken);
+      bool billResponse = await _billRepository.deleteBill(billId, tokenId);
       billSink.add(Response.completed(billResponse));
     } catch (e) {
       billSink.add(Response.error(e.toString()));
@@ -46,11 +46,11 @@ class BillBloc {
     }
   }
 
-  getBills(String idGroup, String idToken) async {
+  getBills(String groupId, String tokenId) async {
     billSinkBills.add(Response.loading('Get bills.'));
     try {
       List<Bill> billResponse =
-          await _billRepository.getBills(idGroup, idToken);
+          await _billRepository.getBills(groupId, tokenId);
 
       billSinkBills.add(Response.completed(billResponse));
     } catch (e) {

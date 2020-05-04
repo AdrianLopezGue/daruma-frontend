@@ -16,7 +16,7 @@ class AddMemberDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(converter: (store) {
       return new _ViewModel(
-          idToken: store.state.userState.idTokenUser,
+          tokenId: store.state.userState.tokenUserId,
           addMember: (Member newMember) {
             store.dispatch(AddMemberToGroupAction(newMember));
           });
@@ -28,7 +28,7 @@ class AddMemberDialog extends StatelessWidget {
   Widget _addMemberDialogView(BuildContext context, _ViewModel vm) {
     final MemberBloc _bloc = MemberBloc();
 
-    _bloc.addMember(this.member, this.groupId, vm.idToken);
+    _bloc.addMember(this.member, this.groupId, vm.tokenId);
 
     return StreamBuilder<Response<bool>>(
         stream: _bloc.memberStream,
@@ -86,11 +86,11 @@ class AddMemberDialog extends StatelessWidget {
 }
 
 class _ViewModel {
-  final String idToken;
+  final String tokenId;
   final Function(Member) addMember;
 
   _ViewModel({
-    @required this.idToken,
+    @required this.tokenId,
     @required this.addMember,
   });
 }

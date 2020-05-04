@@ -7,9 +7,9 @@ import 'package:daruma/util/url.dart';
 class MemberRepository {
   ApiProvider _provider = ApiProvider();
 
-  Future<List<Member>> getMembers(String idGroup, String idToken) async {
-    final response = await _provider.get(Url.apiBaseUrl + "/members/" + idGroup,
-        header: idToken);
+  Future<List<Member>> getMembers(String groupId, String tokenId) async {
+    final response = await _provider.get(Url.apiBaseUrl + "/members/" + groupId,
+        header: tokenId);
 
     var list = response as List;
     list = response.map<Member>((json) => Member.fromJson(json)).toList();
@@ -17,37 +17,37 @@ class MemberRepository {
     return list;
   }
 
-  Future<bool> addMember(Member member, String idGroup, String idToken) async {
+  Future<bool> addMember(Member member, String groupId, String tokenId) async {
     final String url = Url.apiBaseUrl + "/members";
 
     final Map body = {
-      'id': member.idMember,
-      'groupId': idGroup,
+      'id': member.memberId,
+      'groupId': groupId,
       'name': member.name,
     };
 
     var requestBody = jsonEncode(body);
-    final response = await _provider.post(url, requestBody, idToken);
+    final response = await _provider.post(url, requestBody, tokenId);
 
     return response;
   }
 
-  Future<bool> deleteMember(String idMember, String idToken) async {
+  Future<bool> deleteMember(String memberId, String tokenId) async {
     final response = await _provider.delete(
-        Url.apiBaseUrl + "/members/" + idMember, idToken);
+        Url.apiBaseUrl + "/members/" + memberId, tokenId);
 
     return response;
   }
 
   Future<bool> setUserIdToMember(
-      String idMember, String idUser, String idToken) async {
-    final String url = Url.apiBaseUrl + "/members/" + idMember;
+      String memberId, String userId, String tokenId) async {
+    final String url = Url.apiBaseUrl + "/members/" + memberId;
 
-    final Map body = {'idUser': idUser};
+    final Map body = {'idUser': userId};
 
     var requestBody = jsonEncode(body);
 
-    final response = await _provider.patch(url, requestBody, idToken);
+    final response = await _provider.patch(url, requestBody, tokenId);
 
     return response;
   }

@@ -62,7 +62,7 @@ _handleLoginWithGoogle(Store<AppState> store, LoginWithGoogleAction action,
         UserLoadedAction(systemUser, currentUser.photoUrl, token.token));
   } else {
     User newUser = new User();
-    newUser.idUser = currentUser.uid;
+    newUser.userId = currentUser.uid;
     newUser.name = currentUser.displayName;
     newUser.email = currentUser.email;
 
@@ -79,15 +79,15 @@ _handleLogoutAction(Store<AppState> store, LogoutAction action) async {
   await _googleSignIn.signOut();
 }
 
-ThunkAction loadGroup(String idGroup, String idToken) {
+ThunkAction loadGroup(String groupId, String tokenId) {
   GroupRepository _groupRepository = new GroupRepository();
   MemberRepository _memberRepository = new MemberRepository();
 
   return (Store store) async {
     new Future(() async {
       store.dispatch(new StartLoadingGroupAction());
-      _groupRepository.getGroup(idGroup, idToken).then((group) async {
-        var members = await _memberRepository.getMembers(idGroup, idToken);
+      _groupRepository.getGroup(groupId, tokenId).then((group) async {
+        var members = await _memberRepository.getMembers(groupId, tokenId);
 
         group = group.copyWith(members: members);
         store.dispatch(new LoadingGroupSuccessAction(group));

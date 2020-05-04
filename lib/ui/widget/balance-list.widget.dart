@@ -8,14 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class BalanceList extends StatelessWidget {
-  final String idToken;
+  final String tokenId;
   final Group group;
 
-  BalanceList({this.idToken, this.group});
+  BalanceList({this.tokenId, this.group});
 
   Widget build(BuildContext context) {
     final BalanceBloc _bloc = new BalanceBloc();
-    _bloc.getBalance(idToken, this.group);
+    _bloc.getBalance(tokenId, this.group);
 
     return StreamBuilder<Response<List<Transaction>>>(
         stream: _bloc.balanceStream,
@@ -76,9 +76,9 @@ class BalanceList extends StatelessWidget {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  Text(group.getMemberNameById(transaction.sender) +
+                  Text(group.getMemberNameById(transaction.senderId) +
                       " debe a " +
-                      group.getMemberNameById(transaction.beneficiary)),
+                      group.getMemberNameById(transaction.beneficiaryId)),
                 ],
               ),
               Row(

@@ -14,7 +14,7 @@ class DeleteBillDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(converter: (store) {
       return new _ViewModel(
-        idToken: store.state.userState.idTokenUser,
+        tokenId: store.state.userState.tokenUserId,
       );
     }, builder: (BuildContext context, _ViewModel vm) {
       return _deleteBillDialogView(context, vm);
@@ -24,7 +24,7 @@ class DeleteBillDialog extends StatelessWidget {
   Widget _deleteBillDialogView(BuildContext context, _ViewModel vm) {
     final BillBloc _bloc = BillBloc();
 
-    _bloc.deleteBill(this.billId, vm.idToken);
+    _bloc.deleteBill(this.billId, vm.tokenId);
 
     return StreamBuilder<Response<bool>>(
         stream: _bloc.billStream,
@@ -88,9 +88,9 @@ class DeleteBillDialog extends StatelessWidget {
 }
 
 class _ViewModel {
-  final String idToken;
+  final String tokenId;
 
   _ViewModel({
-    @required this.idToken,
+    @required this.tokenId,
   });
 }

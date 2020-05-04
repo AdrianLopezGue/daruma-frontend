@@ -6,16 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 class SetUserIdToMemberDialog extends StatelessWidget {
-  final String idMember;
-  final String idUser;
+  final String memberId;
+  final String userId;
 
-  SetUserIdToMemberDialog({this.idMember, this.idUser});
+  SetUserIdToMemberDialog({this.memberId, this.userId});
 
   @override
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(converter: (store) {
       return new _ViewModel(
-        idToken: store.state.userState.idTokenUser,
+        tokenId: store.state.userState.tokenUserId,
       );
     }, builder: (BuildContext context, _ViewModel vm) {
       return _selectMemberInGroupDialogView(context, vm);
@@ -25,7 +25,7 @@ class SetUserIdToMemberDialog extends StatelessWidget {
   Widget _selectMemberInGroupDialogView(BuildContext context, _ViewModel vm) {
     final MemberBloc _bloc = MemberBloc();
 
-    _bloc.setUserIdToMember(this.idMember, this.idUser, vm.idToken);
+    _bloc.setUserIdToMember(this.memberId, this.userId, vm.tokenId);
 
     return StreamBuilder<Response<bool>>(
         stream: _bloc.memberStream,
@@ -89,9 +89,9 @@ class SetUserIdToMemberDialog extends StatelessWidget {
 }
 
 class _ViewModel {
-  final String idToken;
+  final String tokenId;
 
   _ViewModel({
-    @required this.idToken,
+    @required this.tokenId,
   });
 }

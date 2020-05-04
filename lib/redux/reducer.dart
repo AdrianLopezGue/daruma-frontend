@@ -26,7 +26,7 @@ UserState _reduceUserState(AppState state, dynamic action) {
   if (action is UserLoadedAction) {
     newState = newState.copyWith(
         user: action.user,
-        idTokenUser: action.idTokenUser,
+        tokenUserId: action.tokenUserId,
         photoUrl: action.photoUrl);
   } else if (action is UserUpdatedAction) {
     User newUser =
@@ -59,7 +59,7 @@ GroupState _reduceGroupState(AppState state, dynamic action) {
   } else if (action is DeleteMemberToGroupAction) {
     List<Member> newMembers = newState.group.members;
     newMembers
-        .removeWhere((member) => member.idMember == action.member.idMember);
+        .removeWhere((member) => member.memberId == action.member.memberId);
 
     Group newGroup = newState.group.copyWith(members: newMembers);
     newState = newState.copyWith(group: newGroup);
@@ -75,21 +75,21 @@ BillState _reduceBillState(AppState state, dynamic action) {
 
     var uuid = new Uuid();
     Participant firstPayer = new Participant(
-        idParticipant: action.group.members.first.idMember, money: 0);
+        participantId: action.group.members.first.memberId, money: 0);
 
     newState = newState.copyWith(
         bill: newState.bill.copyWith(
-            idBill: uuid.v4(),
-            idGroup: action.group.idGroup,
+            billId: uuid.v4(),
+            groupId: action.group.groupId,
             currencyCode: action.group.currencyCode,
             payers: [firstPayer],
             debtors: action.group.members
                 .map((member) => Participant(
-                    idParticipant: member.idMember,
+                    participantId: member.memberId,
                     name: member.name,
                     money: 0))
                 .toList(),
-            idCreator: action.idCreator,
+            creatorId: action.creatorId,
             money: 0));
   } else if (action is BillNameChangedAction) {
     newState =
@@ -111,12 +111,12 @@ BillState _reduceBillState(AppState state, dynamic action) {
     for (int i = 0; i < newState.bill.debtors.length; i++) {
       if (newState.bill.debtors[i].money != -1) {
         newDebtors.add(new Participant(
-            idParticipant: newState.bill.debtors[i].idParticipant,
+            participantId: newState.bill.debtors[i].participantId,
             name: newState.bill.debtors[i].name,
             money: (allocation[i].minorUnits).toInt()));
       } else {
         newDebtors.add(new Participant(
-            idParticipant: newState.bill.debtors[i].idParticipant,
+            participantId: newState.bill.debtors[i].participantId,
             name: newState.bill.debtors[i].name,
             money: -1));
       }
@@ -128,7 +128,7 @@ BillState _reduceBillState(AppState state, dynamic action) {
 
     for (int i = 0; i < newState.bill.payers.length; i++) {
       newPayers.add(new Participant(
-          idParticipant: newState.bill.payers[i].idParticipant,
+          participantId: newState.bill.payers[i].participantId,
           name: newState.bill.payers[i].name,
           money: (allocationPayers[i].minorUnits).toInt()));
     }
@@ -151,12 +151,12 @@ BillState _reduceBillState(AppState state, dynamic action) {
     for (int i = 0; i < newState.bill.debtors.length; i++) {
       if (newState.bill.debtors[i].money != -1) {
         newDebtors.add(new Participant(
-            idParticipant: newState.bill.debtors[i].idParticipant,
+            participantId: newState.bill.debtors[i].participantId,
             name: newState.bill.debtors[i].name,
             money: (allocation[i].minorUnits).toInt()));
       } else {
         newDebtors.add(new Participant(
-            idParticipant: newState.bill.debtors[i].idParticipant,
+            participantId: newState.bill.debtors[i].participantId,
             name: newState.bill.debtors[i].name,
             money: -1));
       }
@@ -179,17 +179,17 @@ BillState _reduceBillState(AppState state, dynamic action) {
     for (int i = 0; i < newState.bill.debtors.length; i++) {
       if (newState.bill.debtors[i].money != -1) {
         newDebtors.add(new Participant(
-            idParticipant: newState.bill.debtors[i].idParticipant,
+            participantId: newState.bill.debtors[i].participantId,
             name: newState.bill.debtors[i].name,
             money: (allocation[i].minorUnits).toInt()));
       } else {
         newDebtors.add(new Participant(
-            idParticipant: newState.bill.debtors[i].idParticipant,
+            participantId: newState.bill.debtors[i].participantId,
             name: newState.bill.debtors[i].name,
             money: -1));
       }
     }
-    
+
     newState =
         newState.copyWith(bill: newState.bill.copyWith(debtors: newDebtors));
   } else if (action is BillPayersChangedAction) {

@@ -15,7 +15,7 @@ class PostBillDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(converter: (store) {
       return new _ViewModel(
-        idToken: store.state.userState.idTokenUser,
+        tokenId: store.state.userState.tokenUserId,
       );
     }, builder: (BuildContext context, _ViewModel vm) {
       return _postDialogView(context, vm);
@@ -25,7 +25,7 @@ class PostBillDialog extends StatelessWidget {
   Widget _postDialogView(BuildContext context, _ViewModel vm) {
     final BillBloc _bloc = BillBloc();
 
-    _bloc.postBill(this.bill, vm.idToken);
+    _bloc.postBill(this.bill, vm.tokenId);
 
     return StreamBuilder<Response<bool>>(
         stream: _bloc.billStream,
@@ -89,7 +89,7 @@ class PostBillDialog extends StatelessWidget {
 }
 
 class _ViewModel {
-  final String idToken;
+  final String tokenId;
 
-  _ViewModel({@required this.idToken});
+  _ViewModel({@required this.tokenId});
 }

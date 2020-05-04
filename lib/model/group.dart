@@ -2,22 +2,22 @@ import 'package:daruma/model/member.dart';
 import 'package:daruma/model/owner.dart';
 
 class Group {
-  String idGroup;
+  String groupId;
   String name;
   String currencyCode;
   Owner owner;
   List<Member> members;
 
-  Group({this.idGroup, this.name, this.currencyCode, this.owner, this.members});
+  Group({this.groupId, this.name, this.currencyCode, this.owner, this.members});
 
   Group copyWith(
       {String id,
       String name,
       String currencyCode,
-      String idOwner,
+      String ownerId,
       List<Member> members}) {
     return Group(
-        idGroup: id ?? this.idGroup,
+        groupId: id ?? this.groupId,
         name: name ?? this.name,
         currencyCode: currencyCode ?? this.currencyCode,
         owner: owner ?? this.owner,
@@ -32,7 +32,7 @@ class Group {
     Map owner = this.owner != null ? this.owner.toJson() : null;
 
     return {
-      'groupId': this.idGroup,
+      'groupId': this.groupId,
       'name': this.name,
       'currencyCode': this.currencyCode,
       'owner': owner,
@@ -41,12 +41,12 @@ class Group {
   }
 
   Group.fromJson(Map<String, dynamic> json) {
-    this.idGroup = json['_id'];
+    this.groupId = json['_id'];
     this.name = json['name'];
     this.currencyCode = json['currencyCode'];
 
     Owner owner = new Owner();
-    owner.idOwner = json['ownerId'];
+    owner.ownerId = json['ownerId'];
     owner.name = '';
     this.owner = owner;
     this.members = [];
@@ -63,15 +63,15 @@ class Group {
     return result;
   }
 
-  String getMemberNameById(String idMember) {
+  String getMemberNameById(String memberId) {
     var selectedMember =
-        this.members.singleWhere((member) => member.idMember == idMember);
+        this.members.singleWhere((member) => member.memberId == memberId);
     return selectedMember.name;
   }
 
   String getMemberIdByName(String name) {
     var selectedMember =
         this.members.singleWhere((member) => member.name == name);
-    return selectedMember.idMember;
+    return selectedMember.memberId;
   }
 }

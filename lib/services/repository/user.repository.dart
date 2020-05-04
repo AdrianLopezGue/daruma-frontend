@@ -7,18 +7,18 @@ import 'package:daruma/util/url.dart';
 class UserRepository {
   ApiProvider _provider = ApiProvider();
 
-  Future<bool> createUser(User user, String idToken) async {
+  Future<bool> createUser(User user, String tokenId) async {
     final String url = Url.apiBaseUrl + "/users";
 
     var requestBody = jsonEncode(user);
-    final response = await _provider.post(url, requestBody, idToken);
+    final response = await _provider.post(url, requestBody, tokenId);
 
     return response;
   }
 
-  Future<User> getUser(String idUser, String idToken) async {
-    final response = await _provider.get(Url.apiBaseUrl + "/users/" + idUser,
-        header: idToken);
+  Future<User> getUser(String userId, String tokenId) async {
+    final response = await _provider.get(Url.apiBaseUrl + "/users/" + userId,
+        header: tokenId);
 
     var user;
 
@@ -30,8 +30,8 @@ class UserRepository {
   }
 
   Future<bool> updateUser(
-      String idUser, String name, String paypal, String idToken) async {
-    final String url = Url.apiBaseUrl + "/users/" + idUser;
+      String userId, String name, String paypal, String tokenId) async {
+    final String url = Url.apiBaseUrl + "/users/" + userId;
 
     final Map body = {
       'name': name,
@@ -40,7 +40,7 @@ class UserRepository {
 
     var requestBody = jsonEncode(body);
 
-    final response = await _provider.put(url, requestBody, idToken);
+    final response = await _provider.put(url, requestBody, tokenId);
 
     return response;
   }

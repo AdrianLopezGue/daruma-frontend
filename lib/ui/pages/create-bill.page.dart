@@ -55,7 +55,7 @@ class _NewBillFormState extends State<NewBillForm> {
     return new StoreConnector<AppState, _ViewModel>(
       converter: (store) {
         return new _ViewModel(
-            idUser: store.state.userState.user.idUser,
+            userId: store.state.userState.user.userId,
             group: store.state.groupState.group,
             bill: store.state.billState.bill);
       },
@@ -67,7 +67,7 @@ class _NewBillFormState extends State<NewBillForm> {
             .map((debtor) => debtor.name)
             .toList();
         store.dispatch(StartCreatingBill(
-            store.state.groupState.group, store.state.userState.user.idUser));
+            store.state.groupState.group, store.state.userState.user.userId));
       },
     );
   }
@@ -168,7 +168,7 @@ class _NewBillFormState extends State<NewBillForm> {
 
                       for(int i = 0; i < nameMembers.length ; i++){
                         payers.add(new Participant(
-                              idParticipant: vm.group.getMemberIdByName(nameMembers[i]),
+                              participantId: vm.group.getMemberIdByName(nameMembers[i]),
                               name: nameMembers[i],
                               money: (allocation[i].minorUnits).toInt()));
                       }
@@ -264,12 +264,12 @@ class _NewBillFormState extends State<NewBillForm> {
 }
 
 class _ViewModel {
-  final String idUser;
+  final String userId;
   final Group group;
   final Bill bill;
 
   _ViewModel({
-    @required this.idUser,
+    @required this.userId,
     @required this.group,
     @required this.bill,
   });

@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 class SelectMemberInGroupDialog extends StatefulWidget {
-  final String idGroup;
+  final String groupId;
 
-  SelectMemberInGroupDialog({this.idGroup});
+  SelectMemberInGroupDialog({this.groupId});
 
   @override
   _SelectMemberInGroupDialogState createState() =>
@@ -18,15 +18,15 @@ class SelectMemberInGroupDialog extends StatefulWidget {
 
 class _SelectMemberInGroupDialogState extends State<SelectMemberInGroupDialog> {
   bool memberSelected = false;
-  String idMemberSelected = '';
-  String idUserSelected = '';
+  String memberIdSelected = '';
+  String userIdSelected = '';
 
   @override
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(converter: (store) {
       return new _ViewModel(
-        idToken: store.state.userState.idTokenUser,
-        idUser: store.state.userState.user.idUser,
+        tokenId: store.state.userState.tokenUserId,
+        userId: store.state.userState.user.userId,
       );
     }, builder: (BuildContext context, _ViewModel vm) {
       return _selectMemberInGroupDialogView(context, vm);
@@ -36,7 +36,7 @@ class _SelectMemberInGroupDialogState extends State<SelectMemberInGroupDialog> {
   Widget _selectMemberInGroupDialogView(BuildContext context, _ViewModel vm) {
     final MemberBloc _bloc = MemberBloc();
 
-    _bloc.getMembers(this.widget.idGroup, vm.idToken);
+    _bloc.getMembers(this.widget.groupId, vm.tokenId);
 
     return StreamBuilder<Response<List<Member>>>(
         stream: _bloc.memberStreamMembers,
@@ -50,7 +50,7 @@ class _SelectMemberInGroupDialogState extends State<SelectMemberInGroupDialog> {
               case Status.COMPLETED:
                 if (memberSelected == false) {
                   var memberInGroup = snapshot.data.data
-                      .where((member) => member.idUser == vm.idUser);
+                      .where((member) => member.userId == vm.userId);
 
                   if (memberInGroup.isEmpty) {
                     return Container(
@@ -62,15 +62,15 @@ class _SelectMemberInGroupDialogState extends State<SelectMemberInGroupDialog> {
                             child: ListView.builder(
                               itemCount: snapshot.data.data.length,
                               itemBuilder: (BuildContext context, int index) {
-                                if (snapshot.data.data[index].idUser.isEmpty) {
+                                if (snapshot.data.data[index].userId.isEmpty) {
                                   return ListTile(
                                     title: Text(snapshot.data.data[index].name),
                                     onTap: () {
                                       setState(() {
                                         memberSelected = true;
-                                        idMemberSelected =
-                                            snapshot.data.data[index].idMember;
-                                        idUserSelected = vm.idUser;
+                                        memberIdSelected =
+                                            snapshot.data.data[index].memberId;
+                                        userIdSelected = vm.userId;
                                       });
                                     },
                                   );
@@ -123,7 +123,7 @@ class _SelectMemberInGroupDialogState extends State<SelectMemberInGroupDialog> {
                   }
                 } else {
                   return SetUserIdToMemberDialog(
-                      idMember: idMemberSelected, idUser: idUserSelected);
+                      memberId: memberIdSelected, userId: userIdSelected);
                 }
 
                 break;
@@ -154,11 +154,11 @@ class _SelectMemberInGroupDialogState extends State<SelectMemberInGroupDialog> {
 }
 
 class _ViewModel {
-  final String idToken;
-  final String idUser;
+  final String tokenId;
+  final String userId;
 
   _ViewModel({
-    @required this.idToken,
-    @required this.idUser,
+    @required this.tokenId,
+    @required this.userId,
   });
 }

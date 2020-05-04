@@ -19,9 +19,9 @@ class LogoutAction {
 class UserLoadedAction {
   final User user;
   final String photoUrl;
-  final String idTokenUser;
+  final String tokenUserId;
 
-  UserLoadedAction(this.user, this.photoUrl, this.idTokenUser);
+  UserLoadedAction(this.user, this.photoUrl, this.tokenUserId);
 }
 
 class UserUpdatedAction {
@@ -77,9 +77,9 @@ class LoadingGroupFailedAction {
 
 class StartCreatingBill {
   final Group group;
-  final String idCreator;
+  final String creatorId;
 
-  StartCreatingBill(this.group, this.idCreator);
+  StartCreatingBill(this.group, this.creatorId);
 }
 
 class BillNameChangedAction {

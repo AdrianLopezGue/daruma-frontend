@@ -38,22 +38,22 @@ class AppState {
 class UserState {
   final User user;
   final String photoUrl;
-  final String idTokenUser;
+  final String tokenUserId;
 
   const UserState(
       {@required this.user,
       @required this.photoUrl,
-      @required this.idTokenUser});
+      @required this.tokenUserId});
 
   factory UserState.initial() {
-    return new UserState(user: null, photoUrl: null, idTokenUser: null);
+    return new UserState(user: null, photoUrl: null, tokenUserId: null);
   }
 
-  UserState copyWith({User user, String photoUrl, String idTokenUser}) {
+  UserState copyWith({User user, String photoUrl, String tokenUserId}) {
     return new UserState(
         user: user ?? this.user,
         photoUrl: photoUrl ?? this.photoUrl,
-        idTokenUser: idTokenUser ?? this.idTokenUser);
+        tokenUserId: tokenUserId ?? this.tokenUserId);
   }
 }
 

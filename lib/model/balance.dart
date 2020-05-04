@@ -1,11 +1,11 @@
 class Balance {
-  String idMember;
+  String memberId;
   int money;
 
-  Balance(this.idMember, this.money);
+  Balance(this.memberId, this.money);
 
   Balance.fromJson(Map<String, dynamic> json) {
-    this.idMember = json['_id'];
+    this.memberId = json['_id'];
     this.money = json['money'];
   }
 }
