@@ -108,12 +108,16 @@ BillState _reduceBillState(AppState state, dynamic action) {
 
     List<Participant> newDebtors = [];
 
+    int index = 0;
+
     for (int i = 0; i < newState.bill.debtors.length; i++) {
       if (newState.bill.debtors[i].money != -1) {
         newDebtors.add(new Participant(
             participantId: newState.bill.debtors[i].participantId,
             name: newState.bill.debtors[i].name,
-            money: (allocation[i].minorUnits).toInt()));
+            money: (allocation[index].minorUnits).toInt()));
+
+        index++;
       } else {
         newDebtors.add(new Participant(
             participantId: newState.bill.debtors[i].participantId,
@@ -146,6 +150,8 @@ BillState _reduceBillState(AppState state, dynamic action) {
     final value = Money.fromInt(newState.bill.money, currencyCode);
     final allocation = value.allocationTo(count);
 
+    int index = 0;
+
     List<Participant> newDebtors = [];
 
     for (int i = 0; i < newState.bill.debtors.length; i++) {
@@ -153,7 +159,9 @@ BillState _reduceBillState(AppState state, dynamic action) {
         newDebtors.add(new Participant(
             participantId: newState.bill.debtors[i].participantId,
             name: newState.bill.debtors[i].name,
-            money: (allocation[i].minorUnits).toInt()));
+            money: (allocation[index].minorUnits).toInt()));
+        
+        index++;
       } else {
         newDebtors.add(new Participant(
             participantId: newState.bill.debtors[i].participantId,
@@ -176,12 +184,16 @@ BillState _reduceBillState(AppState state, dynamic action) {
 
     List<Participant> newDebtors = [];
 
+    int index = 0;
+
     for (int i = 0; i < newState.bill.debtors.length; i++) {
       if (newState.bill.debtors[i].money != -1) {
         newDebtors.add(new Participant(
             participantId: newState.bill.debtors[i].participantId,
             name: newState.bill.debtors[i].name,
-            money: (allocation[i].minorUnits).toInt()));
+            money: (allocation[index].minorUnits).toInt()));
+
+        index++;
       } else {
         newDebtors.add(new Participant(
             participantId: newState.bill.debtors[i].participantId,
