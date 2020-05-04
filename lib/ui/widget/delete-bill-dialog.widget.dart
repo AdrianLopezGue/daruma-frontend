@@ -24,9 +24,7 @@ class DeleteBillDialog extends StatelessWidget {
   Widget _deleteBillDialogView(BuildContext context, _ViewModel vm) {
     final BillBloc _bloc = BillBloc();
 
-    _bloc.deleteBill(
-        this.billId,
-        vm.idToken);
+    _bloc.deleteBill(this.billId, vm.idToken);
 
     return StreamBuilder<Response<bool>>(
         stream: _bloc.billStream,

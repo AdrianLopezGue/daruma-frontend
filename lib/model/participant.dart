@@ -13,6 +13,8 @@ class Participant {
   }
 
   factory Participant.fromJson(Map<String, dynamic> json) {
-    return Participant(idParticipant: json['props']['memberId']['props']['value'], money: json['props']['amount']['props']['value']);
+    return Participant(
+        idParticipant: json['props']['memberId']['props']['value'],
+        money: json['props']['amount']['props']['value']);
   }
 }

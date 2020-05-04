@@ -57,12 +57,10 @@ _handleLoginWithGoogle(Store<AppState> store, LoginWithGoogleAction action,
   UserRepository userRepository = new UserRepository();
   var systemUser = await userRepository.getUser(currentUser.uid, token.token);
 
-
-  if(systemUser != null){
-
-    store.dispatch(UserLoadedAction(systemUser, currentUser.photoUrl ,token.token));
-  }
-  else{
+  if (systemUser != null) {
+    store.dispatch(
+        UserLoadedAction(systemUser, currentUser.photoUrl, token.token));
+  } else {
     User newUser = new User();
     newUser.idUser = currentUser.uid;
     newUser.name = currentUser.displayName;
@@ -70,9 +68,9 @@ _handleLoginWithGoogle(Store<AppState> store, LoginWithGoogleAction action,
 
     userRepository.createUser(newUser, token.token);
 
-    store.dispatch(UserLoadedAction(newUser, currentUser.photoUrl, token.token));
+    store
+        .dispatch(UserLoadedAction(newUser, currentUser.photoUrl, token.token));
   }
-
 
   action.completer.complete();
 }
@@ -82,16 +80,15 @@ _handleLogoutAction(Store<AppState> store, LogoutAction action) async {
 }
 
 ThunkAction loadGroup(String idGroup, String idToken) {
-
   GroupRepository _groupRepository = new GroupRepository();
   MemberRepository _memberRepository = new MemberRepository();
 
   return (Store store) async {
-    new Future(() async{
+    new Future(() async {
       store.dispatch(new StartLoadingGroupAction());
       _groupRepository.getGroup(idGroup, idToken).then((group) async {
         var members = await _memberRepository.getMembers(idGroup, idToken);
-        
+
         group = group.copyWith(members: members);
         store.dispatch(new LoadingGroupSuccessAction(group));
         Keys.navKey.currentState.pushNamed(Routes.groupPage);

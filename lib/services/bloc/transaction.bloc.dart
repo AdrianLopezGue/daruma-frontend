@@ -8,23 +8,20 @@ class TransactionBloc {
   TransactionRepository _transactionRepository;
   StreamController _transactionController;
 
-  StreamSink<Response<bool>> get transactionSink =>
-      _transactionController.sink;
-      
+  StreamSink<Response<bool>> get transactionSink => _transactionController.sink;
 
-  Stream<Response<bool>> get transactionStream =>
-      _transactionController.stream;
+  Stream<Response<bool>> get transactionStream => _transactionController.stream;
 
   TransactionBloc() {
     _transactionController = BehaviorSubject<Response<bool>>();
     _transactionRepository = TransactionRepository();
-    
   }
 
   postTransaction(Transaction transaction, String idToken) async {
     transactionSink.add(Response.loading('Post new transaction.'));
     try {
-      bool transactionResponse = await _transactionRepository.createTransfer(transaction, idToken);
+      bool transactionResponse =
+          await _transactionRepository.createTransfer(transaction, idToken);
       transactionSink.add(Response.completed(transactionResponse));
     } catch (e) {
       transactionSink.add(Response.error(e.toString()));

@@ -9,4 +9,3 @@ class Balance {
     this.money = json['money'];
   }
 }
-

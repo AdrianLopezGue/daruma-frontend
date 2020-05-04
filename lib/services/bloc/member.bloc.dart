@@ -27,7 +27,8 @@ class MemberBloc {
   addMember(Member member, String groupId, String idToken) async {
     memberSink.add(Response.loading('Add new member.'));
     try {
-      bool memberResponse = await _memberRepository.addMember(member, groupId, idToken);
+      bool memberResponse =
+          await _memberRepository.addMember(member, groupId, idToken);
       memberSink.add(Response.completed(memberResponse));
     } catch (e) {
       memberSink.add(Response.error(e.toString()));
@@ -38,7 +39,8 @@ class MemberBloc {
   deleteMember(String idMember, String idToken) async {
     memberSink.add(Response.loading('Delete member.'));
     try {
-      bool memberResponse = await _memberRepository.deleteMember(idMember, idToken);
+      bool memberResponse =
+          await _memberRepository.deleteMember(idMember, idToken);
       memberSink.add(Response.completed(memberResponse));
     } catch (e) {
       memberSink.add(Response.error(e.toString()));
@@ -49,7 +51,8 @@ class MemberBloc {
   getMembers(String idGroup, String idToken) async {
     memberSinkMembers.add(Response.loading('Get members.'));
     try {
-      List<Member> memberResponse = await _memberRepository.getMembers(idGroup, idToken);
+      List<Member> memberResponse =
+          await _memberRepository.getMembers(idGroup, idToken);
 
       memberSinkMembers.add(Response.completed(memberResponse));
     } catch (e) {
@@ -61,7 +64,8 @@ class MemberBloc {
   setUserIdToMember(String idMember, String idUser, String idToken) async {
     memberSink.add(Response.loading('Set User Id to member.'));
     try {
-      bool memberResponse = await _memberRepository.setUserIdToMember(idMember, idUser, idToken);
+      bool memberResponse =
+          await _memberRepository.setUserIdToMember(idMember, idUser, idToken);
       memberSink.add(Response.completed(memberResponse));
     } catch (e) {
       memberSink.add(Response.error(e.toString()));

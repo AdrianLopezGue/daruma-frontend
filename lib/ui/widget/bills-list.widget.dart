@@ -34,8 +34,9 @@ class BillsList extends StatelessWidget {
                         itemCount: snapshot.data.data.length,
                         itemBuilder: (context, index) {
                           return Padding(
-                            padding: const EdgeInsets.all(8.0),                            
-                            child: _buildListTile(snapshot.data.data[index], this.group, context),
+                            padding: const EdgeInsets.all(8.0),
+                            child: _buildListTile(
+                                snapshot.data.data[index], this.group, context),
                           );
                         }));
                 break;
@@ -59,21 +60,27 @@ class BillsList extends StatelessWidget {
   }
 
   ListTile _buildListTile(Bill bill, Group group, BuildContext context) {
-    List<String> payers = bill.payers.map((payer) => group.getMemberNameById(payer.idParticipant)).toList();
-    List<String> debtors = bill.debtors.map((debtor) => group.getMemberNameById(debtor.idParticipant)).toList();
+    List<String> payers = bill.payers
+        .map((payer) => group.getMemberNameById(payer.idParticipant))
+        .toList();
+    List<String> debtors = bill.debtors
+        .map((debtor) => group.getMemberNameById(debtor.idParticipant))
+        .toList();
 
     return ListTile(
       title: Text(bill.name),
-      subtitle: Text("Pagado por " + payers.toString().substring(1, payers.toString().length-1)),
-      trailing: Text((bill.money/100).toString() + " " + bill.currencyCode),
-      onTap: (){
+      subtitle: Text("Pagado por " +
+          payers.toString().substring(1, payers.toString().length - 1)),
+      trailing: Text((bill.money / 100).toString() + " " + bill.currencyCode),
+      onTap: () {
         Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) {
-                return DetailBillPage(bill: bill, payers: payers, debtors: debtors, group: group);
-              },
-            ),
-          );
+          MaterialPageRoute(
+            builder: (context) {
+              return DetailBillPage(
+                  bill: bill, payers: payers, debtors: debtors, group: group);
+            },
+          ),
+        );
       },
     );
   }

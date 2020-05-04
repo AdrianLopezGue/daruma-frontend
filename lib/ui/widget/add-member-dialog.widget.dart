@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 class AddMemberDialog extends StatelessWidget {
-
   final Member member;
   final String groupId;
 
@@ -17,11 +16,10 @@ class AddMemberDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(converter: (store) {
       return new _ViewModel(
-        idToken: store.state.userState.idTokenUser,
-        addMember: (Member newMember) {
-          store.dispatch(AddMemberToGroupAction(newMember));
-        }
-      );
+          idToken: store.state.userState.idTokenUser,
+          addMember: (Member newMember) {
+            store.dispatch(AddMemberToGroupAction(newMember));
+          });
     }, builder: (BuildContext context, _ViewModel vm) {
       return _addMemberDialogView(context, vm);
     });
@@ -30,10 +28,7 @@ class AddMemberDialog extends StatelessWidget {
   Widget _addMemberDialogView(BuildContext context, _ViewModel vm) {
     final MemberBloc _bloc = MemberBloc();
 
-    _bloc.addMember(
-        this.member,
-        this.groupId,
-        vm.idToken);
+    _bloc.addMember(this.member, this.groupId, vm.idToken);
 
     return StreamBuilder<Response<bool>>(
         stream: _bloc.memberStream,
@@ -53,7 +48,7 @@ class AddMemberDialog extends StatelessWidget {
                       Text("Add Member completed!"),
                       FlatButton(
                         onPressed: () {
-                          vm.addMember(this.member);                         
+                          vm.addMember(this.member);
                           Navigator.of(context).pop();
                         },
                         child: Text(

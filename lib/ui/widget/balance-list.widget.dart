@@ -84,20 +84,20 @@ class BalanceList extends StatelessWidget {
               Row(
                 children: <Widget>[
                   FlatButton(
-                    child: Text("Liquidar"),
-                    textColor: Colors.green,
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return TranferMoneyPage(transaction: transaction, group: group);
-                          },
-                        ),
-                      );
-                    },
-                    shape: RoundedRectangleBorder(side: BorderSide(color: Colors.grey))
-                    
-                  )
+                      child: Text("Liquidar"),
+                      textColor: Colors.green,
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return TranferMoneyPage(
+                                  transaction: transaction, group: group);
+                            },
+                          ),
+                        );
+                      },
+                      shape: RoundedRectangleBorder(
+                          side: BorderSide(color: Colors.grey)))
                 ],
               )
             ],

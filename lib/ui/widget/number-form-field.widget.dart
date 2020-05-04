@@ -8,17 +8,12 @@ class CustomNumberFormField extends StatelessWidget {
   final FormFieldSetter<String> validator;
   final FormFieldSetter<String> onChanged;
 
-  CustomNumberFormField({
-    this.hintText,
-    this.validator,
-    this.onChanged
-  });
+  CustomNumberFormField({this.hintText, this.validator, this.onChanged});
 
   @override
   Widget build(BuildContext context) {
-    
     return TextFormField(
-        decoration: InputDecoration(
+      decoration: InputDecoration(
         hintText: hintText,
         contentPadding: EdgeInsets.all(15.0),
         filled: true,
@@ -28,7 +23,7 @@ class CustomNumberFormField extends StatelessWidget {
       onChanged: onChanged,
       inputFormatters: [
         MoneyInputFormatter(),
-        BlacklistingTextInputFormatter(new RegExp('-')),        
+        BlacklistingTextInputFormatter(new RegExp('-')),
       ],
       keyboardType: TextInputType.number,
     );

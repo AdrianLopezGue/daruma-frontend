@@ -20,21 +20,17 @@ class CreateBillPage extends StatelessWidget {
     return Scaffold(
       appBar: new AppBar(title: new Text("Nuevo Gasto")),
       body: SingleChildScrollView(
-        child:
-          Container(
-            color: white,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 25.0, top: 15.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  NewBillForm()
-                ],
-              ),
-            ),
-          )
-      ),
+          child: Container(
+        color: white,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 25.0, top: 15.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[NewBillForm()],
+          ),
+        ),
+      )),
     );
   }
 }
@@ -66,11 +62,11 @@ class _NewBillFormState extends State<NewBillForm> {
         return _formView(context, vm);
       },
       onInit: (store) {
-        this.nameDebtors = store.state.billState.bill.debtors.map((debtor) => debtor.name).toList();
+        this.nameDebtors = store.state.billState.bill.debtors
+            .map((debtor) => debtor.name)
+            .toList();
         store.dispatch(StartCreatingBill(
-            store.state.groupState.group,
-            store.state.userState.user.idUser
-            ));
+            store.state.groupState.group, store.state.userState.user.idUser));
       },
     );
   }
@@ -78,7 +74,6 @@ class _NewBillFormState extends State<NewBillForm> {
   Widget _formView(BuildContext context, _ViewModel vm) {
     final halfMediaWidth = MediaQuery.of(context).size.width / 1.15;
     final format = DateFormat("yyyy-MM-dd");
-
 
     return Form(
         key: _formKey,
@@ -164,15 +159,15 @@ class _NewBillFormState extends State<NewBillForm> {
                   MembersButton(
                     members: vm.group.members,
                     selectedMembers: (nameMembers) {
-                      List<Participant> payers = nameMembers.map((name) =>
-                          new Participant(
+                      List<Participant> payers = nameMembers
+                          .map((name) => new Participant(
                               idParticipant: vm.group.getMemberIdByName(name),
                               name: name,
-                              money: vm.bill.money ~/ nameMembers.length)).toList();
+                              money: vm.bill.money ~/ nameMembers.length))
+                          .toList();
 
                       StoreProvider.of<AppState>(context)
                           .dispatch(BillPayersChangedAction(payers));
-                      
                     },
                   )
                 ],
@@ -182,77 +177,80 @@ class _NewBillFormState extends State<NewBillForm> {
             Row(
               children: <Widget>[
                 Text("Para quién"),
-                ],
+              ],
             ),
             SizedBox(height: 20.0),
             CheckboxGroup(
-                labels: vm.bill.debtors.map((debtor) => debtor.name).toList(),
-                checked: nameDebtors,
-                onChange: (bool isChecked, String label, int index){
-                  if(isChecked){
-                    setState(() {
-                      nameDebtors.add(label);                      
-                    });
-                    StoreProvider.of<AppState>(context)
-                          .dispatch(BillDebtorWasAddedAction(index));
-                  }
-                  else{
-                    setState(() {
-                      nameDebtors.removeWhere((name) => name == label);                     
-                    });
-                    
-                    StoreProvider.of<AppState>(context)
-                          .dispatch(BillDebtorWasDeletedAction(index));
-                  }
-                },
-                activeColor: redPrimaryColor,
-                itemBuilder: (Checkbox cb, Text txt, int i){
-                  return Row(
-                    children: <Widget>[
-                      Expanded(child: cb, flex: 1),
-                      Expanded(child: txt, flex: 7),
-                      vm.bill.debtors[i].money == -1 ? Expanded(child: Text('0.0'), flex: 2)  : Expanded(child: Text((vm.bill.debtors[i].money/100).toString()), flex: 2),
-                    ],
-                  );
-                },
-              ),
+              labels: vm.bill.debtors.map((debtor) => debtor.name).toList(),
+              checked: nameDebtors,
+              onChange: (bool isChecked, String label, int index) {
+                if (isChecked) {
+                  setState(() {
+                    nameDebtors.add(label);
+                  });
+                  StoreProvider.of<AppState>(context)
+                      .dispatch(BillDebtorWasAddedAction(index));
+                } else {
+                  setState(() {
+                    nameDebtors.removeWhere((name) => name == label);
+                  });
 
-          RaisedButton(
-            color: redPrimaryColor,
-            onPressed: () {
-              if (_formKey.currentState.validate()) {
-                _formKey.currentState.save();
-
-                showDialog(
-                    context: context,
-                    child: new SimpleDialog(children: <Widget>[
-                      PostBillDialog(bill: vm.bill),
-                    ]));
-              }
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Icon(Icons.done, color: white),
-                  SizedBox(
-                    width: 5.0,
-                  ),
-                  Text(
-                    'Guardar',
-                    style: GoogleFonts.roboto(textStyle:
-                            TextStyle(fontSize: 20, color: Colors.white)),
-                        
-                  ),
-                ],
-              ),
+                  StoreProvider.of<AppState>(context)
+                      .dispatch(BillDebtorWasDeletedAction(index));
+                }
+              },
+              activeColor: redPrimaryColor,
+              itemBuilder: (Checkbox cb, Text txt, int i) {
+                return Row(
+                  children: <Widget>[
+                    Expanded(child: cb, flex: 1),
+                    Expanded(child: txt, flex: 7),
+                    vm.bill.debtors[i].money == -1
+                        ? Expanded(child: Text('0.0'), flex: 2)
+                        : Expanded(
+                            child: Text(
+                                (vm.bill.debtors[i].money / 100).toString()),
+                            flex: 2),
+                  ],
+                );
+              },
             ),
-            elevation: 5,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-          ),
-          SizedBox(height: 15.0),
+            RaisedButton(
+              color: redPrimaryColor,
+              onPressed: () {
+                if (_formKey.currentState.validate()) {
+                  _formKey.currentState.save();
+
+                  showDialog(
+                      context: context,
+                      child: new SimpleDialog(children: <Widget>[
+                        PostBillDialog(bill: vm.bill),
+                      ]));
+                }
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Icon(Icons.done, color: white),
+                    SizedBox(
+                      width: 5.0,
+                    ),
+                    Text(
+                      'Guardar',
+                      style: GoogleFonts.roboto(
+                          textStyle:
+                              TextStyle(fontSize: 20, color: Colors.white)),
+                    ),
+                  ],
+                ),
+              ),
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(40)),
+            ),
+            SizedBox(height: 15.0),
           ],
         ));
   }

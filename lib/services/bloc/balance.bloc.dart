@@ -13,7 +13,6 @@ class BalanceBloc {
 
   StreamSink<Response<List<Transaction>>> get balanceSink =>
       _balanceController.sink;
-      
 
   Stream<Response<List<Transaction>>> get balanceStream =>
       _balanceController.stream;
@@ -21,7 +20,6 @@ class BalanceBloc {
   BalanceBloc() {
     _balanceController = BehaviorSubject<Response<List<Transaction>>>();
     _balanceRepository = BalanceRepository();
-    
   }
 
   getBalance(String idToken, Group group) async {
@@ -29,8 +27,9 @@ class BalanceBloc {
     try {
       HashMap<String, int> balance =
           await _balanceRepository.getBalance(idToken, group.idGroup);
-      
-      BalanceCalculator balanceCalculator = new BalanceCalculator(transactions: balance, group: group);
+
+      BalanceCalculator balanceCalculator =
+          new BalanceCalculator(transactions: balance, group: group);
 
       balanceSink.add(Response.completed(balanceCalculator.getTransactions()));
     } catch (e) {

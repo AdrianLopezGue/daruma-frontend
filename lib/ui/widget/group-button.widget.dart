@@ -20,11 +20,10 @@ class GroupButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(
-      converter: (store) => _ViewModel.fromStore(store),
-      builder: (BuildContext context, _ViewModel vm) {
-        return _groupButtonView(context, vm);
-      }
-    );
+        converter: (store) => _ViewModel.fromStore(store),
+        builder: (BuildContext context, _ViewModel vm) {
+          return _groupButtonView(context, vm);
+        });
   }
 
   Widget _groupButtonView(BuildContext context, _ViewModel vm) {
@@ -55,7 +54,7 @@ class GroupButton extends StatelessWidget {
                   ),
                 )
               ]));
-        }else if (vm.isLoading) {
+        } else if (vm.isLoading) {
           showDialog(
               context: context,
               child: new SimpleDialog(children: <Widget>[

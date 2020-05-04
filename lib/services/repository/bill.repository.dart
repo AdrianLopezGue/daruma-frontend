@@ -17,8 +17,8 @@ class BillRepository {
   }
 
   Future<List<Bill>> getBills(String idGroup, String idToken) async {
-    final response =
-        await _provider.get(Url.apiBaseUrl + "/bills/" + idGroup, header: idToken);
+    final response = await _provider.get(Url.apiBaseUrl + "/bills/" + idGroup,
+        header: idToken);
 
     var list = response as List;
     list = response.map<Bill>((json) => Bill.fromJson(json)).toList();
@@ -27,9 +27,8 @@ class BillRepository {
   }
 
   Future<bool> deleteBill(String idBill, String idToken) async {
-
     final response =
-        await _provider.delete(Url.apiBaseUrl + "/bills/"+ idBill, idToken);
+        await _provider.delete(Url.apiBaseUrl + "/bills/" + idBill, idToken);
 
     return response;
   }

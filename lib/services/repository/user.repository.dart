@@ -17,19 +17,20 @@ class UserRepository {
   }
 
   Future<User> getUser(String idUser, String idToken) async {
-    final response =
-        await _provider.get(Url.apiBaseUrl + "/users/"+ idUser, header: idToken);
-    
+    final response = await _provider.get(Url.apiBaseUrl + "/users/" + idUser,
+        header: idToken);
+
     var user;
 
-    if(response != null){
+    if (response != null) {
       user = User.fromJson(response);
-    } 
+    }
 
     return user;
   }
 
-  Future<bool> updateUser(String idUser, String name, String paypal, String idToken) async {
+  Future<bool> updateUser(
+      String idUser, String name, String paypal, String idToken) async {
     final String url = Url.apiBaseUrl + "/users/" + idUser;
 
     final Map body = {

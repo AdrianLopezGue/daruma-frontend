@@ -16,7 +16,7 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-        decoration: InputDecoration(
+      decoration: InputDecoration(
         hintText: hintText,
         contentPadding: EdgeInsets.all(15.0),
         filled: true,

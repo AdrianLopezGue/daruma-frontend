@@ -8,8 +8,7 @@ class Group {
   Owner owner;
   List<Member> members;
 
-  Group(
-      {this.idGroup, this.name, this.currencyCode, this.owner, this.members});
+  Group({this.idGroup, this.name, this.currencyCode, this.owner, this.members});
 
   Group copyWith(
       {String id,
@@ -53,9 +52,9 @@ class Group {
     this.members = [];
   }
 
-  String getMembersAsString(){
-    String result  = "";
-    for(int i = 0; i < this.members.length-1; i++){
+  String getMembersAsString() {
+    String result = "";
+    for (int i = 0; i < this.members.length - 1; i++) {
       result += this.members[i].name + ", ";
     }
 
@@ -64,13 +63,15 @@ class Group {
     return result;
   }
 
-  String getMemberNameById(String idMember){
-    var selectedMember = this.members.singleWhere((member) => member.idMember == idMember);
+  String getMemberNameById(String idMember) {
+    var selectedMember =
+        this.members.singleWhere((member) => member.idMember == idMember);
     return selectedMember.name;
   }
 
-  String getMemberIdByName(String name){
-    var selectedMember = this.members.singleWhere((member) => member.name == name);
+  String getMemberIdByName(String name) {
+    var selectedMember =
+        this.members.singleWhere((member) => member.name == name);
     return selectedMember.idMember;
   }
 }

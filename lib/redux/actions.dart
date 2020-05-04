@@ -51,7 +51,7 @@ class DeleteMemberToGroupAction {
 
 class LoadingMembersSuccessAction {
   final List<Member> members;
-  
+
   LoadingMembersSuccessAction(this.members);
 }
 
@@ -75,7 +75,7 @@ class LoadingGroupFailedAction {
   LoadingGroupFailedAction();
 }
 
-class StartCreatingBill{
+class StartCreatingBill {
   final Group group;
   final String idCreator;
 
@@ -113,7 +113,6 @@ class BillDebtorWasDeletedAction {
 }
 
 class RemoveNegatedDebtorsAction {
-  
   RemoveNegatedDebtorsAction();
 }
 

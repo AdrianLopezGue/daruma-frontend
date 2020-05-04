@@ -46,10 +46,11 @@ class BillBloc {
     }
   }
 
-  getBills( String idGroup, String idToken) async {
+  getBills(String idGroup, String idToken) async {
     billSinkBills.add(Response.loading('Get bills.'));
     try {
-      List<Bill> billResponse = await _billRepository.getBills(idGroup, idToken);
+      List<Bill> billResponse =
+          await _billRepository.getBills(idGroup, idToken);
 
       billSinkBills.add(Response.completed(billResponse));
     } catch (e) {

@@ -112,27 +112,30 @@ class GroupBalance extends StatelessWidget {
         floatingActionButton: NewBillFloatingButton());
   }
 
-  Future<void> handleClick(String value, BuildContext context, Group group) async {
+  Future<void> handleClick(
+      String value, BuildContext context, Group group) async {
     switch (value) {
       case 'Compartir':
         {
           final RenderBox box = context.findRenderObject();
           final AppDynamicLinks _appDynamicLinks = AppDynamicLinks();
-          final String urlLink = await _appDynamicLinks.createDynamicLink(group.idGroup);
+          final String urlLink =
+              await _appDynamicLinks.createDynamicLink(group.idGroup);
           Share.share(urlLink,
               sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
-          }
+        }
         break;
 
-      case 'Configuración': {
-        Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) {
-                    return EditGroupPage(group: group);
-                  },
-                ),
-              );
-      }
+      case 'Configuración':
+        {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) {
+                return EditGroupPage(group: group);
+              },
+            ),
+          );
+        }
         break;
     }
   }

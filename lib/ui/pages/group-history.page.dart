@@ -34,24 +34,32 @@ class GroupHistory extends StatelessWidget {
                   Text(vm.group.name),
                 ],
               ),
-              SizedBox(height: 5.0,),
+              SizedBox(
+                height: 5.0,
+              ),
               Row(
                 children: <Widget>[
-                  Text(vm.group.getMembersAsString(), style: GoogleFonts.roboto(
-                                fontSize: 12, textStyle: TextStyle(color: white)),),
+                  Text(
+                    vm.group.getMembersAsString(),
+                    style: GoogleFonts.roboto(
+                        fontSize: 12, textStyle: TextStyle(color: white)),
+                  ),
                 ],
               )
             ],
           ),
-          leading: BackButton(color: Colors.white, onPressed: (){
-            Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) {
-                return WelcomeScreen();
-              },
-            ),
-          );
-          },),
+          leading: BackButton(
+            color: Colors.white,
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return WelcomeScreen();
+                  },
+                ),
+              );
+            },
+          ),
           actions: <Widget>[
             PopupMenuButton<String>(
               onSelected: (choice) => handleClick(choice, context, vm.group),
@@ -85,9 +93,9 @@ class GroupHistory extends StatelessWidget {
                     ),
                   ),
                   Divider(
-                        color: black,
-                        endIndent: 25.0,
-                      ),
+                    color: black,
+                    endIndent: 25.0,
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(top: 15.0),
                     child: Row(
@@ -103,27 +111,31 @@ class GroupHistory extends StatelessWidget {
         ),
         floatingActionButton: NewBillFloatingButton());
   }
-  Future<void> handleClick(String value, BuildContext context, Group group) async {
+
+  Future<void> handleClick(
+      String value, BuildContext context, Group group) async {
     switch (value) {
       case 'Compartir':
         {
           final RenderBox box = context.findRenderObject();
           final AppDynamicLinks _appDynamicLinks = AppDynamicLinks();
-          final String urlLink = await _appDynamicLinks.createDynamicLink(group.idGroup);
+          final String urlLink =
+              await _appDynamicLinks.createDynamicLink(group.idGroup);
           Share.share(urlLink,
               sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
-          }
+        }
         break;
 
-      case 'Configuración': {
-        Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) {
-                    return EditGroupPage(group: group);
-                  },
-                ),
-              );
-      }
+      case 'Configuración':
+        {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) {
+                return EditGroupPage(group: group);
+              },
+            ),
+          );
+        }
         break;
     }
   }

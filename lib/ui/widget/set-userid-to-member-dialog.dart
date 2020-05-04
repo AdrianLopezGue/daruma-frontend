@@ -9,7 +9,7 @@ class SetUserIdToMemberDialog extends StatelessWidget {
   final String idMember;
   final String idUser;
 
-  SetUserIdToMemberDialog({ this.idMember, this.idUser });
+  SetUserIdToMemberDialog({this.idMember, this.idUser});
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +25,7 @@ class SetUserIdToMemberDialog extends StatelessWidget {
   Widget _selectMemberInGroupDialogView(BuildContext context, _ViewModel vm) {
     final MemberBloc _bloc = MemberBloc();
 
-    _bloc.setUserIdToMember(
-        this.idMember,
-        this.idUser,
-        vm.idToken);
+    _bloc.setUserIdToMember(this.idMember, this.idUser, vm.idToken);
 
     return StreamBuilder<Response<bool>>(
         stream: _bloc.memberStream,
@@ -40,7 +37,6 @@ class SetUserIdToMemberDialog extends StatelessWidget {
                 break;
 
               case Status.COMPLETED:
-
                 return Container(
                   height: 300.0, // Change as per your requirement
                   width: 300.0,

@@ -20,20 +20,21 @@ class _CreateGroupPageState extends State<CreateGroupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: new AppBar(title: new Text("Crear un grupo"), backgroundColor: redPrimaryColor,),
-      body: SingleChildScrollView(
-        child:
-          SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 25.0, top: 15.0),
-                child: Column(
-                  children: <Widget>[
-                    NewGroupForm(),
-                  ],
-                ),
-              ),
-          )
+      appBar: new AppBar(
+        title: new Text("Crear un grupo"),
+        backgroundColor: redPrimaryColor,
       ),
+      body: SingleChildScrollView(
+          child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 25.0, top: 15.0),
+          child: Column(
+            children: <Widget>[
+              NewGroupForm(),
+            ],
+          ),
+        ),
+      )),
     );
   }
 }
@@ -47,7 +48,6 @@ class _NewGroupFormState extends State<NewGroupForm> {
   final _formKey = GlobalKey<FormState>();
   Group group = Group();
   List<Contact> members = new List<Contact>();
-  
 
   @override
   void initState() {

@@ -16,7 +16,8 @@ class AppState {
     @required this.userIsNew,
   });
 
-  AppState copyWith({UserState userState, GroupState groupState, BillState billState}) {
+  AppState copyWith(
+      {UserState userState, GroupState groupState, BillState billState}) {
     return new AppState(
         userState: userState ?? this.userState,
         groupState: groupState ?? this.groupState,
@@ -40,10 +41,12 @@ class UserState {
   final String idTokenUser;
 
   const UserState(
-      {@required this.user, @required this.photoUrl, @required this.idTokenUser});
+      {@required this.user,
+      @required this.photoUrl,
+      @required this.idTokenUser});
 
   factory UserState.initial() {
-    return new UserState(user: null, photoUrl:null, idTokenUser: null);
+    return new UserState(user: null, photoUrl: null, idTokenUser: null);
   }
 
   UserState copyWith({User user, String photoUrl, String idTokenUser}) {
@@ -88,15 +91,10 @@ class BillState {
   });
 
   factory BillState.initial() {
-    return new BillState(
-      bill: Bill.initial()
-    );
+    return new BillState(bill: Bill.initial());
   }
 
-  BillState copyWith(
-      {Bill bill}) {
-    return new BillState(
-      bill: bill ?? this.bill
-    );
+  BillState copyWith({Bill bill}) {
+    return new BillState(bill: bill ?? this.bill);
   }
 }

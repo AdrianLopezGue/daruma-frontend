@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         navigatorKey: Keys.navKey,
         routes: {
-          Routes.groupPage:(context){
+          Routes.groupPage: (context) {
             return GroupPage();
           }
         },

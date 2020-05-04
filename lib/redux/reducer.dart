@@ -21,21 +21,22 @@ AppState mainReducer(AppState state, dynamic action) {
 
 UserState _reduceUserState(AppState state, dynamic action) {
   UserState newState = state.userState;
-  
 
   if (action is UserLoadedAction) {
     newState = newState.copyWith(
-        user: action.user, idTokenUser: action.idTokenUser, photoUrl: action.photoUrl);
-  } else if(action is UserUpdatedAction){
-    User newUser = newState.user.copyWith(name: action.name, paypal: action.paypal);
-    newState = newState.copyWith(
-        user: newUser);
+        user: action.user,
+        idTokenUser: action.idTokenUser,
+        photoUrl: action.photoUrl);
+  } else if (action is UserUpdatedAction) {
+    User newUser =
+        newState.user.copyWith(name: action.name, paypal: action.paypal);
+    newState = newState.copyWith(user: newUser);
   }
   return newState;
 }
 
 GroupState _reduceGroupState(AppState state, dynamic action) {
-  GroupState newState = state.groupState;  
+  GroupState newState = state.groupState;
 
   if (action is StartLoadingGroupAction) {
     newState = newState.copyWith(isLoading: true, loadingError: false);
@@ -47,22 +48,20 @@ GroupState _reduceGroupState(AppState state, dynamic action) {
         newState.copyWith(group: null, isLoading: false, loadingError: true);
   } else if (action is GroupNameUpdatedAction) {
     Group newGroup = newState.group.copyWith(name: action.name);
-    newState =
-        newState.copyWith(group: newGroup);
+    newState = newState.copyWith(group: newGroup);
   } else if (action is AddMemberToGroupAction) {
     List<Member> newMembers = newState.group.members;
     newMembers.add(action.member);
 
     Group newGroup = newState.group.copyWith(members: newMembers);
-    newState =
-        newState.copyWith(group: newGroup);
+    newState = newState.copyWith(group: newGroup);
   } else if (action is DeleteMemberToGroupAction) {
     List<Member> newMembers = newState.group.members;
-    newMembers.removeWhere((member) => member.idMember == action.member.idMember);
+    newMembers
+        .removeWhere((member) => member.idMember == action.member.idMember);
 
     Group newGroup = newState.group.copyWith(members: newMembers);
-    newState =
-        newState.copyWith(group: newGroup);
+    newState = newState.copyWith(group: newGroup);
   }
   return newState;
 }

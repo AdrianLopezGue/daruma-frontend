@@ -27,27 +27,25 @@ class GroupRepository {
   }
 
   Future<Group> getGroup(String idGroup, String idToken) async {
-    final response =
-        await _provider.get(Url.apiBaseUrl + "/groups/"+ idGroup, header: idToken);
+    final response = await _provider.get(Url.apiBaseUrl + "/groups/" + idGroup,
+        header: idToken);
     var group = Group.fromJson(response);
 
     return group;
   }
 
   Future<bool> deleteGroup(String idGroup, String idToken) async {
-
     final response =
-        await _provider.delete(Url.apiBaseUrl + "/groups/"+ idGroup, idToken);
+        await _provider.delete(Url.apiBaseUrl + "/groups/" + idGroup, idToken);
 
     return response;
   }
 
-  Future<bool> updateGroupName(String idGroup, String name, String idToken) async {
+  Future<bool> updateGroupName(
+      String idGroup, String name, String idToken) async {
     final String url = Url.apiBaseUrl + "/groups/" + idGroup;
 
-    final Map body = {
-      'name': name
-    };
+    final Map body = {'name': name};
 
     var requestBody = jsonEncode(body);
 

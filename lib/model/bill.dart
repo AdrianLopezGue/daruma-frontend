@@ -63,7 +63,8 @@ class Bill {
         ? this.payers.map((payer) => payer.toJson()).toList()
         : null;
 
-    List<Participant> finalDebtors = this.debtors.where((debtor) => debtor.money != -1).toList();
+    List<Participant> finalDebtors =
+        this.debtors.where((debtor) => debtor.money != -1).toList();
 
     List<Map> debtors = finalDebtors != null
         ? finalDebtors.map((debtor) => debtor.toJson()).toList()

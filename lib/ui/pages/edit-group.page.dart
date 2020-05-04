@@ -208,7 +208,10 @@ class _EditGroupPageState extends State<EditGroupPage> {
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: <Widget>[
-                                    Icon(Icons.person_add, color: white,)
+                                    Icon(
+                                      Icons.person_add,
+                                      color: white,
+                                    )
                                   ],
                                 ),
                               ),

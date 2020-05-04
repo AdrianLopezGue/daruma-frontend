@@ -24,9 +24,7 @@ class DeleteDialog extends StatelessWidget {
   Widget _deleteDialogView(BuildContext context, _ViewModel vm) {
     final GroupBloc _bloc = GroupBloc();
 
-    _bloc.deleteGroup(
-        this.groupId,
-        vm.idToken);
+    _bloc.deleteGroup(this.groupId, vm.idToken);
 
     return StreamBuilder<Response<bool>>(
         stream: _bloc.groupStream,

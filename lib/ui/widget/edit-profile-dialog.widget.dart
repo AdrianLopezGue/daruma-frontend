@@ -17,12 +17,11 @@ class EditProfileDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(converter: (store) {
       return new _ViewModel(
-        user: store.state.userState.user,
-        idToken: store.state.userState.idTokenUser,
-        updateUser: () {
-          store.dispatch(UserUpdatedAction(name, paypal));
-        }
-      );
+          user: store.state.userState.user,
+          idToken: store.state.userState.idTokenUser,
+          updateUser: () {
+            store.dispatch(UserUpdatedAction(name, paypal));
+          });
     }, builder: (BuildContext context, _ViewModel vm) {
       return _editProfileDialogView(context, vm);
     });
@@ -31,11 +30,7 @@ class EditProfileDialog extends StatelessWidget {
   Widget _editProfileDialogView(BuildContext context, _ViewModel vm) {
     final UserBloc _bloc = UserBloc();
 
-    _bloc.updateUser(
-        vm.user.idUser,
-        name,
-        paypal,
-        vm.idToken);
+    _bloc.updateUser(vm.user.idUser, name, paypal, vm.idToken);
 
     return StreamBuilder<Response<bool>>(
         stream: _bloc.userStream,

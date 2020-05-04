@@ -11,7 +11,7 @@ class TransactionRepository {
     final String url = Url.apiBaseUrl + "/transactions";
 
     var requestBody = jsonEncode(transaction);
-    
+
     final response = await _provider.post(url, requestBody, idToken);
 
     return response;

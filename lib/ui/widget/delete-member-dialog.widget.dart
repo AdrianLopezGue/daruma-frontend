@@ -15,11 +15,10 @@ class DeleteMemberDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(converter: (store) {
       return new _ViewModel(
-        idToken: store.state.userState.idTokenUser,
-        deleteMember: (Member deletedMember) {
-          store.dispatch(DeleteMemberToGroupAction(deletedMember));
-        }
-      );
+          idToken: store.state.userState.idTokenUser,
+          deleteMember: (Member deletedMember) {
+            store.dispatch(DeleteMemberToGroupAction(deletedMember));
+          });
     }, builder: (BuildContext context, _ViewModel vm) {
       return _deleteMemberDialogView(context, vm);
     });
@@ -28,9 +27,7 @@ class DeleteMemberDialog extends StatelessWidget {
   Widget _deleteMemberDialogView(BuildContext context, _ViewModel vm) {
     final MemberBloc _bloc = MemberBloc();
 
-    _bloc.deleteMember(
-        this.member.idMember,
-        vm.idToken);
+    _bloc.deleteMember(this.member.idMember, vm.idToken);
 
     return StreamBuilder<Response<bool>>(
         stream: _bloc.memberStream,
@@ -50,7 +47,7 @@ class DeleteMemberDialog extends StatelessWidget {
                       Text("Delete completed!"),
                       FlatButton(
                         onPressed: () {
-                          vm.deleteMember(this.member);                         
+                          vm.deleteMember(this.member);
                           Navigator.of(context).pop();
                         },
                         child: Text(

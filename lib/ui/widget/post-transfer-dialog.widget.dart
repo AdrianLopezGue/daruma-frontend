@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 class PostTransferDialog extends StatelessWidget {
-
   final Transaction transaction;
 
   PostTransferDialog({this.transaction});
@@ -26,9 +25,7 @@ class PostTransferDialog extends StatelessWidget {
   Widget _postDialogView(BuildContext context, _ViewModel vm) {
     final TransactionBloc _bloc = TransactionBloc();
 
-    _bloc.postTransaction(
-        this.transaction,
-        vm.idToken);
+    _bloc.postTransaction(this.transaction, vm.idToken);
 
     return StreamBuilder<Response<bool>>(
         stream: _bloc.transactionStream,
@@ -94,7 +91,5 @@ class PostTransferDialog extends StatelessWidget {
 class _ViewModel {
   final String idToken;
 
-  _ViewModel({
-    @required this.idToken
-  });
+  _ViewModel({@required this.idToken});
 }

@@ -6,16 +6,18 @@ class User {
 
   User({this.idUser, this.name, this.email, this.paypal});
 
-  User copyWith(
-      {String id,
-      String name,
-      String email,
-      String paypal,}) {
+  User copyWith({
+    String id,
+    String name,
+    String email,
+    String paypal,
+  }) {
     return User(
-        idUser: id ?? this.idUser,
-        name: name ?? this.name,
-        email: email ?? this.email,
-        paypal: paypal ?? this.paypal,);
+      idUser: id ?? this.idUser,
+      name: name ?? this.name,
+      email: email ?? this.email,
+      paypal: paypal ?? this.paypal,
+    );
   }
 
   Map toJson() {

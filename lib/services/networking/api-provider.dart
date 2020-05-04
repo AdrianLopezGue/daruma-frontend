@@ -75,14 +75,12 @@ class ApiProvider {
   }
 
   Future<dynamic> delete(String url, String header) async {
-
     var responseJson;
     try {
-      final response = await http.delete(url,
-          headers: {
-            HttpHeaders.contentTypeHeader: 'application/json',
-            HttpHeaders.authorizationHeader: 'Bearer $header'
-          });
+      final response = await http.delete(url, headers: {
+        HttpHeaders.contentTypeHeader: 'application/json',
+        HttpHeaders.authorizationHeader: 'Bearer $header'
+      });
 
       responseJson = _response(response);
     } on SocketException {
@@ -106,10 +104,10 @@ class ApiProvider {
 
       case 403:
         throw UnauthorisedException(response.body);
-      
+
       case 404:
         return null;
-      
+
       case 406:
         throw BadRequestException(response.body);
       case 500:

@@ -17,7 +17,6 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen>
     with WidgetsBindingObserver {
-      
   @override
   void initState() {
     super.initState();
@@ -50,7 +49,8 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
   Widget _loginView(BuildContext context, _ViewModel vm) {
     var scaffold = Scaffold(
-      appBar: new AppBar(title: new Text("Daruma"), backgroundColor: redPrimaryColor),
+      appBar: new AppBar(
+          title: new Text("Daruma"), backgroundColor: redPrimaryColor),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -83,33 +83,38 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                     ],
                   ),
                   SizedBox(height: 5.0),
-                  Row(children: <Widget>[
-                    Text(
+                  Row(
+                    children: <Widget>[
+                      Text(
                         vm.user.email,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 14,
                         ),
                       ),
-                  ],)
+                    ],
+                  )
                 ],
               ),
             ),
             ListTile(
               leading: Icon(Icons.home),
               title: Text('Inicio'),
-              onTap: (){
+              onTap: () {
                 Navigator.of(context).pop();
               },
             ),
             ListTile(
               leading: Icon(Icons.settings),
               title: Text('Configuración'),
-              onTap: (){
+              onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) {
-                      return EditProfilePage(name: vm.user.name, paypal: vm.user.paypal,);
+                      return EditProfilePage(
+                        name: vm.user.name,
+                        paypal: vm.user.paypal,
+                      );
                     },
                   ),
                 );

@@ -62,7 +62,6 @@ class _SelectMemberInGroupDialogState extends State<SelectMemberInGroupDialog> {
                             child: ListView.builder(
                               itemCount: snapshot.data.data.length,
                               itemBuilder: (BuildContext context, int index) {
-
                                 if (snapshot.data.data[index].idUser.isEmpty) {
                                   return ListTile(
                                     title: Text(snapshot.data.data[index].name),
@@ -75,8 +74,7 @@ class _SelectMemberInGroupDialogState extends State<SelectMemberInGroupDialog> {
                                       });
                                     },
                                   );
-                                }
-                                else{
+                                } else {
                                   return SizedBox(height: 0.0, width: 0.0);
                                 }
                               },
