@@ -13,6 +13,7 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:money2/money2.dart';
 
 class CreateBillPage extends StatelessWidget {
   @override
@@ -159,12 +160,18 @@ class _NewBillFormState extends State<NewBillForm> {
                   MembersButton(
                     members: vm.group.members,
                     selectedMembers: (nameMembers) {
-                      List<Participant> payers = nameMembers
-                          .map((name) => new Participant(
-                              idParticipant: vm.group.getMemberIdByName(name),
-                              name: name,
-                              money: vm.bill.money ~/ nameMembers.length))
-                          .toList();
+                      final Currency currencyCode = Currency.create(vm.bill.currencyCode, 2);
+                      final value = Money.fromInt(vm.bill.money, currencyCode);
+                      final allocation = value.allocationTo(nameMembers.length);
+
+                      List<Participant> payers = [];
+
+                      for(int i = 0; i < nameMembers.length ; i++){
+                        payers.add(new Participant(
+                              idParticipant: vm.group.getMemberIdByName(nameMembers[i]),
+                              name: nameMembers[i],
+                              money: (allocation[i].minorUnits).toInt()));
+                      }
 
                       StoreProvider.of<AppState>(context)
                           .dispatch(BillPayersChangedAction(payers));

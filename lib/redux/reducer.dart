@@ -4,6 +4,7 @@ import 'package:daruma/model/participant.dart';
 import 'package:daruma/model/user.dart';
 import 'package:daruma/redux/index.dart';
 import 'package:daruma/redux/state.dart';
+import 'package:money2/money2.dart';
 import 'package:uuid/uuid.dart';
 
 AppState mainReducer(AppState state, dynamic action) {
@@ -100,24 +101,37 @@ BillState _reduceBillState(AppState state, dynamic action) {
     var count =
         newState.bill.debtors.where((debtor) => debtor.money != -1).length;
 
-    List<Participant> newDebtors = newState.bill.debtors.map((debtor) {
-      if (debtor.money != -1) {
-        return Participant(
-            idParticipant: debtor.idParticipant,
-            name: debtor.name,
-            money: (action.newMoney ~/ count));
-      } else {
-        return Participant(
-            idParticipant: debtor.idParticipant, name: debtor.name, money: -1);
-      }
-    }).toList();
+    final Currency currencyCode =
+        Currency.create(newState.bill.currencyCode, 2);
+    final value = Money.fromInt(action.newMoney, currencyCode);
+    final allocation = value.allocationTo(count);
 
-    List<Participant> newPayers = newState.bill.payers
-        .map((payer) => Participant(
-            idParticipant: payer.idParticipant,
-            name: payer.name,
-            money: action.newMoney ~/ newState.bill.payers.length))
-        .toList();
+    List<Participant> newDebtors = [];
+
+    for (int i = 0; i < newState.bill.debtors.length; i++) {
+      if (newState.bill.debtors[i].money != -1) {
+        newDebtors.add(new Participant(
+            idParticipant: newState.bill.debtors[i].idParticipant,
+            name: newState.bill.debtors[i].name,
+            money: (allocation[i].minorUnits).toInt()));
+      } else {
+        newDebtors.add(new Participant(
+            idParticipant: newState.bill.debtors[i].idParticipant,
+            name: newState.bill.debtors[i].name,
+            money: -1));
+      }
+    }
+
+    final allocationPayers = value.allocationTo(newState.bill.payers.length);
+
+    List<Participant> newPayers = [];
+
+    for (int i = 0; i < newState.bill.payers.length; i++) {
+      newPayers.add(new Participant(
+          idParticipant: newState.bill.payers[i].idParticipant,
+          name: newState.bill.payers[i].name,
+          money: (allocationPayers[i].minorUnits).toInt()));
+    }
 
     newState = newState.copyWith(
         bill: newState.bill.copyWith(
@@ -127,17 +141,27 @@ BillState _reduceBillState(AppState state, dynamic action) {
     var count =
         newState.bill.debtors.where((debtor) => debtor.money != -1).length;
 
-    List<Participant> newDebtors = newState.bill.debtors.map((debtor) {
-      if (debtor.money != -1) {
-        return Participant(
-            idParticipant: debtor.idParticipant,
-            name: debtor.name,
-            money: (newState.bill.money ~/ count));
+    final Currency currencyCode =
+        Currency.create(newState.bill.currencyCode, 2);
+    final value = Money.fromInt(newState.bill.money, currencyCode);
+    final allocation = value.allocationTo(count);
+
+    List<Participant> newDebtors = [];
+
+    for (int i = 0; i < newState.bill.debtors.length; i++) {
+      if (newState.bill.debtors[i].money != -1) {
+        newDebtors.add(new Participant(
+            idParticipant: newState.bill.debtors[i].idParticipant,
+            name: newState.bill.debtors[i].name,
+            money: (allocation[i].minorUnits).toInt()));
       } else {
-        return Participant(
-            idParticipant: debtor.idParticipant, name: debtor.name, money: -1);
+        newDebtors.add(new Participant(
+            idParticipant: newState.bill.debtors[i].idParticipant,
+            name: newState.bill.debtors[i].name,
+            money: -1));
       }
-    }).toList();
+    }
+
     newState =
         newState.copyWith(bill: newState.bill.copyWith(debtors: newDebtors));
   } else if (action is BillDebtorWasAddedAction) {
@@ -145,17 +169,27 @@ BillState _reduceBillState(AppState state, dynamic action) {
     var count =
         newState.bill.debtors.where((debtor) => debtor.money != -1).length;
 
-    List<Participant> newDebtors = newState.bill.debtors.map((debtor) {
-      if (debtor.money != -1) {
-        return Participant(
-            idParticipant: debtor.idParticipant,
-            name: debtor.name,
-            money: (newState.bill.money ~/ count));
+    final Currency currencyCode =
+        Currency.create(newState.bill.currencyCode, 2);
+    final value = Money.fromInt(newState.bill.money, currencyCode);
+    final allocation = value.allocationTo(count);
+
+    List<Participant> newDebtors = [];
+
+    for (int i = 0; i < newState.bill.debtors.length; i++) {
+      if (newState.bill.debtors[i].money != -1) {
+        newDebtors.add(new Participant(
+            idParticipant: newState.bill.debtors[i].idParticipant,
+            name: newState.bill.debtors[i].name,
+            money: (allocation[i].minorUnits).toInt()));
       } else {
-        return Participant(
-            idParticipant: debtor.idParticipant, name: debtor.name, money: -1);
+        newDebtors.add(new Participant(
+            idParticipant: newState.bill.debtors[i].idParticipant,
+            name: newState.bill.debtors[i].name,
+            money: -1));
       }
-    }).toList();
+    }
+    
     newState =
         newState.copyWith(bill: newState.bill.copyWith(debtors: newDebtors));
   } else if (action is BillPayersChangedAction) {
