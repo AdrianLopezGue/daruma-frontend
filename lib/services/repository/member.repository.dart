@@ -40,4 +40,19 @@ class MemberRepository {
 
     return response;
   }
+  
+
+  Future<bool> setUserIdToMember(String idMember, String idUser, String idToken) async {
+    final String url = Url.apiBaseUrl + "/members/" + idMember;
+
+    final Map body = {
+      'idUser': idUser
+    };
+
+    var requestBody = jsonEncode(body);
+
+    final response = await _provider.patch(url, requestBody, idToken);
+
+    return response;
+  }
 }

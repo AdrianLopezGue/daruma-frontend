@@ -17,10 +17,11 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen>
     with WidgetsBindingObserver {
+      
   @override
   void initState() {
     super.initState();
-    AppDynamicLinks.initDynamicLinks();
+    AppDynamicLinks.initDynamicLinks(context);
   }
 
   @override

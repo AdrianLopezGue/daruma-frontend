@@ -56,6 +56,24 @@ class ApiProvider {
     return responseJson;
   }
 
+  Future<dynamic> patch(String url, String body, String header) async {
+    var responseJson;
+
+    try {
+      final response = await http.patch(url,
+          headers: {
+            HttpHeaders.contentTypeHeader: 'application/json',
+            HttpHeaders.authorizationHeader: 'Bearer $header'
+          },
+          body: body);
+
+      responseJson = _response(response);
+    } on SocketException {
+      throw FetchDataException('No Internet connection');
+    }
+    return responseJson;
+  }
+
   Future<dynamic> delete(String url, String header) async {
 
     var responseJson;
