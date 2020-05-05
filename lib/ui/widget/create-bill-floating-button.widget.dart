@@ -10,6 +10,7 @@ class NewBillFloatingButton extends StatelessWidget {
       heroTag: null,
       backgroundColor: redPrimaryColor,
       onPressed: () {
+        Navigator.pop(context, true);
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) {

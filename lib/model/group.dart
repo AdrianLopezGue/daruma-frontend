@@ -89,4 +89,15 @@ class Group {
         this.members.singleWhere((member) => member.name == name);
     return selectedMember.memberId;
   }
+
+  String getUserIdByMemberId(String memberId) {
+    var selectedMember =
+        this.members.singleWhere((member) => member.memberId == memberId);
+    
+    if(selectedMember.userId.isEmpty){
+      return '';
+    }
+
+    return selectedMember.userId;
+  }
 }

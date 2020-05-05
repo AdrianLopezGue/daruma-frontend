@@ -1,8 +1,12 @@
 import 'package:daruma/model/group.dart';
 import 'package:daruma/model/transaction.dart';
+import 'package:daruma/model/user.dart';
+import 'package:daruma/redux/index.dart';
+import 'package:daruma/services/repository/user.repository.dart';
 import 'package:daruma/ui/widget/post-transfer-dialog.widget.dart';
 import 'package:daruma/util/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TranferMoneyPage extends StatelessWidget {
@@ -13,6 +17,17 @@ class TranferMoneyPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return new StoreConnector<AppState, _ViewModel>(converter: (store) {
+      return new _ViewModel(
+        tokenId: store.state.userState.tokenUserId,
+      );
+    }, builder: (BuildContext context, _ViewModel vm) {
+      return _transferMoneyPageView(context, vm);
+    });
+  }
+
+
+  Widget _transferMoneyPageView(BuildContext context, _ViewModel vm) {
     return Scaffold(
         appBar: new AppBar(title: new Text("Liquidar Gasto")),
         body: SingleChildScrollView(
@@ -59,13 +74,23 @@ class TranferMoneyPage extends StatelessWidget {
                     children: <Widget>[
                       RaisedButton(
                         color: redPrimaryColor,
-                        onPressed: () {
+                        onPressed: () async {
+
+                          String userId = group.getUserIdByMemberId(this.transaction.beneficiaryId);
+                          String paypalName = '';
+
+                          if(userId != ''){
+                            UserRepository userRepository = UserRepository();                          
+                            User user = await userRepository.getUser(userId, vm.tokenId);
+                            paypalName = user.paypal;
+                          }
+                          
                           showDialog(
                               context: context,
-                              child: new SimpleDialog(children: <Widget>[
-                                PostTransferDialog(
-                                    transaction: this.transaction),
-                              ]));
+                              builder: (__) {
+                                return PostTransferDialog(transaction: this.transaction, paypalName: paypalName);
+                              }
+                          );
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
@@ -97,4 +122,10 @@ class TranferMoneyPage extends StatelessWidget {
           ),
         ));
   }
+}
+
+class _ViewModel {
+  final String tokenId;
+
+  _ViewModel({@required this.tokenId});
 }

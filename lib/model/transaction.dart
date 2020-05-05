@@ -18,7 +18,7 @@ class Transaction {
     var uuid = new Uuid();
 
     return {
-      'transactionId': uuid.v4(),
+      '_id': uuid.v4(),
       'senderId': this.senderId,
       'beneficiaryId': this.beneficiaryId,
       'money': this.money,
