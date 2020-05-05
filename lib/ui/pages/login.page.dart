@@ -14,7 +14,7 @@ class LoginPage extends StatelessWidget {
     return new StoreConnector<AppState, _ViewModel>(converter: (store) {
       return new _ViewModel(
           user: store.state.userState.user,
-          login: () {
+          loginGoogle: () {
             final result = LoginWithGoogleAction();
 
             store.dispatch(result);
@@ -28,7 +28,23 @@ class LoginPage extends StatelessWidget {
                     ),
                   )
                 });
-          });
+          },
+          loginFacebook: () {
+            final result = LoginWithFacebookAction();
+
+            store.dispatch(result);
+
+            Future.wait([result.completer.future]).then((user) => {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return WelcomeScreen();
+                      },
+                    ),
+                  )
+                });
+          },
+          );
     }, builder: (BuildContext context, _ViewModel vm) {
       return _loginView(context, vm);
     });
@@ -38,6 +54,7 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       body: Container(
         color: redPrimaryColor,
+        
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.max,
@@ -49,8 +66,15 @@ class LoginPage extends StatelessWidget {
               ),
               SizedBox(height: 50),
               OAuthLoginButton(
-                onPressed: vm.login,
+                onPressed: vm.loginGoogle,
                 text: "Inicia Sesión con Google",
+                assetName: "assets/google_logo.png",
+                backgroundColor: white,
+              ),
+              SizedBox(height: 20),
+              OAuthLoginButton(
+                onPressed: vm.loginFacebook,
+                text: "Inicia Sesión con Facebook",
                 assetName: "assets/google_logo.png",
                 backgroundColor: white,
               ),
@@ -64,10 +88,12 @@ class LoginPage extends StatelessWidget {
 
 class _ViewModel {
   final User user;
-  final Function() login;
+  final Function() loginGoogle;
+  final Function() loginFacebook;
 
   _ViewModel({
     @required this.user,
-    @required this.login,
+    @required this.loginGoogle,
+    @required this.loginFacebook,
   });
 }

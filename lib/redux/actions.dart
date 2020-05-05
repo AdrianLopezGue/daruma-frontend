@@ -12,6 +12,13 @@ class LoginWithGoogleAction {
       : this.completer = completer ?? Completer();
 }
 
+class LoginWithFacebookAction {
+  final Completer completer;
+
+  LoginWithFacebookAction({Completer completer})
+      : this.completer = completer ?? Completer();
+}
+
 class LogoutAction {
   LogoutAction();
 }
