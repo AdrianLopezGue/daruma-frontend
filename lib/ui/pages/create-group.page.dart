@@ -194,10 +194,11 @@ class _NewGroupFormState extends State<NewGroupForm> {
                 _formKey.currentState.save();
 
                 showDialog(
-                    context: context,
-                    child: new SimpleDialog(children: <Widget>[
-                      PostGroupDialog(group: group),
-                    ]));
+                      context: context,
+                      builder: (__) {
+                        return PostGroupDialog(group: group);
+                      }
+                  );
               }
             },
             child: Padding(

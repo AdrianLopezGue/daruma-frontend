@@ -4,6 +4,7 @@ import 'package:daruma/services/networking/response.dart';
 import 'package:daruma/ui/widget/group-button.widget.dart';
 import 'package:daruma/util/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class GroupsList extends StatelessWidget {
@@ -31,12 +32,22 @@ class GroupsList extends StatelessWidget {
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: snapshot.data.data.length,
                       itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(
-                              left: 8.0, right: 25.0, top: 8.0, bottom: 8.0),
-                          child: GroupButton(
-                              groupId: snapshot.data.data[index].groupId,
-                              name: snapshot.data.data[index].name),
+                        return AnimationConfiguration.staggeredList(
+                          position: index,
+                          duration: const Duration(milliseconds: 375),
+                          child: SlideAnimation(
+                            verticalOffset: 250.0,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 8.0,
+                                  right: 25.0,
+                                  top: 8.0,
+                                  bottom: 8.0),
+                              child: GroupButton(
+                                  groupId: snapshot.data.data[index].groupId,
+                                  name: snapshot.data.data[index].name),
+                            ),
+                          ),
                         );
                       }),
                 );

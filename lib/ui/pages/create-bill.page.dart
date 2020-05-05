@@ -230,9 +230,10 @@ class _NewBillFormState extends State<NewBillForm> {
 
                   showDialog(
                       context: context,
-                      child: new SimpleDialog(children: <Widget>[
-                        PostBillDialog(bill: vm.bill),
-                      ]));
+                      builder: (__) {
+                        return PostBillDialog(bill: vm.bill);
+                      }
+                  );
                 }
               },
               child: Padding(
