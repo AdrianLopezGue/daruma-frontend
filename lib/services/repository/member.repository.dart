@@ -21,7 +21,7 @@ class MemberRepository {
     final String url = Url.apiBaseUrl + "/members";
 
     final Map body = {
-      'id': member.memberId,
+      '_id': member.memberId,
       'groupId': groupId,
       'name': member.name,
     };
@@ -43,7 +43,7 @@ class MemberRepository {
       String memberId, String userId, String tokenId) async {
     final String url = Url.apiBaseUrl + "/members/" + memberId;
 
-    final Map body = {'idUser': userId};
+    final Map body = {'userId': userId};
 
     var requestBody = jsonEncode(body);
 

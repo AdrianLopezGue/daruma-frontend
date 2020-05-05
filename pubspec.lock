@@ -247,6 +247,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.1+1"
+  loading_view:
+    dependency: transitive
+    description:
+      name: loading_view
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   matcher:
     dependency: transitive
     description:
@@ -441,6 +448,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.11"
+  tip_dialog:
+    dependency: "direct main"
+    description:
+      name: tip_dialog
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.1.0"
   toast:
     dependency: "direct main"
     description:

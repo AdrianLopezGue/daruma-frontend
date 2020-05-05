@@ -2,9 +2,9 @@ import 'package:contacts_service/contacts_service.dart';
 import 'package:daruma/model/group.dart';
 import 'package:daruma/model/member.dart';
 import 'package:daruma/ui/pages/add-members.page.dart';
+import 'package:daruma/ui/widget/post-group-dialog.widget.dart';
 import 'package:daruma/ui/widget/text-form-field.widget.dart';
 import 'package:daruma/ui/widget/currency-button.widget.dart';
-import 'package:daruma/ui/widget/post-dialog.widget.dart';
 import 'package:daruma/util/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -196,7 +196,7 @@ class _NewGroupFormState extends State<NewGroupForm> {
                 showDialog(
                     context: context,
                     child: new SimpleDialog(children: <Widget>[
-                      PostDialog(group: group),
+                      PostGroupDialog(group: group),
                     ]));
               }
             },

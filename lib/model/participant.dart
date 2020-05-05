@@ -7,7 +7,7 @@ class Participant {
 
   Map toJson() {
     return {
-      'id': this.participantId,
+      '_id': this.participantId,
       'money': this.money,
     };
   }

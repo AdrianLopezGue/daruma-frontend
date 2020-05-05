@@ -8,10 +8,10 @@ import 'package:daruma/ui/pages/welcome.page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
-class PostDialog extends StatelessWidget {
+class PostGroupDialog extends StatelessWidget {
   final Group group;
 
-  PostDialog({this.group});
+  PostGroupDialog({this.group});
 
   @override
   Widget build(BuildContext context) {

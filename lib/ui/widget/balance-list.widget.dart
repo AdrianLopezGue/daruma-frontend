@@ -76,15 +76,21 @@ class BalanceList extends StatelessWidget {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  Text(group.getMemberNameById(transaction.senderId) +
-                      " debe a " +
-                      group.getMemberNameById(transaction.beneficiaryId)),
+                  Text(
+                    group.getMemberNameById(transaction.senderId) +
+                        " debe a " +
+                        group.getMemberNameById(transaction.beneficiaryId),
+                    style: GoogleFonts.roboto(
+                        textStyle: TextStyle(fontSize: 14, color: black)),
+                  ),
                 ],
               ),
               Row(
                 children: <Widget>[
                   FlatButton(
-                      child: Text("Liquidar"),
+                      child: Text("Liquidar",
+                      style: GoogleFonts.roboto(
+                          fontSize: 16, textStyle: TextStyle(color: Colors.green))),
                       textColor: Colors.green,
                       onPressed: () {
                         Navigator.of(context).push(
@@ -104,7 +110,8 @@ class BalanceList extends StatelessWidget {
           ),
         ),
         trailing: Text(
-            (transaction.money / 100).toString() + " " + group.currencyCode),
+            (transaction.money / 100).toString() + " " + group.currencyCode, style: GoogleFonts.roboto(
+                        textStyle: TextStyle(fontSize: 14, color: black))),
       ),
     );
   }

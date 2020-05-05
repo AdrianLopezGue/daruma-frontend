@@ -44,6 +44,7 @@ class DeleteDialog extends StatelessWidget {
                       Text("Delete completed!"),
                       FlatButton(
                         onPressed: () {
+                          Navigator.pop(context, true);
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) {

@@ -71,7 +71,7 @@ class Bill {
         : null;
 
     var json = {
-      'billId': this.billId,
+      '_id': this.billId,
       'groupId': this.groupId,
       'name': this.name,
       'date': this.date.toIso8601String(),

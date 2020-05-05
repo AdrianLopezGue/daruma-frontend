@@ -11,7 +11,7 @@ export 'members-button.widget.dart';
 export 'number-form-field.widget.dart';
 export 'oauth-login-button.widget.dart';
 export 'post-bill-dialog.widget.dart';
-export 'post-dialog.widget.dart';
+export 'post-group-dialog.widget.dart';
 export 'post-transfer-dialog.widget.dart';
 export 'sign-out-button.widget.dart';
 export 'text-form-field.widget.dart';

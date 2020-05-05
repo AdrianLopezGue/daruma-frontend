@@ -32,7 +32,7 @@ class Group {
     Map owner = this.owner != null ? this.owner.toJson() : null;
 
     return {
-      'groupId': this.groupId,
+      '_id': this.groupId,
       'name': this.name,
       'currencyCode': this.currencyCode,
       'owner': owner,
@@ -54,11 +54,26 @@ class Group {
 
   String getMembersAsString() {
     String result = "";
+    int index = 0;
+
     for (int i = 0; i < this.members.length - 1; i++) {
-      result += this.members[i].name + ", ";
+      index += this.members[i].name.length;
+
+      if(index <= 40){
+        result += this.members[i].name + ", ";
+      }
     }
 
-    result += this.members.last.name;
+    index += this.members.last.name.length;
+
+
+    if(index <= 40){
+        result += this.members.last.name;
+    }
+    else{
+      result = result.substring(0, result.length-2);
+      result += '...';
+    }
 
     return result;
   }

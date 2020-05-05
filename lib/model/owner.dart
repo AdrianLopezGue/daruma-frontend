@@ -6,7 +6,7 @@ class Owner {
 
   Map toJson() {
     return {
-      'id': this.ownerId,
+      '_id': this.ownerId,
       'name': this.name,
     };
   }

@@ -22,7 +22,7 @@ class User {
 
   Map toJson() {
     return {
-      'id': this.userId,
+      '_id': this.userId,
       'name': this.name,
       'email': this.email,
     };
