@@ -75,7 +75,7 @@ class LoginPage extends StatelessWidget {
               OAuthLoginButton(
                 onPressed: vm.loginFacebook,
                 text: "Inicia Sesión con Facebook",
-                assetName: "assets/google_logo.png",
+                assetName: "assets/facebook_logo.png",
                 backgroundColor: white,
               ),
             ],
