@@ -7,10 +7,11 @@ import 'package:daruma/ui/pages/welcome.page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
-class EditGroupNameDialog extends StatelessWidget {
+class EditGroupDialog extends StatelessWidget {
   final String name;
+  final String currencyCode;
 
-  EditGroupNameDialog({this.name});
+  EditGroupDialog({this.name, this.currencyCode});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class EditGroupNameDialog extends StatelessWidget {
           group: store.state.groupState.group,
           tokenId: store.state.userState.tokenUserId,
           updateGroupName: () {
-            store.dispatch(GroupNameUpdatedAction(name));
+            store.dispatch(GroupUpdatedAction(name, currencyCode));
           });
     }, builder: (BuildContext context, _ViewModel vm) {
       return _editGroupNameDialogView(context, vm);
@@ -29,7 +30,7 @@ class EditGroupNameDialog extends StatelessWidget {
   Widget _editGroupNameDialogView(BuildContext context, _ViewModel vm) {
     final GroupBloc _bloc = GroupBloc();
 
-    _bloc.updateGroupName(vm.group.groupId, name, vm.tokenId);
+    _bloc.updateGroup(vm.group.groupId, name, currencyCode, vm.tokenId);
 
     return StreamBuilder<Response<bool>>(
         stream: _bloc.groupStream,

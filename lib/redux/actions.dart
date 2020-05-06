@@ -38,10 +38,11 @@ class UserUpdatedAction {
   UserUpdatedAction(this.name, this.paypal);
 }
 
-class GroupNameUpdatedAction {
+class GroupUpdatedAction {
   final String name;
+  final String currencyCode;
 
-  GroupNameUpdatedAction(this.name);
+  GroupUpdatedAction(this.name, this.currencyCode);
 }
 
 class AddMemberToGroupAction {

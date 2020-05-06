@@ -46,11 +46,11 @@ class GroupBloc {
     }
   }
 
-  updateGroupName(String groupId, String name, String tokenId) async {
-    groupSink.add(Response.loading('Update group name.'));
+  updateGroup(String groupId, String name, String currencyCode, String tokenId) async {
+    groupSink.add(Response.loading('Update group.'));
     try {
       bool groupResponse =
-          await _groupRepository.updateGroupName(groupId, name, tokenId);
+          await _groupRepository.updateGroup(groupId, name, currencyCode, tokenId);
       groupSink.add(Response.completed(groupResponse));
     } catch (e) {
       groupSink.add(Response.error(e.toString()));

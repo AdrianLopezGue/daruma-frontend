@@ -41,15 +41,18 @@ class GroupRepository {
     return response;
   }
 
-  Future<bool> updateGroupName(
-      String groupId, String name, String tokenId) async {
+  Future<bool> updateGroup(
+      String groupId, String name, String currencyCode, String tokenId) async {
     final String url = Url.apiBaseUrl + "/groups/" + groupId;
 
-    final Map body = {'name': name};
+    final Map body = {
+      'name': name,
+      'currencyCode': currencyCode,      
+    };
 
     var requestBody = jsonEncode(body);
 
-    final response = await _provider.put(url, requestBody, tokenId);
+    final response = await _provider.patch(url, requestBody, tokenId);
 
     return response;
   }

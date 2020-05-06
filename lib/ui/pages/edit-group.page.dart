@@ -2,7 +2,7 @@ import 'package:daruma/model/group.dart';
 import 'package:daruma/model/member.dart';
 import 'package:daruma/ui/widget/add-member-dialog.widget.dart';
 import 'package:daruma/ui/widget/delete-group-dialog.widget.dart';
-import 'package:daruma/ui/widget/edit-group-name-dialog.widget.dart';
+import 'package:daruma/ui/widget/edit-group-dialog.widget.dart';
 import 'package:daruma/ui/widget/members-list.widget.dart';
 import 'package:daruma/ui/widget/text-form-field.widget.dart';
 import 'package:daruma/util/colors.dart';
@@ -25,12 +25,14 @@ class _EditGroupPageState extends State<EditGroupPage> {
 
   String groupId = "";
   String newName = "";
+  String newCurrencyCode = "";
   String newMemberName = "";
 
   @override
   void initState() {
     groupId = widget.group.groupId;
     newName = widget.group.name;
+    newCurrencyCode = widget.group.currencyCode;
     super.initState();
   }
 
@@ -102,7 +104,7 @@ class _EditGroupPageState extends State<EditGroupPage> {
                                       context: context,
                                       child:
                                           new SimpleDialog(children: <Widget>[
-                                        EditGroupNameDialog(name: newName),
+                                        EditGroupDialog(name: newName, currencyCode: newCurrencyCode),
                                       ]));
                                 }
                               },

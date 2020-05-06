@@ -47,8 +47,8 @@ GroupState _reduceGroupState(AppState state, dynamic action) {
   } else if (action is LoadingGroupFailedAction) {
     newState =
         newState.copyWith(group: null, isLoading: false, loadingError: true);
-  } else if (action is GroupNameUpdatedAction) {
-    Group newGroup = newState.group.copyWith(name: action.name);
+  } else if (action is GroupUpdatedAction) {
+    Group newGroup = newState.group.copyWith(name: action.name, currencyCode: action.currencyCode);
     newState = newState.copyWith(group: newGroup);
   } else if (action is AddMemberToGroupAction) {
     List<Member> newMembers = newState.group.members;
