@@ -47,9 +47,9 @@ class MembersList extends StatelessWidget {
         onPressed: () {
           showDialog(
               context: context,
-              child: new SimpleDialog(children: <Widget>[
-                DeleteMemberDialog(member: member),
-              ]));
+              builder: (__) {
+                return DeleteMemberDialog(member: member);
+              });
         },
       ),
     );

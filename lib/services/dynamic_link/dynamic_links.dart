@@ -24,7 +24,9 @@ class AppDynamicLinks {
               showDialog(
                   context: context,
                   builder: (_) {
-                    return new SimpleDialog(children: <Widget>[
+                    return new SimpleDialog(
+                      title: new Text("¿Quién eres?"),
+                      children: <Widget>[
                       SelectMemberInGroupDialog(groupId: type),
                     ]);
                   });

@@ -129,12 +129,11 @@ class _EditGroupPageState extends State<EditGroupPage> {
                                         widget.group.currencyCode) {
                                   showDialog(
                                       context: context,
-                                      child:
-                                          new SimpleDialog(children: <Widget>[
-                                        EditGroupDialog(
+                                      builder: (__) {
+                                        return EditGroupDialog(
                                             name: newName,
-                                            currencyCode: newCurrencyCode),
-                                      ]));
+                                            currencyCode: newCurrencyCode);
+                                      });
                                 }
                               }
                             },
@@ -228,12 +227,11 @@ class _EditGroupPageState extends State<EditGroupPage> {
 
                                   showDialog(
                                       context: context,
-                                      child:
-                                          new SimpleDialog(children: <Widget>[
-                                        AddMemberDialog(
+                                      builder: (__) {
+                                        return AddMemberDialog(
                                             member: newMember,
-                                            groupId: groupId),
-                                      ]));
+                                            groupId: groupId);
+                                      });
                                 }
                               },
                               child: Padding(
@@ -266,9 +264,9 @@ class _EditGroupPageState extends State<EditGroupPage> {
                   onPressed: () {
                     showDialog(
                         context: context,
-                        child: new SimpleDialog(children: <Widget>[
-                          DeleteDialog(groupId: groupId),
-                        ]));
+                        builder: (__) {
+                          return DeleteDialog(groupId: groupId);
+                        });
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),

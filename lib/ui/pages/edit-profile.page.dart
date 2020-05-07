@@ -122,10 +122,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                           showDialog(
                               context: context,
-                              child: new SimpleDialog(children: <Widget>[
-                                EditProfileDialog(
-                                    name: newName, paypal: newPaypal),
-                              ]));
+                              builder: (__) {
+                                return EditProfileDialog(
+                                    name: newName, paypal: newPaypal);
+                              });
                         }
                       },
                       child: Padding(

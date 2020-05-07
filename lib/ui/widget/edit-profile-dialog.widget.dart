@@ -4,8 +4,10 @@ import 'package:daruma/redux/state.dart';
 import 'package:daruma/services/bloc/user.bloc.dart';
 import 'package:daruma/services/networking/index.dart';
 import 'package:daruma/ui/pages/welcome.page.dart';
+import 'package:daruma/util/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:sweet_alert_dialogs/sweet_alert_dialogs.dart';
 
 class EditProfileDialog extends StatelessWidget {
   final String name;
@@ -38,19 +40,24 @@ class EditProfileDialog extends StatelessWidget {
           if (snapshot.hasData) {
             switch (snapshot.data.status) {
               case Status.LOADING:
-                return Center(child: CircularProgressIndicator());
+              return RichAlertDialog(
+                  alertTitle: richTitle("Cargando"),
+                  alertSubtitle: richSubtitle("Se esta editando el perfil..."),
+                  alertType: RichAlertType.CUSTOM,
+                  dialogIcon: Icon(Icons.access_time, color: redPrimaryColor,),
+                );
                 break;
 
               case Status.COMPLETED:
-                return Container(
-                  height: 300.0, // Change as per your requirement
-                  width: 300.0,
-                  child: Row(
-                    children: <Widget>[
-                      Text("Post completed!"),
-                      FlatButton(
-                        onPressed: () {
-                          vm.updateUser();
+              return RichAlertDialog(
+                  alertTitle: richTitle("¡Completado!"),
+                  alertSubtitle: richSubtitle("Perfil editado correctamente"),
+                  alertType: RichAlertType.SUCCESS,
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text("OK"),
+                      onPressed: () {
+                        vm.updateUser();
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) {
@@ -58,32 +65,27 @@ class EditProfileDialog extends StatelessWidget {
                               },
                             ),
                           );
-                        },
-                        child: Text(
-                          "Exit",
-                        ),
-                      )
-                    ],
-                  ),
+                      },
+                    )
+                  ],
                 );
                 break;
               case Status.ERROR:
-                return Container(
-                  height: 300.0, // Change as per your requirement
-                  width: 300.0,
-                  child: Row(
-                    children: <Widget>[
-                      Text("Post ERROR!"),
-                      FlatButton(
-                        onPressed: () {
-                          Navigator.pop(context, true);
-                        },
-                        child: Text(
-                          "Exit",
-                        ),
-                      )
-                    ],
-                  ),
+
+              var errorSubtitle = "No se ha encontrado al usuario";
+
+              return RichAlertDialog(
+                  alertTitle: richTitle("Error"),
+                  alertSubtitle: richSubtitle(errorSubtitle),
+                  alertType: RichAlertType.ERROR,
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text("OK"),
+                      onPressed: () {
+                        Navigator.pop(context, true);
+                      },
+                    )
+                  ],
                 );
                 break;
             }

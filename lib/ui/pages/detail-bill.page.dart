@@ -151,9 +151,10 @@ class DetailBillPage extends StatelessWidget {
                         onPressed: () {
                           showDialog(
                               context: context,
-                              child: new SimpleDialog(children: <Widget>[
-                                DeleteBillDialog(billId: this.bill.billId),
-                              ]));
+                              builder: (__) {
+                                return DeleteBillDialog(
+                                    billId: this.bill.billId);
+                              });
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
