@@ -61,7 +61,7 @@ class LoginPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Image(
-                image: AssetImage("assets/daruma-logo.jpg"),
+                image: AssetImage("assets/daruma-logo.png"),
                 height: 200.0,
               ),
               SizedBox(height: 50),

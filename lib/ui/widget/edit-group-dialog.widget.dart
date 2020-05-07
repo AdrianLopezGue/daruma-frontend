@@ -3,7 +3,7 @@ import 'package:daruma/redux/actions.dart';
 import 'package:daruma/redux/state.dart';
 import 'package:daruma/services/bloc/group.bloc.dart';
 import 'package:daruma/services/networking/index.dart';
-import 'package:daruma/ui/pages/welcome.page.dart';
+import 'package:daruma/ui/pages/group.page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
@@ -19,7 +19,7 @@ class EditGroupDialog extends StatelessWidget {
       return new _ViewModel(
           group: store.state.groupState.group,
           tokenId: store.state.userState.tokenUserId,
-          updateGroupName: () {
+          updateGroup: () {
             store.dispatch(GroupUpdatedAction(name, currencyCode));
           });
     }, builder: (BuildContext context, _ViewModel vm) {
@@ -50,11 +50,13 @@ class EditGroupDialog extends StatelessWidget {
                       Text("Update completed!"),
                       FlatButton(
                         onPressed: () {
-                          vm.updateGroupName();
+                          vm.updateGroup();
+                          Navigator.pop(context, true);
+                          Navigator.pop(context, true);
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) {
-                                return WelcomeScreen();
+                                return GroupPage();
                               },
                             ),
                           );
@@ -96,11 +98,11 @@ class EditGroupDialog extends StatelessWidget {
 class _ViewModel {
   final Group group;
   final String tokenId;
-  final Function updateGroupName;
+  final Function updateGroup;
 
   _ViewModel({
     @required this.group,
     @required this.tokenId,
-    @required this.updateGroupName,
+    @required this.updateGroup,
   });
 }
