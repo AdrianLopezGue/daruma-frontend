@@ -1,6 +1,7 @@
 import 'package:daruma/model/bill.dart';
 import 'package:daruma/model/group.dart';
 import 'package:daruma/model/participant.dart';
+import 'package:daruma/ui/pages/group.page.dart';
 import 'package:daruma/ui/widget/members-button.widget.dart';
 import 'package:daruma/ui/widget/number-form-field.widget.dart';
 import 'package:daruma/ui/widget/post-bill-dialog.widget.dart';
@@ -19,7 +20,18 @@ class CreateBillPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: new AppBar(title: new Text("Nuevo Gasto")),
+      appBar: new AppBar(title: new Text("Nuevo Gasto"), leading: BackButton(
+            color: Colors.white,
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return GroupPage();
+                  },
+                ),
+              );
+            },
+          )),
       body: SingleChildScrollView(
           child: Container(
         color: white,
@@ -63,11 +75,12 @@ class _NewBillFormState extends State<NewBillForm> {
         return _formView(context, vm);
       },
       onInit: (store) {
-        this.nameDebtors = store.state.billState.bill.debtors
-            .map((debtor) => debtor.name)
-            .toList();
         store.dispatch(StartCreatingBill(
             store.state.groupState.group, store.state.userState.user.userId));
+
+        this.nameDebtors = store.state.billState.bill.debtors
+            .map((debtor) => debtor.name)
+            .toList();        
       },
     );
   }
