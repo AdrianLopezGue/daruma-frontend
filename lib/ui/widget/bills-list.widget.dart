@@ -77,7 +77,7 @@ class BillsList extends StatelessWidget {
           MaterialPageRoute(
             builder: (context) {
               return DetailBillPage(
-                  bill: bill, payers: payers, debtors: debtors, group: group);
+                  bill: bill, group: group);
             },
           ),
         );

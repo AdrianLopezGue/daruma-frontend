@@ -32,22 +32,15 @@ class GroupsList extends StatelessWidget {
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: snapshot.data.data.length,
                       itemBuilder: (context, index) {
-                        return AnimationConfiguration.staggeredList(
-                          position: index,
-                          duration: const Duration(milliseconds: 375),
-                          child: SlideAnimation(
-                            verticalOffset: 250.0,
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 8.0,
-                                  right: 25.0,
-                                  top: 8.0,
-                                  bottom: 8.0),
-                              child: GroupButton(
-                                  groupId: snapshot.data.data[index].groupId,
-                                  name: snapshot.data.data[index].name),
-                            ),
-                          ),
+                        return Padding(
+                          padding: const EdgeInsets.only(
+                              left: 8.0,
+                              right: 25.0,
+                              top: 8.0,
+                              bottom: 8.0),
+                          child: GroupButton(
+                              groupId: snapshot.data.data[index].groupId,
+                              name: snapshot.data.data[index].name),
                         );
                       }),
                 );

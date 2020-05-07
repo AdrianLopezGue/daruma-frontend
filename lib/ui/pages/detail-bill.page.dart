@@ -7,14 +7,13 @@ import 'package:google_fonts/google_fonts.dart';
 
 class DetailBillPage extends StatelessWidget {
   final Bill bill;
-  final List<String> payers;
-  final List<String> debtors;
   final Group group;
 
-  DetailBillPage({this.bill, this.payers, this.debtors, this.group});
+  DetailBillPage({this.bill, this.group});
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         appBar: new AppBar(title: new Text("Detalle del gasto")),
         body: SingleChildScrollView(
@@ -98,27 +97,25 @@ class DetailBillPage extends StatelessWidget {
                   SizedBox(
                     height: 5.0,
                   ),
+                  Row(children: <Widget>[
+                    Expanded(
+                        child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: this.bill.payers.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                              title: Text(this.group.getMemberNameById(this.bill.payers[index].participantId)),
+                              trailing:
+                                  Text((this.bill.payers[index].money/100).toString() + " " + this.bill.currencyCode),
+                              );
+                        }),
+                    )
+                  ],),
                   Row(
                     children: <Widget>[
                       Text(
-                        this
-                            .payers
-                            .toString()
-                            .substring(1, payers.toString().length - 1),
-                        style: GoogleFonts.roboto(
-                            fontSize: 14, textStyle: TextStyle(color: black)),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 25.0,
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Text(
-                        "Para " +
-                            bill.debtors.length.toString() +
-                            " participantes",
+                        "Para ",
                         style: GoogleFonts.roboto(
                             fontSize: 16,
                             textStyle: TextStyle(color: Colors.grey)),
@@ -128,18 +125,21 @@ class DetailBillPage extends StatelessWidget {
                   SizedBox(
                     height: 5.0,
                   ),
-                  Row(
-                    children: <Widget>[
-                      Text(
-                        this
-                            .debtors
-                            .toString()
-                            .substring(1, debtors.toString().length - 1),
-                        style: GoogleFonts.roboto(
-                            fontSize: 14, textStyle: TextStyle(color: black)),
-                      )
-                    ],
-                  ),
+                  Row(children: <Widget>[
+                    Expanded(
+                        child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: this.bill.debtors.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                              title: Text(this.group.getMemberNameById(this.bill.debtors[index].participantId)),
+                              trailing:
+                                  Text((this.bill.debtors[index].money/100).toString() + " " + this.bill.currencyCode),
+                              );
+                        }),
+                    )
+                  ],),
                   SizedBox(
                     height: 25.0,
                   ),
