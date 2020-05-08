@@ -1,5 +1,7 @@
 import 'package:daruma/model/bill.dart';
 import 'package:daruma/model/group.dart';
+import 'package:daruma/ui/pages/edit-bill.page.dart';
+import 'package:daruma/ui/pages/group.page.dart';
 import 'package:daruma/ui/widget/delete-bill-dialog.widget.dart';
 import 'package:daruma/util/colors.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +15,36 @@ class DetailBillPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-        appBar: new AppBar(title: new Text("Detalle del gasto")),
+        appBar: new AppBar(
+          title: new Text("Detalle del gasto"),
+          leading: BackButton(
+            color: Colors.white,
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return GroupPage();
+                  },
+                ),
+              );
+            },
+          ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.edit),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return EditBillPage(bill: this.bill);
+                    },
+                  ),
+                );
+              },
+            )
+          ],
+        ),
         body: SingleChildScrollView(
           child: SafeArea(
             child: Padding(
@@ -97,21 +126,27 @@ class DetailBillPage extends StatelessWidget {
                   SizedBox(
                     height: 5.0,
                   ),
-                  Row(children: <Widget>[
-                    Expanded(
+                  Row(
+                    children: <Widget>[
+                      Expanded(
                         child: ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: this.bill.payers.length,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                              title: Text(this.group.getMemberNameById(this.bill.payers[index].participantId)),
-                              trailing:
-                                  Text((this.bill.payers[index].money/100).toString() + " " + this.bill.currencyCode),
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: this.bill.payers.length,
+                            itemBuilder: (context, index) {
+                              return ListTile(
+                                title: Text(this.group.getMemberNameById(
+                                    this.bill.payers[index].participantId)),
+                                trailing: Text(
+                                    (this.bill.payers[index].money / 100)
+                                            .toString() +
+                                        " " +
+                                        this.bill.currencyCode),
                               );
-                        }),
-                    )
-                  ],),
+                            }),
+                      )
+                    ],
+                  ),
                   Row(
                     children: <Widget>[
                       Text(
@@ -125,21 +160,27 @@ class DetailBillPage extends StatelessWidget {
                   SizedBox(
                     height: 5.0,
                   ),
-                  Row(children: <Widget>[
-                    Expanded(
+                  Row(
+                    children: <Widget>[
+                      Expanded(
                         child: ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: this.bill.debtors.length,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                              title: Text(this.group.getMemberNameById(this.bill.debtors[index].participantId)),
-                              trailing:
-                                  Text((this.bill.debtors[index].money/100).toString() + " " + this.bill.currencyCode),
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: this.bill.debtors.length,
+                            itemBuilder: (context, index) {
+                              return ListTile(
+                                title: Text(this.group.getMemberNameById(
+                                    this.bill.debtors[index].participantId)),
+                                trailing: Text(
+                                    (this.bill.debtors[index].money / 100)
+                                            .toString() +
+                                        " " +
+                                        this.bill.currencyCode),
                               );
-                        }),
-                    )
-                  ],),
+                            }),
+                      )
+                    ],
+                  ),
                   SizedBox(
                     height: 25.0,
                   ),

@@ -1,3 +1,4 @@
+import 'package:daruma/model/bill.dart';
 import 'package:daruma/model/group.dart';
 import 'package:daruma/model/member.dart';
 import 'package:daruma/model/participant.dart';
@@ -48,7 +49,8 @@ GroupState _reduceGroupState(AppState state, dynamic action) {
     newState =
         newState.copyWith(group: null, isLoading: false, loadingError: true);
   } else if (action is GroupUpdatedAction) {
-    Group newGroup = newState.group.copyWith(name: action.name, currencyCode: action.currencyCode);
+    Group newGroup = newState.group
+        .copyWith(name: action.name, currencyCode: action.currencyCode);
     newState = newState.copyWith(group: newGroup);
   } else if (action is AddMemberToGroupAction) {
     List<Member> newMembers = newState.group.members;
@@ -70,7 +72,7 @@ GroupState _reduceGroupState(AppState state, dynamic action) {
 BillState _reduceBillState(AppState state, dynamic action) {
   BillState newState = state.billState;
 
-  if (action is StartCreatingBill) {
+  if (action is StartCreatingBillAction) {
     newState = BillState.initial();
 
     var uuid = new Uuid();
@@ -91,6 +93,35 @@ BillState _reduceBillState(AppState state, dynamic action) {
                 .toList(),
             creatorId: action.creatorId,
             money: 0));
+  } else if (action is StartEditingBillAction) {
+    List<Participant> newDebtors = [];
+
+    bool isInDebtors = false;
+
+    for(int i = 0; i < action.group.members.length; i++){
+      isInDebtors = false;
+      for(int j = 0; j < action.bill.debtors.length && !isInDebtors; j++){
+        if(action.group.members[i].memberId == action.bill.debtors[j].participantId){
+          newDebtors.add(action.bill.debtors[j].copyWith(name: action.group.getMemberNameById(action.bill.debtors[j].participantId)));
+          isInDebtors = true;
+        }
+      }
+      if(isInDebtors == false){
+        newDebtors.add(Participant(
+                    participantId: action.group.members[i].memberId,
+                    name: action.group.members[i].name,
+                    money: -1));
+      }
+    }
+
+    List<Participant> newPayers = [];
+
+    for(int i = 0; i < action.bill.payers.length; i++){
+      newPayers.add(action.bill.payers[i].copyWith(name: action.group.getMemberNameById(action.bill.payers[i].participantId)));
+    }
+        
+    Bill newBill = action.bill.copyWith(payers: newPayers, debtors: newDebtors);
+    newState = newState.copyWith(bill: newBill);
   } else if (action is BillNameChangedAction) {
     newState =
         newState.copyWith(bill: newState.bill.copyWith(name: action.newName));
@@ -160,7 +191,7 @@ BillState _reduceBillState(AppState state, dynamic action) {
             participantId: newState.bill.debtors[i].participantId,
             name: newState.bill.debtors[i].name,
             money: (allocation[index].minorUnits).toInt()));
-        
+
         index++;
       } else {
         newDebtors.add(new Participant(

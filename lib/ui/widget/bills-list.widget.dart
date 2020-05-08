@@ -73,6 +73,7 @@ class BillsList extends StatelessWidget {
           payers.toString().substring(1, payers.toString().length - 1)),
       trailing: Text((bill.money / 100).toString() + " " + bill.currencyCode),
       onTap: () {
+        Navigator.of(context).pop();
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) {

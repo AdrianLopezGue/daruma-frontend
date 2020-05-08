@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:daruma/model/bill.dart';
 import 'package:daruma/model/group.dart';
 import 'package:daruma/model/member.dart';
 import 'package:daruma/model/participant.dart';
@@ -83,11 +84,18 @@ class LoadingGroupFailedAction {
   LoadingGroupFailedAction();
 }
 
-class StartCreatingBill {
+class StartCreatingBillAction {
   final Group group;
   final String creatorId;
 
-  StartCreatingBill(this.group, this.creatorId);
+  StartCreatingBillAction(this.group, this.creatorId);
+}
+
+class StartEditingBillAction {
+  final Bill bill;
+  final Group group;
+
+  StartEditingBillAction(this.bill, this.group);
 }
 
 class BillNameChangedAction {

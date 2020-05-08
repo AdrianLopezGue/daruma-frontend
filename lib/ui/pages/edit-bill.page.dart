@@ -1,10 +1,9 @@
 import 'package:daruma/model/bill.dart';
 import 'package:daruma/model/group.dart';
 import 'package:daruma/model/participant.dart';
-import 'package:daruma/ui/pages/group.page.dart';
+import 'package:daruma/ui/widget/edit-bill-dialog.widget.dart';
 import 'package:daruma/ui/widget/members-button.widget.dart';
 import 'package:daruma/ui/widget/number-form-field.widget.dart';
-import 'package:daruma/ui/widget/post-bill-dialog.widget.dart';
 import 'package:grouped_buttons/grouped_buttons.dart';
 import 'package:intl/intl.dart';
 import 'package:daruma/redux/index.dart';
@@ -16,20 +15,18 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:money2/money2.dart';
 
-class CreateBillPage extends StatelessWidget {
+class EditBillPage extends StatelessWidget {
+  final Bill bill;
+
+  EditBillPage({this.bill});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: new AppBar(title: new Text("Nuevo Gasto"), leading: BackButton(
+      appBar: new AppBar(title: new Text("Editar Gasto"), leading: BackButton(
             color: Colors.white,
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) {
-                    return GroupPage();
-                  },
-                ),
-              );
+              Navigator.of(context).pop();
             },
           )),
       body: SingleChildScrollView(
@@ -40,7 +37,9 @@ class CreateBillPage extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[NewBillForm()],
+            children: <Widget>[
+                EditBillForm(bill: bill)
+              ],
           ),
         ),
       )),
@@ -48,12 +47,16 @@ class CreateBillPage extends StatelessWidget {
   }
 }
 
-class NewBillForm extends StatefulWidget {
+class EditBillForm extends StatefulWidget {
+  final Bill bill;
+
+  EditBillForm({this.bill});
+
   @override
-  _NewBillFormState createState() => _NewBillFormState();
+  _EditBillFormState createState() => _EditBillFormState();
 }
 
-class _NewBillFormState extends State<NewBillForm> {
+class _EditBillFormState extends State<EditBillForm> {
   final _formKey = GlobalKey<FormState>();
   List<String> nameDebtors = [];
 
@@ -67,7 +70,6 @@ class _NewBillFormState extends State<NewBillForm> {
     return new StoreConnector<AppState, _ViewModel>(
       converter: (store) {
         return new _ViewModel(
-            userId: store.state.userState.user.userId,
             group: store.state.groupState.group,
             bill: store.state.billState.bill);
       },
@@ -75,12 +77,14 @@ class _NewBillFormState extends State<NewBillForm> {
         return _formView(context, vm);
       },
       onInit: (store) {
-        store.dispatch(StartCreatingBillAction(
-            store.state.groupState.group, store.state.userState.user.userId));
+        store.dispatch(StartEditingBillAction(
+            widget.bill, store.state.groupState.group));
 
-        this.nameDebtors = store.state.billState.bill.debtors
-            .map((debtor) => debtor.name)
-            .toList();        
+        for(int i = 0; i<store.state.billState.bill.debtors.length; i++){
+          if(store.state.billState.bill.debtors[i].money != -1){
+            this.nameDebtors.add(store.state.billState.bill.debtors[i].name);
+          }
+        }
       },
     );
   }
@@ -101,6 +105,7 @@ class _NewBillFormState extends State<NewBillForm> {
                       width: halfMediaWidth,
                       child: CustomTextFormField(
                         hintText: 'Titulo del gasto',
+                        initialValue: vm.bill.name,
                         validator: (String value) {
                           if (value.isEmpty) {
                             return 'Introduce nombre del recibo';
@@ -124,6 +129,7 @@ class _NewBillFormState extends State<NewBillForm> {
                       width: halfMediaWidth,
                       child: CustomNumberFormField(
                           hintText: '10.00',
+                          initialValue: (vm.bill.money/100).toString(),
                           validator: (String value) {
                             if (double.parse(value) < 0) {
                               return 'Valor negativo no permitido';
@@ -144,6 +150,7 @@ class _NewBillFormState extends State<NewBillForm> {
             Container(
               alignment: Alignment.topLeft,
               child: DateTimeField(
+                initialValue: vm.bill.date,
                 format: format,
                 decoration: InputDecoration(
                   hintText: vm.bill.date.toIso8601String().substring(0, 10),
@@ -244,7 +251,7 @@ class _NewBillFormState extends State<NewBillForm> {
                   showDialog(
                       context: context,
                       builder: (__) {
-                        return PostBillDialog(bill: vm.bill);
+                        return EditBillDialog(bill: vm.bill);
                       }
                   );
                 }
@@ -259,7 +266,7 @@ class _NewBillFormState extends State<NewBillForm> {
                       width: 5.0,
                     ),
                     Text(
-                      'Guardar',
+                      'Actualizar',
                       style: GoogleFonts.roboto(
                           textStyle:
                               TextStyle(fontSize: 20, color: Colors.white)),
@@ -278,12 +285,10 @@ class _NewBillFormState extends State<NewBillForm> {
 }
 
 class _ViewModel {
-  final String userId;
   final Group group;
   final Bill bill;
 
   _ViewModel({
-    @required this.userId,
     @required this.group,
     @required this.bill,
   });

@@ -46,6 +46,18 @@ class BillBloc {
     }
   }
 
+  updateBill(Bill bill, String tokenId) async {
+    billSink.add(Response.loading('Update bill.'));
+    try {
+      bool billResponse =
+          await _billRepository.updateBill(bill, tokenId);
+      billSink.add(Response.completed(billResponse));
+    } catch (e) {
+      billSink.add(Response.error(e.toString()));
+      print(e);
+    }
+  }
+
   getBills(String groupId, String tokenId) async {
     billSinkBills.add(Response.loading('Get bills.'));
     try {

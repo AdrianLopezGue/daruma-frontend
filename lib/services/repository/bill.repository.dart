@@ -16,6 +16,15 @@ class BillRepository {
     return response;
   }
 
+  Future<bool> updateBill(Bill bill, String tokenId) async {
+    final String url = Url.apiBaseUrl + "/bills/" + bill.billId;
+
+    var requestBody = jsonEncode(bill);
+    final response = await _provider.put(url, requestBody, tokenId);
+
+    return response;
+  }
+
   Future<List<Bill>> getBills(String groupId, String tokenId) async {
     final response = await _provider.get(Url.apiBaseUrl + "/bills/" + groupId,
         header: tokenId);

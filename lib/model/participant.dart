@@ -5,6 +5,16 @@ class Participant {
 
   Participant({this.participantId, this.name, this.money});
 
+  Participant copyWith(
+      {String participantId,
+      String name,
+      String money}) {
+    return Participant(
+        participantId: participantId ?? this.participantId,
+        name: name ?? this.name,
+        money: money ?? this.money);
+  }
+
   Map toJson() {
     return {
       '_id': this.participantId,

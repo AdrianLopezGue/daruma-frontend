@@ -5,10 +5,11 @@ import 'package:flutter_multi_formatter/formatters/money_input_formatter.dart';
 
 class CustomNumberFormField extends StatelessWidget {
   final String hintText;
+  final String initialValue;
   final FormFieldSetter<String> validator;
   final FormFieldSetter<String> onChanged;
 
-  CustomNumberFormField({this.hintText, this.validator, this.onChanged});
+  CustomNumberFormField({this.hintText, this.initialValue, this.validator, this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +22,7 @@ class CustomNumberFormField extends StatelessWidget {
       ),
       validator: validator,
       onChanged: onChanged,
+      initialValue: initialValue,
       inputFormatters: [
         MoneyInputFormatter(),
         BlacklistingTextInputFormatter(new RegExp('-')),

@@ -51,6 +51,7 @@ class GroupBalance extends StatelessWidget {
           leading: BackButton(
             color: Colors.white,
             onPressed: () {
+              Navigator.of(context).pop();
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) {
@@ -128,6 +129,7 @@ class GroupBalance extends StatelessWidget {
 
       case 'Configuración':
         {
+          Navigator.of(context).pop();
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) {
