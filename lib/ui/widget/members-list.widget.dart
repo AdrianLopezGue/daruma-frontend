@@ -21,23 +21,18 @@ class MembersList extends StatelessWidget {
 
   Widget _membersListView(BuildContext context, _ViewModel vm) {
     return Expanded(
-        child: Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: vm.group.members.length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.all(3.0),
-              child: _buildListTile(vm.group.members[index], context),
-            );
-          }),
-    ));
+        child: ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: vm.group.members.length,
+            itemBuilder: (context, index) {
+              return _buildListTile(vm.group.members[index], context);
+            }));
   }
 
   ListTile _buildListTile(Member member, BuildContext context) {
     return ListTile(
+      contentPadding: const EdgeInsets.all(1.0),
       title: Text(member.name),
       trailing: IconButton(
         icon: Icon(

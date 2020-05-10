@@ -33,16 +33,8 @@ class BalanceList extends StatelessWidget {
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: snapshot.data.data.length,
                       itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(
-                              top: 8.0, bottom: 8.0, right: 25.0),
-                          child: Column(
-                            children: <Widget>[
-                              _buildListTile(
-                                  snapshot.data.data[index], group, context),
-                            ],
-                          ),
-                        );
+                        return _buildListTile(
+                            snapshot.data.data[index], group, context);
                       }),
                 );
                 break;
@@ -65,14 +57,14 @@ class BalanceList extends StatelessWidget {
         });
   }
 
-  Container _buildListTile(
+  Card _buildListTile(
       Transaction transaction, Group group, BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
-      child: ListTile(
-        title: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
+
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: ListTile(
+          title: Column(
             children: <Widget>[
               Row(
                 children: <Widget>[
@@ -88,10 +80,10 @@ class BalanceList extends StatelessWidget {
               Row(
                 children: <Widget>[
                   FlatButton(
+                      color: Colors.green,
                       child: Text("Liquidar",
                       style: GoogleFonts.roboto(
-                          fontSize: 16, textStyle: TextStyle(color: Colors.green))),
-                      textColor: Colors.green,
+                          fontSize: 15, textStyle: TextStyle(color: white))),
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
@@ -102,16 +94,15 @@ class BalanceList extends StatelessWidget {
                           ),
                         );
                       },
-                      shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.grey)))
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3.0)))
                 ],
               )
             ],
           ),
+          trailing: Text(
+              (transaction.money / 100).toString() + " " + group.currencyCode, style: GoogleFonts.roboto(
+                          textStyle: TextStyle(fontSize: 14, color: black))),
         ),
-        trailing: Text(
-            (transaction.money / 100).toString() + " " + group.currencyCode, style: GoogleFonts.roboto(
-                        textStyle: TextStyle(fontSize: 14, color: black))),
       ),
     );
   }

@@ -26,20 +26,12 @@ class _MembersButtonState extends State<MembersButton> {
   Widget build(BuildContext context) {
     return FlatButton(
       color: redPrimaryColor,
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text(
-              membersNames.isEmpty
-                  ? widget.members.first.name
-                  : (membersNames.length.toString() + "+ PERSONAS"),
-              style: GoogleFonts.roboto(
-                  textStyle: TextStyle(fontSize: 15, color: Colors.white)),
-            ),
-          ],
-        ),
+      child: Text(
+        membersNames.isEmpty
+            ? widget.members.first.name
+            : (membersNames.length.toString() + "+ PERSONAS"),
+        style: GoogleFonts.roboto(
+            textStyle: TextStyle(fontSize: 15, color: Colors.white)),
       ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
       textColor: white,

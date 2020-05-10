@@ -18,9 +18,9 @@ class CustomTextFormField extends StatelessWidget {
     return TextFormField(
       decoration: InputDecoration(
         hintText: hintText,
-        contentPadding: EdgeInsets.all(15.0),
         filled: true,
         fillColor: Colors.transparent,
+        contentPadding: EdgeInsets.all(1.0)
       ),
       validator: validator,
       onSaved: onSaved,

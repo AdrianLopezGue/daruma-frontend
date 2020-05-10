@@ -33,23 +33,17 @@ class BillsList extends StatelessWidget {
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: snapshot.data.data.length,
                         itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: _buildListTile(
-                                snapshot.data.data[index], this.group, context),
-                          );
+                          return _buildListTile(
+                              snapshot.data.data[index], this.group, context);
                         }));
                 break;
               case Status.ERROR:
                 return Card(
                   color: redPrimaryColor,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(
-                      "Error recibiendo bills",
-                      style: GoogleFonts.roboto(
-                          fontSize: 22, textStyle: TextStyle(color: white)),
-                    ),
+                  child: Text(
+                    "Error recibiendo bills",
+                    style: GoogleFonts.roboto(
+                        fontSize: 22, textStyle: TextStyle(color: white)),
                   ),
                 );
                 break;
@@ -59,30 +53,33 @@ class BillsList extends StatelessWidget {
         });
   }
 
-  ListTile _buildListTile(Bill bill, Group group, BuildContext context) {
+  Card _buildListTile(Bill bill, Group group, BuildContext context) {
     List<String> payers = bill.payers
         .map((payer) => group.getMemberNameById(payer.participantId))
         .toList();
-    List<String> debtors = bill.debtors
-        .map((debtor) => group.getMemberNameById(debtor.participantId))
-        .toList();
 
-    return ListTile(
-      title: Text(bill.name),
-      subtitle: Text("Pagado por " +
-          payers.toString().substring(1, payers.toString().length - 1)),
-      trailing: Text((bill.money / 100).toString() + " " + bill.currencyCode),
-      onTap: () {
-        Navigator.of(context).pop();
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) {
-              return DetailBillPage(
-                  bill: bill, group: group);
-            },
+    return Card(
+          child: Padding(
+            padding: const EdgeInsets.only(left:10.0, right: 10.0),
+            child: ListTile(
+        contentPadding: const EdgeInsets.only(top: 0.0),
+        title: Text(bill.name),
+        subtitle: Text("Pagado por " +
+              payers.toString().substring(1, payers.toString().length - 1)),
+        trailing: Text((bill.money / 100).toString() + " " + bill.currencyCode),
+        onTap: () {
+            Navigator.of(context).pop();
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) {
+                  return DetailBillPage(
+                      bill: bill, group: group);
+                },
+              ),
+            );
+        },
+      ),
           ),
-        );
-      },
     );
   }
 }

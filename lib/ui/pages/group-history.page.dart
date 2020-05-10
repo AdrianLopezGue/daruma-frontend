@@ -78,32 +78,26 @@ class GroupHistory extends StatelessWidget {
         body: SingleChildScrollView(
           child: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.only(top: 15.0, left: 25.0),
+              padding: const EdgeInsets.all(20.0),
               child: Column(
                 children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15.0),
-                    child: Row(
-                      children: <Widget>[
-                        Text(
-                          "Historial",
-                          style: GoogleFonts.roboto(
-                              fontSize: 24, textStyle: TextStyle(color: black)),
-                        ),
-                      ],
-                    ),
+                  Row(
+                    children: <Widget>[
+                      Text(
+                        "Historial",
+                        style: GoogleFonts.roboto(
+                            fontSize: 24, textStyle: TextStyle(color: black)),
+                      ),
+                    ],
                   ),
                   Divider(
                     color: black,
-                    endIndent: 25.0,
+                    endIndent: 5.0,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15.0),
-                    child: Row(
-                      children: <Widget>[
-                        BillsList(tokenId: vm.tokenId, group: vm.group),
-                      ],
-                    ),
+                  Row(
+                    children: <Widget>[
+                      BillsList(tokenId: vm.tokenId, group: vm.group),
+                    ],
                   )
                 ],
               ),

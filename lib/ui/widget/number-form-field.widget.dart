@@ -16,9 +16,10 @@ class CustomNumberFormField extends StatelessWidget {
     return TextFormField(
       decoration: InputDecoration(
         hintText: hintText,
-        contentPadding: EdgeInsets.all(15.0),
+        contentPadding: EdgeInsets.all(1.0),
         filled: true,
-        fillColor: white,
+        fillColor: Colors.transparent,
+        
       ),
       validator: validator,
       onChanged: onChanged,
