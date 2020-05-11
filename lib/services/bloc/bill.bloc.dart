@@ -10,6 +10,7 @@ class BillBloc {
   BillRepository _billRepository;
   StreamController _billController;
   StreamController _billControllerGroups;
+  StreamController _recurringBillController;
 
   StreamSink<Response<bool>> get billSink => _billController.sink;
   Stream<Response<bool>> get billStream => _billController.stream;
@@ -19,10 +20,16 @@ class BillBloc {
   Stream<Response<List<Bill>>> get billStreamBills =>
       _billControllerGroups.stream;
 
+  StreamSink<Response<List<RecurringBill>>> get billSinkRecurringBills =>
+      _recurringBillController.sink;
+  Stream<Response<List<RecurringBill>>> get billStreamRecurringBills =>
+      _recurringBillController.stream;
+
   BillBloc() {
     _billController = BehaviorSubject<Response<bool>>();
     _billRepository = BillRepository();
     _billControllerGroups = BehaviorSubject<Response<List<Bill>>>();
+    _recurringBillController = BehaviorSubject<Response<List<RecurringBill>>>();
   }
 
   postBill(Bill bill, String tokenId) async {
@@ -83,8 +90,23 @@ class BillBloc {
     }
   }
 
+  getRecurringBills(String groupId, String tokenId) async {
+    billSinkRecurringBills.add(Response.loading('Get recurring bills.'));
+    try {
+      List<RecurringBill> billResponse =
+          await _billRepository.getRecurringBills(groupId, tokenId);
+
+      billSinkRecurringBills.add(Response.completed(billResponse));
+    } catch (e) {
+      billSinkRecurringBills.add(Response.error(e.toString()));
+      print(e);
+    }
+  }
+
   dispose() {
     _billController?.close();
     _billControllerGroups?.close();
+    _recurringBillController?.close();
   }
+
 }

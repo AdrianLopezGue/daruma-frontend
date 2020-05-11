@@ -4,7 +4,6 @@ import 'package:daruma/services/networking/response.dart';
 import 'package:daruma/ui/widget/group-button.widget.dart';
 import 'package:daruma/util/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class GroupsList extends StatelessWidget {

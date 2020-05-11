@@ -1,4 +1,3 @@
-import 'package:daruma/util/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_multi_formatter/formatters/money_input_formatter.dart';

@@ -45,6 +45,16 @@ class BillRepository {
     return list;
   }
 
+  Future<List<RecurringBill>> getRecurringBills(String groupId, String tokenId) async {
+    final response = await _provider.get(Url.apiBaseUrl + "/recurringbills/" + groupId,
+        header: tokenId);
+
+    var list = response as List;
+    list = response.map<RecurringBill>((json) => RecurringBill.fromJson(json)).toList();
+
+    return list;
+  }
+
   Future<bool> deleteBill(String billId, String tokenId) async {
     final response =
         await _provider.delete(Url.apiBaseUrl + "/bills/" + billId, tokenId);

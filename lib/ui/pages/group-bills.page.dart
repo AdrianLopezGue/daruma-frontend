@@ -1,4 +1,5 @@
 import 'package:daruma/ui/pages/bills-history.page.dart';
+import 'package:daruma/ui/pages/recurring-bills.page.dart';
 import 'package:daruma/util/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +10,7 @@ class TabsExample extends StatelessWidget {
   Widget build(BuildContext context) {
     final _kTabPages = <Widget>[
       BillsHistory(),
-      Center(child: Icon(Icons.alarm, size: 64.0, color: redPrimaryColor)),
+      RecurringBills(),
     ];
     final _kTabs = <Tab>[
       Tab(child: Text('Historial', style: TextStyle(color: redPrimaryColor))),

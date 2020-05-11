@@ -1,16 +1,18 @@
 class RecurringBill {
-  final String id;
-  final String billId;
-  final String groupId;
-  final DateTime date;
-  final int period;
+  String id;
+  String billId;
+  String groupId;
+  DateTime date;
+  int period;
+  DateTime nextCreationDate;
 
   RecurringBill(
       {this.id,
       this.billId,
       this.groupId,
       this.date,
-      this.period});
+      this.period,
+      });
 
   Map toJson() {
 
@@ -21,5 +23,12 @@ class RecurringBill {
       'date': this.date.toIso8601String(),
       'period': this.period,
     };
+  }
+
+  RecurringBill.fromJson(Map<String, dynamic> json) {
+    this.id = json['_id'];
+    this.billId = json['billId'];
+    this.groupId = json['groupId'];
+    this.nextCreationDate = DateTime.parse(json['nextCreationDate']);
   }
 }
