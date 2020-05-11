@@ -1,5 +1,7 @@
+import 'package:flutter_config/flutter_config.dart';
+
 class Url {
-  static const String apiBaseUrl = 'http://10.0.2.2:3000';
-  static const String currencyListBaseUrl =
+  static String apiBaseUrl = FlutterConfig.get('HOST') + ":" + FlutterConfig.get('PORT');
+  static String currencyListBaseUrl =
       'https://openexchangerates.org/api/currencies.json';
 }

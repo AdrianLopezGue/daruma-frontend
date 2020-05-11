@@ -8,8 +8,13 @@ import 'package:flutter/material.dart';
 import 'package:daruma/ui/pages/login.page.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import 'package:flutter_config/flutter_config.dart';
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-void main() => runApp(MyApp());
+  await FlutterConfig.loadEnvVariables();
+  runApp(MyApp());
+  }
 
 class MyApp extends StatelessWidget {
   final Store<AppState> store = createStore();
@@ -26,7 +31,7 @@ class MyApp extends StatelessWidget {
             return GroupPage();
           }
         },
-        title: 'Flutter Login',
+        title: 'Daruma Login',
         theme: ThemeData(
           primarySwatch: Colors.red,
         ),
