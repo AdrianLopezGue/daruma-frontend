@@ -40,9 +40,10 @@ class SetUserIdToMemberDialog extends StatelessWidget {
                 return Container(
                   height: 300.0, // Change as per your requirement
                   width: 300.0,
-                  child: Row(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text("Set Id completed!"),
+                      Text("¡Te has identificado correctamente!"),
                       FlatButton(
                         onPressed: () {
                           Navigator.pop(context, true);
@@ -55,7 +56,7 @@ class SetUserIdToMemberDialog extends StatelessWidget {
                           );
                         },
                         child: Text(
-                          "Exit",
+                          "Salir",
                         ),
                       )
                     ],

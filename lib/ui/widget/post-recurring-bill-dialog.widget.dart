@@ -1,25 +1,22 @@
-import 'package:daruma/model/group.dart';
-import 'package:daruma/model/owner.dart';
-import 'package:daruma/model/user.dart';
+import 'package:daruma/model/recurring-bill.dart';
 import 'package:daruma/redux/state.dart';
-import 'package:daruma/services/bloc/group.bloc.dart';
+import 'package:daruma/services/bloc/bill.bloc.dart';
 import 'package:daruma/services/networking/index.dart';
-import 'package:daruma/ui/pages/welcome.page.dart';
+import 'package:daruma/ui/pages/group.page.dart';
 import 'package:daruma/util/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:sweet_alert_dialogs/sweet_alert_dialogs.dart';
 
-class PostGroupDialog extends StatelessWidget {
-  final Group group;
+class PostRecurringBillDialog extends StatelessWidget {
+  final RecurringBill recurringBill;
 
-  PostGroupDialog({this.group});
+  PostRecurringBillDialog({this.recurringBill});
 
   @override
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(converter: (store) {
       return new _ViewModel(
-        user: store.state.userState.user,
         tokenId: store.state.userState.tokenUserId,
       );
     }, builder: (BuildContext context, _ViewModel vm) {
@@ -28,71 +25,50 @@ class PostGroupDialog extends StatelessWidget {
   }
 
   Widget _postDialogView(BuildContext context, _ViewModel vm) {
-    final GroupBloc _bloc = GroupBloc();
+    final BillBloc _bloc = BillBloc();
 
-    Owner owner = new Owner();
-    owner.ownerId = vm.user.userId;
-    owner.name = vm.user.name;
-
-    _bloc.postGroup(
-        Group(
-          groupId: group.groupId,
-          name: group.name,
-          currencyCode: group.currencyCode,
-          owner: owner,
-          members: group.members,
-        ),
-        vm.tokenId);
+    _bloc.postRecurringBill(this.recurringBill, vm.tokenId);
 
     return StreamBuilder<Response<bool>>(
-        stream: _bloc.groupStream,
+        stream: _bloc.billStream,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             switch (snapshot.data.status) {
               case Status.LOADING:
                 return RichAlertDialog(
                   alertTitle: richTitle("Cargando"),
-                  alertSubtitle: richSubtitle("Se esta creando el grupo..."),
+                  alertSubtitle: richSubtitle("Se esta creando el gasto recurrente..."),
                   alertType: RichAlertType.CUSTOM,
                   dialogIcon: Icon(Icons.access_time, color: redPrimaryColor,),
                 );
                 break;
 
               case Status.COMPLETED:
-              return RichAlertDialog(
+                return RichAlertDialog(
                   alertTitle: richTitle("¡Completado!"),
-                  alertSubtitle: richSubtitle("Grupo creado correctamente"),
+                  alertSubtitle: richSubtitle("Gasto recurrente creado correctamente"),
                   alertType: RichAlertType.SUCCESS,
                   actions: <Widget>[
                     FlatButton(
                       child: Text("OK"),
                       onPressed: () {
-                        Navigator.pop(context, true);
+                        Navigator.of(context).pop();
                         Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return WelcomeScreen();
-                              },
-                            ),
-                          );
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return GroupPage();
+                            },
+                          ),
+                        );
                       },
                     )
                   ],
                 );
                 break;
               case Status.ERROR:
-              var errorMessage = snapshot.data.message;
-              var codeStatus = int.parse(errorMessage.substring(errorMessage.length-3));
-
-              var errorSubtitle = "Se ha producido un error";
-
-              if(codeStatus == 409){
-                errorSubtitle = "Existe un grupo con el mismo nombre";
-              }
-              
-              return RichAlertDialog(
+                return RichAlertDialog(
                   alertTitle: richTitle("Error"),
-                  alertSubtitle: richSubtitle(errorSubtitle),
+                  alertSubtitle: richSubtitle("Error creando el gasto recurrente"),
                   alertType: RichAlertType.ERROR,
                   actions: <Widget>[
                     FlatButton(
@@ -112,11 +88,7 @@ class PostGroupDialog extends StatelessWidget {
 }
 
 class _ViewModel {
-  final User user;
   final String tokenId;
 
-  _ViewModel({
-    @required this.user,
-    @required this.tokenId,
-  });
+  _ViewModel({@required this.tokenId});
 }

@@ -308,11 +308,33 @@ class _EditGroupPageState extends State<EditGroupPage> {
                 RaisedButton(
                   color: redPrimaryColor,
                   onPressed: () {
-                    showDialog(
+                      showDialog(
                         context: context,
-                        builder: (__) {
-                          return DeleteDialog(groupId: groupId);
-                        });
+                        builder: (BuildContext context) {
+                          // return object of type Dialog
+                          return AlertDialog(
+                            content: new Text("¿Seguro que quieres borrar el grupo?"),
+                            actions: <Widget>[
+                              new FlatButton(
+                                child: new Text("BORRAR"),
+                                onPressed: () {
+                                  showDialog(
+                                  context: context,
+                                  builder: (__) {
+                                    return DeleteDialog(groupId: groupId);
+                                  });
+                                },
+                              ),
+                              new FlatButton(
+                                child: new Text("CANCELAR"),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );                  
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),

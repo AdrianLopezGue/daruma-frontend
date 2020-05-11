@@ -1,10 +1,10 @@
 import 'package:daruma/model/group.dart';
 import 'package:daruma/redux/index.dart';
-import 'package:daruma/ui/widget/balance-list.widget.dart';
+import 'package:daruma/ui/widget/bills-list.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
-class GroupBalance extends StatelessWidget {
+class BillsHistory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(
@@ -12,11 +12,11 @@ class GroupBalance extends StatelessWidget {
           group: store.state.groupState.group,
           tokenId: store.state.userState.tokenUserId),
       builder: (BuildContext context, _ViewModel vm) =>
-          _balanceView(context, vm),
+          _historyView(context, vm),
     );
   }
 
-  Widget _balanceView(BuildContext context, _ViewModel vm) {
+  Widget _historyView(BuildContext context, _ViewModel vm) {
     return Scaffold(
         body: SingleChildScrollView(
       child: SafeArea(
@@ -26,7 +26,7 @@ class GroupBalance extends StatelessWidget {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  BalanceList(tokenId: vm.tokenId, group: vm.group),
+                  BillsList(tokenId: vm.tokenId, group: vm.group),
                 ],
               )
             ],

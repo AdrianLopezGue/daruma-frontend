@@ -63,6 +63,10 @@ class BillsList extends StatelessWidget {
             padding: const EdgeInsets.only(left:10.0, right: 10.0),
             child: ListTile(
         contentPadding: const EdgeInsets.only(top: 0.0),
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Icon(Icons.attach_money, size: 35.0),
+        ),
         title: Text(bill.name),
         subtitle: Text("Pagado por " +
               payers.toString().substring(1, payers.toString().length - 1)),

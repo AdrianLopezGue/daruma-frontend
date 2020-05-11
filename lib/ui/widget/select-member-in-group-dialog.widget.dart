@@ -57,6 +57,7 @@ class _SelectMemberInGroupDialogState extends State<SelectMemberInGroupDialog> {
                       height: 300.0,
                       width: 300.0,
                       child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           Expanded(
                             child: ListView.builder(
@@ -64,6 +65,7 @@ class _SelectMemberInGroupDialogState extends State<SelectMemberInGroupDialog> {
                               itemBuilder: (BuildContext context, int index) {
                                 if (snapshot.data.data[index].userId.isEmpty) {
                                   return ListTile(
+                                    leading: Icon(Icons.account_circle),
                                     title: Text(snapshot.data.data[index].name),
                                     onTap: () {
                                       setState(() {
@@ -85,7 +87,7 @@ class _SelectMemberInGroupDialogState extends State<SelectMemberInGroupDialog> {
                               Navigator.pop(context, true);
                             },
                             child: Text(
-                              "Exit",
+                              "Cancelar",
                             ),
                           )
                         ],
@@ -101,7 +103,7 @@ class _SelectMemberInGroupDialogState extends State<SelectMemberInGroupDialog> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              Text("Current member is in the group already!"),
+                              Text("El miembro ya se encuentra en el grupo"),
                             ],
                           ),
                           Row(
@@ -133,13 +135,13 @@ class _SelectMemberInGroupDialogState extends State<SelectMemberInGroupDialog> {
                   width: 300.0,
                   child: Row(
                     children: <Widget>[
-                      Text("Post ERROR!"),
+                      Text("Se ha producido un error trayendo los miebros del grupo"),
                       FlatButton(
                         onPressed: () {
                           Navigator.pop(context, true);
                         },
                         child: Text(
-                          "Exit",
+                          "Salir",
                         ),
                       )
                     ],
