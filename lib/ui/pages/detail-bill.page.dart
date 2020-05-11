@@ -49,11 +49,11 @@ class DetailBillPage extends StatelessWidget {
                 },
               )
             ],
-            title: MyAppBar(),
+            title: BillAppBarTitle(),
             pinned: true,
             expandedHeight: 210.0,
             flexibleSpace: FlexibleSpaceBar(
-              background: MyFlexiableAppBar(bill: this.bill),
+              background: BillFlexibleAppBar(bill: this.bill),
             )),
         SliverToBoxAdapter(
           child: Column(

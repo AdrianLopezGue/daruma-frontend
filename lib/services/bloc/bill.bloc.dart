@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:daruma/model/bill.dart';
+import 'package:daruma/model/recurring-bill.dart';
 import 'package:daruma/services/networking/index.dart';
 import 'package:daruma/services/repository/bill.repository.dart';
 import 'package:rxdart/rxdart.dart';
@@ -28,6 +29,17 @@ class BillBloc {
     billSink.add(Response.loading('Post new bill.'));
     try {
       bool billResponse = await _billRepository.createBill(bill, tokenId);
+      billSink.add(Response.completed(billResponse));
+    } catch (e) {
+      billSink.add(Response.error(e.toString()));
+      print(e);
+    }
+  }
+
+  postRecurringBill(RecurringBill recurringBill, String tokenId) async {
+    billSink.add(Response.loading('Post new recurring bill.'));
+    try {
+      bool billResponse = await _billRepository.createRecurringBill(recurringBill, tokenId);
       billSink.add(Response.completed(billResponse));
     } catch (e) {
       billSink.add(Response.error(e.toString()));

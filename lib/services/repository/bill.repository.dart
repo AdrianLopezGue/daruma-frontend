@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:daruma/model/bill.dart';
+import 'package:daruma/model/recurring-bill.dart';
 import 'package:daruma/services/networking/index.dart';
 import 'package:daruma/util/url.dart';
 
@@ -9,6 +10,15 @@ class BillRepository {
 
   Future<bool> createBill(Bill bill, String tokenId) async {
     final String url = Url.apiBaseUrl + "/bills";
+
+    var requestBody = jsonEncode(bill);
+    final response = await _provider.post(url, requestBody, tokenId);
+
+    return response;
+  }
+
+  Future<bool> createRecurringBill(RecurringBill bill, String tokenId) async {
+    final String url = Url.apiBaseUrl + "/recurringbills";
 
     var requestBody = jsonEncode(bill);
     final response = await _provider.post(url, requestBody, tokenId);
