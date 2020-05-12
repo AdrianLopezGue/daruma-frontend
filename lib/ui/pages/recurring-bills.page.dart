@@ -1,10 +1,13 @@
 import 'package:daruma/model/bill.dart';
 import 'package:daruma/model/group.dart';
 import 'package:daruma/redux/index.dart';
-import 'package:daruma/services/repository/bill.repository.dart';
+import 'package:daruma/services/bloc/bill.bloc.dart';
+import 'package:daruma/services/networking/index.dart';
 import 'package:daruma/ui/widget/recurring-bills-list.widget.dart';
+import 'package:daruma/util/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class RecurringBills extends StatelessWidget {
   @override
@@ -17,32 +20,55 @@ class RecurringBills extends StatelessWidget {
           _recurrenctBillsView(context, vm),
     );
   }
+  
 
   Widget _recurrenctBillsView(BuildContext context, _ViewModel vm) {
-    return Scaffold(
-        body: SingleChildScrollView(
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  RecurringBillsList(tokenId: vm.tokenId, group: vm.group),
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
-    ));
-  }
 
-  Future<List<Bill>> _getBills(String groupId, String tokenId ) async {
-    var billRepository = new BillRepository();
-    var bills = await billRepository.getBills(groupId, tokenId);
+    final BillBloc _bloc = BillBloc();
+    _bloc.getBills(vm.group.groupId, vm.tokenId);
 
-    return bills;
+    return StreamBuilder<Response<List<Bill>>>(
+        stream: _bloc.billStreamBills,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            switch (snapshot.data.status) {
+              case Status.LOADING:
+                return Center(child: CircularProgressIndicator());
+                break;
+
+              case Status.COMPLETED:
+                return Scaffold(
+                    body: SingleChildScrollView(
+                  child: SafeArea(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              RecurringBillsList(bills: snapshot.data.data),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ));
+                break;
+              case Status.ERROR:
+                return Card(
+                  color: redPrimaryColor,
+                  child: Text(
+                    "Error recibiendo gastos",
+                    style: GoogleFonts.roboto(
+                        fontSize: 22, textStyle: TextStyle(color: white)),
+                  ),
+                );
+                break;
+            }
+          }
+          return Container();
+        });
   }
 }
 

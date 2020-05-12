@@ -21,7 +21,7 @@ class BottomNavigationBarWidget extends StatefulWidget {
 
 class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
   var currentTab = [
-    TabsExample(),
+    BillsTabs(),
     GroupBalance(),
   ];
 

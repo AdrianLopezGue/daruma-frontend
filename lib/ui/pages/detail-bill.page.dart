@@ -49,11 +49,17 @@ class DetailBillPage extends StatelessWidget {
                 },
               )
             ],
-            title: BillAppBarTitle(),
+            title: BillAppBarTitle(title: "Detalle del gasto"),
             pinned: true,
             expandedHeight: 210.0,
             flexibleSpace: FlexibleSpaceBar(
-              background: BillFlexibleAppBar(bill: this.bill),
+              background: BillFlexibleAppBar(
+                title: this.bill.name,
+                price: (bill.money / 100).toString() + " " + bill.currencyCode,
+                bottomLeftSubtitle: this.bill.currencyCode,
+                bottomRightSubtitle:
+                    this.bill.date.toIso8601String().substring(0, 10),
+              ),
             )),
         SliverToBoxAdapter(
           child: Column(
@@ -70,16 +76,18 @@ class DetailBillPage extends StatelessWidget {
                           children: <Widget>[
                             Row(
                               children: <Widget>[
-                                Text(
-                                  "Pagado por", style: GoogleFonts.roboto(fontSize: 16, textStyle: TextStyle(color: Colors.grey))
-                                )
+                                Text("Pagado por",
+                                    style: GoogleFonts.roboto(
+                                        fontSize: 16,
+                                        textStyle:
+                                            TextStyle(color: Colors.grey)))
                               ],
                             ),
                             Row(
                               children: <Widget>[
                                 Expanded(
                                   child: ListView.builder(
-                                    padding: EdgeInsets.all(0.0),
+                                      padding: EdgeInsets.all(0.0),
                                       shrinkWrap: true,
                                       physics:
                                           const NeverScrollableScrollPhysics(),
@@ -117,7 +125,7 @@ class DetailBillPage extends StatelessWidget {
                     alignment: Alignment.topCenter,
                     width: halfMediaWidth,
                     child: Card(
-                        child: Padding(
+                      child: Padding(
                         padding: const EdgeInsets.all(15.0),
                         child: Column(
                           children: <Widget>[
@@ -126,33 +134,40 @@ class DetailBillPage extends StatelessWidget {
                                 Text(
                                   "Para ",
                                   style: GoogleFonts.roboto(
-                                      fontSize: 16, textStyle: TextStyle(color: Colors.grey)),
+                                      fontSize: 16,
+                                      textStyle: TextStyle(color: Colors.grey)),
                                 )
                               ],
                             ),
                             Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: ListView.builder(
-                                  padding: EdgeInsets.all(0.0),
-                                  shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemCount: this.bill.debtors.length,
-                                  itemBuilder: (context, index) {
-                                    return ListTile(
-                                      contentPadding: EdgeInsets.all(0.0),
-                                      title: Text(this.group.getMemberNameById(
-                                          this.bill.debtors[index].participantId)),
-                                      trailing: Text(
-                                          (this.bill.debtors[index].money / 100)
-                                                  .toString() +
-                                              " " +
-                                              this.bill.currencyCode),
-                                    );
-                                  }),
-                            )
-                          ],
-                        ),
+                              children: <Widget>[
+                                Expanded(
+                                  child: ListView.builder(
+                                      padding: EdgeInsets.all(0.0),
+                                      shrinkWrap: true,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemCount: this.bill.debtors.length,
+                                      itemBuilder: (context, index) {
+                                        return ListTile(
+                                          contentPadding: EdgeInsets.all(0.0),
+                                          title: Text(this
+                                              .group
+                                              .getMemberNameById(this
+                                                  .bill
+                                                  .debtors[index]
+                                                  .participantId)),
+                                          trailing: Text(
+                                              (this.bill.debtors[index].money /
+                                                          100)
+                                                      .toString() +
+                                                  " " +
+                                                  this.bill.currencyCode),
+                                        );
+                                      }),
+                                )
+                              ],
+                            ),
                           ],
                         ),
                       ),
@@ -171,16 +186,18 @@ class DetailBillPage extends StatelessWidget {
                         builder: (BuildContext context) {
                           // return object of type Dialog
                           return AlertDialog(
-                            content: new Text("¿Seguro que quieres borrar el gasto?"),
+                            content: new Text(
+                                "¿Seguro que quieres borrar el gasto?"),
                             actions: <Widget>[
                               new FlatButton(
                                 child: new Text("BORRAR"),
                                 onPressed: () {
                                   showDialog(
-                                  context: context,
-                                  builder: (__) {
-                                    return DeleteBillDialog(billId: this.bill.billId);
-                                  });
+                                      context: context,
+                                      builder: (__) {
+                                        return DeleteBillDialog(
+                                            billId: this.bill.billId);
+                                      });
                                 },
                               ),
                               new FlatButton(
@@ -192,7 +209,7 @@ class DetailBillPage extends StatelessWidget {
                             ],
                           );
                         },
-                      ); 
+                      );
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),

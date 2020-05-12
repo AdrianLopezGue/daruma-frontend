@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 class BillAppBarTitle extends StatelessWidget {
 
   final double barHeight = 66.0;
+  final String title;
 
-  const BillAppBarTitle();
+  const BillAppBarTitle({this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class BillAppBarTitle extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Container(child: Text(
-            'Detalle del gasto',
+            title,
             style: TextStyle(
               color: Colors.white,
                 fontFamily: 'Poppins',

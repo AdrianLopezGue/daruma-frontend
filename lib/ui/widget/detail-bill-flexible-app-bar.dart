@@ -1,15 +1,17 @@
-import 'package:daruma/model/bill.dart';
 import 'package:daruma/util/colors.dart';
 import 'package:flutter/material.dart';
 
 
 class BillFlexibleAppBar extends StatelessWidget {
 
-  final Bill bill;
+  final String title;
+  final String price;
+  final String bottomLeftSubtitle;
+  final String bottomRightSubtitle;
 
   final double appBarHeight = 66.0;
 
-  const BillFlexibleAppBar({this.bill});
+  const BillFlexibleAppBar({this.title, this.price, this.bottomLeftSubtitle,this.bottomRightSubtitle});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class BillFlexibleAppBar extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Container(child: new Text(
-                        this.bill.name,
+                        this.title,
                         style: const TextStyle(
                             color: Colors.white,
                             fontFamily: 'Poppins',
@@ -38,9 +40,7 @@ class BillFlexibleAppBar extends StatelessWidget {
                         )
                     ),),
                     Container(child: new Text(
-                       (bill.money / 100).toString() +
-                              " " +
-                              bill.currencyCode,
+                       this.price,
                         style: const TextStyle(
                             color: Colors.white,
                             fontFamily: 'Poppins',
@@ -58,7 +58,7 @@ class BillFlexibleAppBar extends StatelessWidget {
                     Container(child: Padding(
                       padding: const EdgeInsets.only(bottom: 8.0,left:8.0),
                       child: new Text(
-                          this.bill.currencyCode,
+                          this.bottomLeftSubtitle,
                           style: const TextStyle(
                               color: Colors.white70,
                               fontFamily: 'Poppins',
@@ -72,7 +72,7 @@ class BillFlexibleAppBar extends StatelessWidget {
                       child: Container(
                           child: Row(children: <Widget>[
                             Container(child: Text(
-                              this.bill.date.toIso8601String().substring(0, 10), style: const TextStyle(
+                              this.bottomRightSubtitle, style: const TextStyle(
                                 color: Colors.white70,
                                 fontFamily: 'Poppins',
                                 fontSize: 16.0

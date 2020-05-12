@@ -65,6 +65,17 @@ class BillBloc {
     }
   }
 
+  deleteRecurringBill(String billId, String tokenId) async {
+    billSink.add(Response.loading('Delete recurring bill.'));
+    try {
+      bool billResponse = await _billRepository.deleteRecurringBill(billId, tokenId);
+      billSink.add(Response.completed(billResponse));
+    } catch (e) {
+      billSink.add(Response.error(e.toString()));
+      print(e);
+    }
+  }
+
   updateBill(Bill bill, String tokenId) async {
     billSink.add(Response.loading('Update bill.'));
     try {

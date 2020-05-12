@@ -3,8 +3,8 @@ import 'package:daruma/ui/pages/recurring-bills.page.dart';
 import 'package:daruma/util/colors.dart';
 import 'package:flutter/material.dart';
 
-class TabsExample extends StatelessWidget {
-  const TabsExample({Key key}) : super(key: key);
+class BillsTabs extends StatelessWidget {
+  const BillsTabs({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

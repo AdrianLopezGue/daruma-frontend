@@ -61,4 +61,11 @@ class BillRepository {
 
     return response;
   }
+
+  Future<bool> deleteRecurringBill(String billId, String tokenId) async {
+    final response =
+        await _provider.delete(Url.apiBaseUrl + "/recurringbills/" + billId, tokenId);
+
+    return response;
+  }
 }
