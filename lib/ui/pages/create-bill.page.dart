@@ -307,7 +307,7 @@ class _NewBillFormState extends State<NewBillForm> {
                                     : Expanded(
                                         child: Text(
                                             (vm.bill.debtors[i].money / 100)
-                                                .toString()),
+                                                .toStringAsFixed(2)  + " " + vm.group.currencyCode),
                                         flex: 2),
                               ],
                             );

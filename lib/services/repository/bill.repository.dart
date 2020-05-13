@@ -35,6 +35,19 @@ class BillRepository {
     return response;
   }
 
+  Future<bool> updateRecurringBill(String recurringBillId, int period, String tokenId) async {
+    final String url = Url.apiBaseUrl + "/recurringbills/" + recurringBillId;
+
+    final Map body = {
+      'period': period,    
+    };
+
+    var requestBody = jsonEncode(body);
+    final response = await _provider.patch(url, requestBody, tokenId);
+
+    return response;
+  }
+
   Future<List<Bill>> getBills(String groupId, String tokenId) async {
     final response = await _provider.get(Url.apiBaseUrl + "/bills/" + groupId,
         header: tokenId);

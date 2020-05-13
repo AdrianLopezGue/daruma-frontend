@@ -88,6 +88,18 @@ class BillBloc {
     }
   }
 
+  updateRecurringBill(String recurringBillId, int period, String tokenId) async {
+    billSink.add(Response.loading('Update recurring bill.'));
+    try {
+      bool billResponse =
+          await _billRepository.updateRecurringBill(recurringBillId, period, tokenId);
+      billSink.add(Response.completed(billResponse));
+    } catch (e) {
+      billSink.add(Response.error(e.toString()));
+      print(e);
+    }
+  }
+
   getBills(String groupId, String tokenId) async {
     billSinkBills.add(Response.loading('Get bills.'));
     try {

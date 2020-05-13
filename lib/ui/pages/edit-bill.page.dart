@@ -299,7 +299,7 @@ class _EditBillFormState extends State<EditBillForm> {
                                       ? Expanded(child: Text('0.0'), flex: 2)
                                       : Expanded(
                                           child: Text(
-                                              (vm.bill.debtors[i].money / 100).toString()),
+                                              (vm.bill.debtors[i].money / 100).toStringAsFixed(2) + " " + vm.group.currencyCode),
                                           flex: 2),
                                 ],
                               );
