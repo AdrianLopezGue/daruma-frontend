@@ -48,6 +48,9 @@ dependencies:
   flutter_staggered_animations: "^0.1.2"
   sweet_alert_dialogs: "^0.2.0"
   url_launcher: ^5.4.5
+  csv: ^4.0.3
+  flutter_file_dialog: ^0.0.5
+  path_provider: ^1.6.8
 
 dev_dependencies:
   flutter_config: ^1.0.7

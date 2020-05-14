@@ -385,7 +385,7 @@ class _NewBillFormState extends State<NewBillForm> {
                                 PopupMenuItem(
                                     child: Text('Mensualmente'), value: 30),
                                 PopupMenuItem(
-                                    child: Text('Anualmente'), value: 360),
+                                    child: Text('Anualmente'), value: 365),
                               ],
                               onSelected: (value) {
                                 setState(() {
