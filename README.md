@@ -33,8 +33,7 @@ Daruma allows users to easily manage shared expenses made in a group, including 
 
 * **State management**: Redux, BloC, repository patterns .
 * **Backend connection**: API provider pattern.
-* **Invitation to group member**: Jest.
-* **End-to-End testing**: Cypress.
+* **Invitation to group member**: Firebase Dynamic Links.
 
 ## Install, build and run!
 
