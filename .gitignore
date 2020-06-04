@@ -43,3 +43,7 @@ lib/generated_plugin_registrant.dart
 !.vscode/launch.json
 !.vscode/extensions.json
 .env
+
+
+# Google service
+android/app/google-services.json
