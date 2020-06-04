@@ -51,6 +51,7 @@ dependencies:
   csv: ^4.0.3
   flutter_file_dialog: ^0.0.5
   path_provider: ^1.6.8
+  avataaar_image: ^1.0.8
 
 dev_dependencies:
   flutter_config: ^1.0.7

@@ -117,7 +117,7 @@ class _EditBillFormState extends State<EditBillForm> {
                               initialValue: vm.bill.name,
                               validator: (String value) {
                                 if (value.isEmpty) {
-                                  return 'Introduce nombre del recibo';
+                                  return 'Introduce nombre del gasto';
                                 }
                                 return null;
                               },

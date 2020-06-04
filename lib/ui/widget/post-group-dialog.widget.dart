@@ -82,12 +82,23 @@ class PostGroupDialog extends StatelessWidget {
                 break;
               case Status.ERROR:
               var errorMessage = snapshot.data.message;
-              var codeStatus = int.parse(errorMessage.substring(errorMessage.length-3));
+              print("ERROR:" + errorMessage);
+              var codeStatus;
+
+              if(errorMessage == "Error During Communication: No Internet connection"){
+                codeStatus = 404;
+              }
+              else{
+                codeStatus = int.parse(errorMessage.substring(errorMessage.length-3));
+              }
 
               var errorSubtitle = "Se ha producido un error";
 
               if(codeStatus == 409){
                 errorSubtitle = "Existe un grupo con el mismo nombre";
+              }
+              else if(codeStatus == 404){
+                errorSubtitle = "Error de conexión";
               }
               
               return RichAlertDialog(

@@ -56,12 +56,23 @@ class RecurringBills extends StatelessWidget {
                 ));
                 break;
               case Status.ERROR:
-                return Card(
-                  color: redPrimaryColor,
-                  child: Text(
-                    "Error recibiendo gastos",
-                    style: GoogleFonts.roboto(
-                        fontSize: 22, textStyle: TextStyle(color: white)),
+              final halfMediaWidth = MediaQuery.of(context).size.width / 1.2;
+                return Padding(
+                  padding: const EdgeInsets.only(top: 18.0),
+                  child: Container(
+                    alignment: Alignment.topCenter,
+                    width: halfMediaWidth,
+                    child: Card(
+                      color: redPrimaryColor,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "Error de conexión recibiendo gastos",
+                          style: GoogleFonts.roboto(
+                              fontSize: 18, textStyle: TextStyle(color: white)),
+                        ),
+                      ),
+                    ),
                   ),
                 );
                 break;

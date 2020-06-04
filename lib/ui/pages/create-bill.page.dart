@@ -155,7 +155,7 @@ class _NewBillFormState extends State<NewBillForm> {
                             hintText: 'Uber desde el aeropuerto',
                             validator: (String value) {
                               if (value.isEmpty) {
-                                return 'Introduce nombre del recibo';
+                                return 'Introduce nombre del gasto';
                               }
                               return null;
                             },

@@ -50,7 +50,7 @@ class GroupsList extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
-                      "No hay grupos:(",
+                      "Error recibiendo grupos",
                       style: GoogleFonts.roboto(
                           fontSize: 22, textStyle: TextStyle(color: white)),
                     ),
