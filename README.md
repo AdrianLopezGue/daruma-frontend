@@ -7,7 +7,7 @@
 </h1>
 
 
-<h4 align="center">Shared expenses management system build on top of <a href="https://nestjs.com/" target="_blank" style="color:#ED1543;">NestJS</a> and <a href="https://flutter.dev/" target="_blank" style="color:##0276E8;">Flutter</a>.</h4>
+<h4 align="center">Shared expenses management system built on top of <a href="https://nestjs.com/" target="_blank" style="color:#ED1543;">NestJS</a> and <a href="https://flutter.dev/" target="_blank" style="color:##0276E8;">Flutter</a>.</h4>
 
 <p align="center">
   <img src="screenshots/groups.png" width="256" hspace="4">
