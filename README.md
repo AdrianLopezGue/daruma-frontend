@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="https://github.com/AdrianLopezGue/daruma-backend"><img src="/assets/daruma-logo-black.png" alt="Daruma Logo" width="350"></a>
+  <a href="https://github.com/AdrianLopezGue/daruma-backend"><img src="assets/daruma-logo-black.png" alt="Daruma Logo" width="350"></a>
   <br>
   🎎 Daruma - Frontend 🎎
   <br>
@@ -8,6 +8,14 @@
 
 
 <h4 align="center">Shared expenses management system build on top of <a href="https://nestjs.com/" target="_blank" style="color:#ED1543;">NestJS</a> and <a href="https://flutter.dev/" target="_blank" style="color:##0276E8;">Flutter</a>.</h4>
+
+<p align="center">
+  <img src="screenshots/groups.png" width="256" hspace="4">
+  <img src="screenshots/history.png" width="256" hspace="4">
+  <img src="screenshots/balances.png" width="256" hspace="4">
+  <img src="screenshots/new-bill.png" width="256" hspace="4">
+  <img src="screenshots/detail-bill.png" width="256" hspace="4">
+</p>
 
 ## Table of Contents
 * [About the Project](#about-the-project)
